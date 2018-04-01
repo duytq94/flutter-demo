@@ -4,13 +4,8 @@ import 'package:english_words/english_words.dart';
 class EnglishWordList extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return new MaterialApp(
-      title: 'Demo flutter',
-      theme: new ThemeData(
-          primaryColor: Colors.amber,
-          accentColor: Colors.amber
-      ),
-      home: new RandomWords(),
+    return new Scaffold(
+      body: new RandomWords(),
     );
   }
 }

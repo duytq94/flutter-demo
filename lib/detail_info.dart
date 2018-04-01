@@ -3,19 +3,12 @@ import 'package:flutter/material.dart';
 class DetailInfo extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return new MaterialApp(
-      title: 'Detail info',
-      theme: new ThemeData(
-          primaryColor: Colors.amber,
-          accentColor: Colors.black
-      ),
-      home: new Scaffold(
-          appBar: new AppBar(
-            title: new Text('Detail info'),
-            centerTitle: true,
-          ),
-          body: new Info()
-      ),
+    return new Scaffold(
+        appBar: new AppBar(
+          title: new Text('Detail info'),
+          centerTitle: true,
+        ),
+        body: new Info()
     );
   }
 }
