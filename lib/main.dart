@@ -29,97 +29,45 @@ class MainApp extends StatelessWidget {
 class MainScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return new Column(
-      children: <Widget>[
+    return new Center(
+        child: new Column(
+          children: <Widget>[
 
-        // Detail info
-        new Container(
-          margin: new EdgeInsets.symmetric(vertical: 10.0, horizontal: 20.0),
-          child: new InkWell(
-            onTap: () =>
-                Navigator.push(context,
-                    new MaterialPageRoute(builder: (context) => new DetailInfo()))
-            ,
-            child: new Container(
-              padding: new EdgeInsets.all(15.0),
-              decoration: new BoxDecoration(
-                  color: new Color(0xff03a9f4),
-                  borderRadius: new BorderRadius.circular(8.0)
-              ),
-              width: 400.0,
-              child: new Text('Detail info screen',
-                style: new TextStyle(color: Colors.white),
-                textAlign: TextAlign.center,),
-            ),
+            new Container(height: 15.0),
+            _buildButton(context, 'Detail info screen', new DetailInfo()),
+
+            new Container(height: 15.0),
+            _buildButton(context, 'English word list screen', new EnglishWordList()),
+
+            new Container(height: 15.0),
+            _buildButton(context, 'Animation screen', new AnimationScreen()),
+
+            new Container(height: 15.0),
+            _buildButton(context, 'Chat screen', new Chat()),
+
+          ],
+        )
+    );
+  }
+
+  Widget _buildButton(BuildContext context, String name, StatelessWidget screenTo) {
+    return new Material(
+      child: new InkWell(
+        onTap: () =>
+            Navigator.push(context, new MaterialPageRoute(builder: (context) => screenTo))
+        ,
+        child: new Container(
+          child: new Text(
+            name,
+            style: new TextStyle(color: Colors.white),
+            textAlign: TextAlign.center,
           ),
+          margin: new EdgeInsets.all(13.0),
+          width: 280.0,
         ),
-
-        // English word list
-        new Container(
-            margin: new EdgeInsets.symmetric(vertical: 10.0, horizontal: 20.0),
-            child: new InkWell(
-              onTap: () =>
-                  Navigator.push(context,
-                      new MaterialPageRoute(builder: (context) => new EnglishWordList()))
-              ,
-              child: new Container(
-                padding: new EdgeInsets.all(15.0),
-                decoration: new BoxDecoration(
-                    color: new Color(0xff03a9f4),
-                    borderRadius: new BorderRadius.circular(8.0)
-                ),
-                width: 400.0,
-                child: new Text('English word list screen',
-                  style: new TextStyle(color: Colors.white),
-                  textAlign: TextAlign.center,),
-              ),
-            )
-        ),
-
-        // Animation
-        new Container(
-            margin: new EdgeInsets.symmetric(vertical: 10.0, horizontal: 20.0),
-            child: new InkWell(
-              onTap: () =>
-                  Navigator.push(context,
-                      new MaterialPageRoute(builder: (context) => new LogoApp()))
-              ,
-              child: new Container(
-                padding: new EdgeInsets.all(15.0),
-                decoration: new BoxDecoration(
-                    color: new Color(0xff03a9f4),
-                    borderRadius: new BorderRadius.circular(8.0)
-                ),
-                width: 400.0,
-                child: new Text('Animation screen',
-                  style: new TextStyle(color: Colors.white),
-                  textAlign: TextAlign.center,),
-              ),
-            )
-        ),
-
-        // Chat
-        new Container(
-            margin: new EdgeInsets.symmetric(vertical: 10.0, horizontal: 20.0),
-            child: new InkWell(
-              onTap: () =>
-                  Navigator.push(context,
-                      new MaterialPageRoute(builder: (context) => new Chat()))
-              ,
-              child: new Container(
-                padding: new EdgeInsets.all(15.0),
-                decoration: new BoxDecoration(
-                    color: new Color(0xff03a9f4),
-                    borderRadius: new BorderRadius.circular(8.0)
-                ),
-                width: 400.0,
-                child: new Text('Chat screen',
-                  style: new TextStyle(color: Colors.white),
-                  textAlign: TextAlign.center,),
-              ),
-            )
-        ),
-      ],
+      ),
+      color: new Color(0xff03a9f4),
+      borderRadius: new BorderRadius.all(new Radius.circular(8.0)),
     );
   }
 }
