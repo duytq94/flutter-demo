@@ -19,37 +19,33 @@ class ChatScreen extends StatefulWidget {
 }
 
 class ChatScreenState extends State<ChatScreen> with TickerProviderStateMixin {
-  final List<ChatMessage> _messages = <ChatMessage>[];
+  final List<ItemMessage> _messages = <ItemMessage>[];
   final TextEditingController _textController = new TextEditingController();
   bool _isComposing = false;
 
   @override
   Widget build(BuildContext context) {
-    return new Scaffold(
-      body: new Column(
-        children: <Widget>[
-          new Flexible(
-            child: new ListView.builder(
-              padding: new EdgeInsets.all(8.0),
-              reverse: true,
-              itemBuilder: (_, int index) => _messages[index],
-              itemCount: _messages.length,
-            ),
+    return new Column(
+      children: <Widget>[
+        new Expanded(
+          child: new ListView.builder(
+            padding: new EdgeInsets.all(8.0),
+            reverse: true,
+            itemBuilder: (_, int index) => _messages[index],
+            itemCount: _messages.length,
           ),
-          new Divider(height: 1.0, color: Colors.black),
-          new Container(
-            decoration: new BoxDecoration(
-                color: Theme
-                    .of(context)
-                    .cardColor),
-            child: _buildTextComposer(),
-          ),
-        ],
-      ),
+
+        ),
+        new Divider(height: 1.0, color: Colors.grey),
+        new Material(
+          color: Colors.white24,
+          child: _buildInputText(),
+        ),
+      ],
     );
   }
 
-  Widget _buildTextComposer() {
+  Widget _buildInputText() {
     return new IconTheme(
       data: new IconThemeData(color: Theme
           .of(context)
@@ -90,9 +86,9 @@ class ChatScreenState extends State<ChatScreen> with TickerProviderStateMixin {
     setState(() {
       _isComposing = false;
     });
-    ChatMessage message = new ChatMessage(
+    ItemMessage message = new ItemMessage(
       text: text,
-      animationController: new AnimationController(vsync: this, duration: new Duration(microseconds: 3000)),
+      animationController: new AnimationController(duration: new Duration(microseconds: 2000), vsync: this),
     );
     setState(() {
       _messages.insert(0, message);
@@ -102,7 +98,7 @@ class ChatScreenState extends State<ChatScreen> with TickerProviderStateMixin {
 
   @override
   void dispose() {
-    for (ChatMessage message in _messages)
+    for (ItemMessage message in _messages)
       message.animationController.dispose();
     super.dispose();
   }
@@ -110,8 +106,8 @@ class ChatScreenState extends State<ChatScreen> with TickerProviderStateMixin {
 
 const String _name = "Duy";
 
-class ChatMessage extends StatelessWidget {
-  ChatMessage({this.text, this.animationController});
+class ItemMessage extends StatelessWidget {
+  ItemMessage({this.text, this.animationController});
 
   final String text;
   final AnimationController animationController;
