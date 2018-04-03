@@ -16,24 +16,43 @@ class LogoApp extends StatefulWidget {
 }
 
 class _LogoAppState extends State<LogoApp> with SingleTickerProviderStateMixin {
-  Animation<double> sizeAnimation;
-  Animation<double> opacityAnimation;
+  Animation<double> sizeAnim;
+  Animation<double> blinkAnim;
+  Animation<double> goUpDownAnim;
+  Animation<double> goLeftRightAnim;
+  Animation<double> rotateAnim;
+  Animation<double> standAnim;
+
   AnimationController controller;
-  int currentAnimation = 1;
+  int currentAnimation = 0;
 
   initState() {
     super.initState();
     controller = new AnimationController(duration: const Duration(milliseconds: 2000), vsync: this);
 
-    sizeAnimation = new Tween(begin: 0.0, end: 100.0).animate(controller);
-    opacityAnimation = new Tween(begin: 0.0, end: 1.0).animate(controller);
+    sizeAnim = new Tween(begin: 0.0, end: 100.0).animate(controller);
+    blinkAnim = new Tween(begin: 0.0, end: 1.0).animate(controller);
+    goUpDownAnim = new Tween(begin: 0.0, end: 100.0).animate(controller);
+    goLeftRightAnim = new Tween(begin: 0.0, end: 100.0).animate(controller);
+    rotateAnim = new Tween(begin: 0.0, end: 1.0).animate(controller);
+    standAnim = new Tween(begin: 0.0, end: 0.0).animate(controller);
 
-    sizeAnimation.addListener(() {
+    sizeAnim.addListener(() {
       setState(() {});
     });
-    opacityAnimation.addListener(() {
+    blinkAnim.addListener(() {
       setState(() {});
     });
+    goUpDownAnim.addListener(() {
+      setState(() {});
+    });
+    goLeftRightAnim.addListener(() {
+      setState(() {});
+    });
+    rotateAnim.addListener(() {
+      setState(() {});
+    });
+
     controller.addStatusListener((status) {
       if (status == AnimationStatus.completed) {
         controller.reverse();
@@ -53,40 +72,62 @@ class _LogoAppState extends State<LogoApp> with SingleTickerProviderStateMixin {
 
   Widget build(BuildContext context) {
     return new Scaffold(
-      body: new Container(
-        color: Colors.grey,
-        child: new Column(
-          children: <Widget>[
-            new Container(
-              alignment: Alignment.center,
-              width: 200.0,
-              height: 200.0,
-              child: new Stack(
-                children: <Widget>[
-                  new Opacity(
-                    opacity: currentAnimation == 2 ? opacityAnimation.value : 1.0,
+      body: new Column(
+        children: <Widget>[
+          new Container(height: 15.0),
+
+          new Container(
+//            color: Colors.black,
+            alignment: Alignment.center,
+            width: 200.0,
+            height: 200.0,
+            child: new Stack(
+              children: <Widget>[
+                new RotationTransition(
+                  turns: currentAnimation == 4 ? rotateAnim : standAnim,
+                  child: new Opacity(
+                    opacity: currentAnimation == 3 ? blinkAnim.value : 1.0,
                     child: new Container(
-                      color: Colors.blue,
-                      width: currentAnimation == 1 ? sizeAnimation.value : 100.0,
-                      height: currentAnimation == 1 ? sizeAnimation.value : 100.0,
+                        color: Colors.red,
+                        width: currentAnimation == 0 ? sizeAnim.value : 50.0,
+                        height: currentAnimation == 0 ? sizeAnim.value : 50.0,
+                        margin: (currentAnimation == 1
+                            ? new EdgeInsets.only(bottom: goUpDownAnim.value)
+                            : (currentAnimation == 2 ? new EdgeInsets.only(left: goLeftRightAnim.value) : null))
                     ),
                   ),
-                ],
-              ),
+                )
+              ],
             ),
-            new Container(height: 15.0),
-            _buildButton('ZOOM', setCurrentAnimation, 0),
-            new Container(height: 15.0),
-            _buildButton('SLIDE UP', setCurrentAnimation, 1),
-            new Container(height: 15.0),
-            _buildButton('MOVE', setCurrentAnimation, 2),
-            new Container(height: 15.0),
-            _buildButton('BLINK', setCurrentAnimation, 3),
-            new Container(height: 15.0),
-            _buildButton('ROTATE', setCurrentAnimation, 3),
-          ],
-        ),
+          ),
+
+          new Container(height: 15.0),
+          new Row(
+            children: <Widget>[
+              _buildButton('ZOOM', setCurrentAnimation, 0),
+              _buildButton('UP DOWN', setCurrentAnimation, 1),
+            ],
+          ),
+
+          new Container(height: 15.0),
+          new Row(
+            children: <Widget>[
+              _buildButton('LEFT RIGHT', setCurrentAnimation, 2),
+              _buildButton('BLINK', setCurrentAnimation, 3),
+            ],
+          ),
+
+          new Container(height: 15.0),
+          new Row(
+            children: <Widget>[
+              _buildButton('ROTATE', setCurrentAnimation, 4),
+              _buildButton('BLINK', setCurrentAnimation, 3),
+            ],
+          ),
+
+        ],
       ),
+
     );
   }
 
@@ -113,58 +154,6 @@ class ZoomLogo extends AnimatedWidget {
   }
 }
 
-class SlideUpLogo extends AnimatedWidget {
-  SlideUpLogo({Animation<double> animation}) : super(listenable: animation);
-
-  @override
-  Widget build(BuildContext context) {
-    final Animation<double> animation = listenable;
-    return new Container(
-      margin: new EdgeInsets.symmetric(vertical: animation.value),
-      child: new FlutterLogo(size: 100.0),
-    );
-  }
-}
-
-class MoveLogo extends AnimatedWidget {
-  MoveLogo({Animation<double> animation}) : super(listenable: animation);
-
-  @override
-  Widget build(BuildContext context) {
-    final Animation<double> animation = listenable;
-    return new Container(
-      margin: new EdgeInsets.symmetric(horizontal: animation.value),
-      child: new FlutterLogo(size: 100.0),
-    );
-  }
-}
-
-class BlinkLogo extends AnimatedWidget {
-  BlinkLogo({Animation<double> animation}) : super(listenable: animation);
-
-  @override
-  Widget build(BuildContext context) {
-    final Animation<double> animation = listenable;
-    return new Opacity(
-      opacity: animation.value > 50 ? 1.0 : 0.0,
-      child: new FlutterLogo(size: 100.0),
-    );
-  }
-}
-
-class RotateLogo extends AnimatedWidget {
-  RotateLogo({Animation<double> animation}) : super(listenable: animation);
-
-  @override
-  Widget build(BuildContext context) {
-    final Animation<double> animation = listenable;
-    return new RotationTransition(
-      turns: animation,
-      child: new FlutterLogo(size: 100.0),
-    );
-  }
-}
-
 Widget _buildButton(String name, Function function, int number) {
   return new Material(
     child: new InkWell(
@@ -176,7 +165,7 @@ Widget _buildButton(String name, Function function, int number) {
           textAlign: TextAlign.center,
         ),
         margin: new EdgeInsets.all(13.0),
-        width: 280.0,
+        width: 140.0,
       ),
     ),
     color: new Color(0xff03a9f4),
