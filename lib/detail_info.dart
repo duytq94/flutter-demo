@@ -5,7 +5,7 @@ class DetailInfo extends StatelessWidget {
   Widget build(BuildContext context) {
     return new Scaffold(
         appBar: new AppBar(
-          title: new Text('Detail info'),
+          title: new Text('DEATAIL INFO'),
           centerTitle: true,
         ),
         body: new Info()

@@ -5,7 +5,7 @@ class Chat extends StatelessWidget {
   Widget build(BuildContext context) {
     return new Scaffold(
       appBar: new AppBar(
-          title: new Text("Chat"),
+          title: new Text("CHAT"),
           centerTitle: true
       ),
       body: new ChatScreen(),

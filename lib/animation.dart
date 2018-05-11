@@ -5,7 +5,7 @@ class AnimationScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return new Scaffold(
-      appBar: new AppBar(title: new Text("Animation"), centerTitle: true),
+      appBar: new AppBar(title: new Text("ANIMATION"), centerTitle: true),
       body: new LogoApp(),
     );
   }

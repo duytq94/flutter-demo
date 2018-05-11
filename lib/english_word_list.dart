@@ -26,7 +26,7 @@ class RandomWordsState extends State<RandomWords> {
   Widget build(BuildContext context) {
     return new Scaffold(
       appBar: new AppBar(
-        title: new Text('English word'),
+        title: new Text('ENDLISH WORD'),
         centerTitle: true,
         actions: <Widget>[
           new IconButton(icon: new Icon(Icons.list), onPressed: _pushSaved)

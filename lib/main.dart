@@ -1,3 +1,4 @@
+import 'package:demo_flutter/music_player.dart';
 import 'package:flutter/material.dart';
 import 'detail_info.dart';
 import 'english_word_list.dart';
@@ -15,9 +16,10 @@ class MainApp extends StatelessWidget {
             primaryColor: Colors.amber,
             accentColor: Colors.amber
         ),
+        debugShowCheckedModeBanner: false,
         home: new Scaffold(
             appBar: new AppBar(
-              title: new Text('Main'),
+              title: new Text('MAIN'),
               centerTitle: true,
             ),
             body: new MainScreen()
@@ -44,6 +46,9 @@ class MainScreen extends StatelessWidget {
 
             new Container(height: 15.0),
             _buildButton(context, 'Chat screen', new Chat()),
+
+            new Container(height: 15.0,),
+            _buildButton(context, 'Music player screen', new MusicPlayer())
 
           ],
         )
