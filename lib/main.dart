@@ -31,27 +31,29 @@ class MainApp extends StatelessWidget {
 class MainScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return new Center(
-        child: new Column(
-          children: <Widget>[
+    return new Material(
+      child: new Center(
+          child: new Column(
+            children: <Widget>[
 
-            new Container(height: 15.0),
-            _buildButton(context, 'Detail info screen', new DetailInfo()),
+              new Container(height: 15.0),
+              _buildButton(context, 'Detail info screen', new DetailInfo()),
 
-            new Container(height: 15.0),
-            _buildButton(context, 'English word list screen', new EnglishWordList()),
+              new Container(height: 15.0),
+              _buildButton(context, 'English word list screen', new EnglishWordList()),
 
-            new Container(height: 15.0),
-            _buildButton(context, 'Animation screen', new AnimationScreen()),
+              new Container(height: 15.0),
+              _buildButton(context, 'Animation screen', new AnimationScreen()),
 
-            new Container(height: 15.0),
-            _buildButton(context, 'Chat screen', new Chat()),
+              new Container(height: 15.0),
+              _buildButton(context, 'Chat screen', new Chat()),
 
-            new Container(height: 15.0,),
-            _buildButton(context, 'Music player screen', new MusicPlayer())
+              new Container(height: 15.0,),
+              _buildButton(context, 'Music player screen', new MusicPlayer())
 
-          ],
-        )
+            ],
+          )
+      ),
     );
   }
 
