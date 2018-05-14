@@ -31,7 +31,7 @@ class _LogoAppState extends State<LogoApp> with SingleTickerProviderStateMixin {
     controller = new AnimationController(duration: const Duration(milliseconds: 2000), vsync: this);
 
     sizeAnim = new Tween(begin: 0.0, end: 100.0).animate(controller);
-    blinkAnim = new Tween(begin: 0.0, end: 1.0).animate(controller);
+    blinkAnim = new Tween(begin: 0.0, end: 10.0).animate(controller);
     goUpDownAnim = new Tween(begin: 0.0, end: 100.0).animate(controller);
     goLeftRightAnim = new Tween(begin: 0.0, end: 100.0).animate(controller);
     rotateAnim = new Tween(begin: 0.0, end: 1.0).animate(controller);
@@ -102,27 +102,39 @@ class _LogoAppState extends State<LogoApp> with SingleTickerProviderStateMixin {
           ),
 
           new Container(height: 15.0),
-          new Row(
-            children: <Widget>[
-              _buildButton('ZOOM', setCurrentAnimation, 0),
-              _buildButton('UP DOWN', setCurrentAnimation, 1),
-            ],
+          new Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: new Row(
+              children: <Widget>[
+                buildButton('ZOOM', setCurrentAnimation, 0),
+                new Expanded(child: new Container()),
+                buildButton('UP DOWN', setCurrentAnimation, 1),
+              ],
+            ),
           ),
 
           new Container(height: 15.0),
-          new Row(
-            children: <Widget>[
-              _buildButton('LEFT RIGHT', setCurrentAnimation, 2),
-              _buildButton('BLINK', setCurrentAnimation, 3),
-            ],
+          new Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: new Row(
+              children: <Widget>[
+                buildButton('LEFT RIGHT', setCurrentAnimation, 2),
+                new Expanded(child: new Container()),
+                buildButton('FADE', setCurrentAnimation, 3),
+              ],
+            ),
           ),
 
           new Container(height: 15.0),
-          new Row(
-            children: <Widget>[
-              _buildButton('ROTATE', setCurrentAnimation, 4),
-              _buildButton('BLINK', setCurrentAnimation, 3),
-            ],
+          new Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: new Row(
+              children: <Widget>[
+                buildButton('ROTATE', setCurrentAnimation, 4),
+                new Expanded(child: new Container()),
+                buildButton('STOP', setCurrentAnimation, 5),
+              ],
+            ),
           ),
 
         ],
@@ -154,21 +166,19 @@ class ZoomLogo extends AnimatedWidget {
   }
 }
 
-Widget _buildButton(String name, Function function, int number) {
-  return new Material(
-    child: new InkWell(
-      onTap: () => function(number),
-      child: new Container(
-        child: new Text(
-          name,
-          style: new TextStyle(color: Colors.white),
-          textAlign: TextAlign.center,
-        ),
-        margin: new EdgeInsets.all(13.0),
-        width: 140.0,
+Widget buildButton(String name, Function function, int number) {
+  return new FlatButton(
+    onPressed: () => function(number),
+    child: new Container(
+      child: new Text(
+        name,
+        style: new TextStyle(color: Colors.white),
+        textAlign: TextAlign.center,
       ),
+      width: 140.0,
     ),
     color: new Color(0xff03a9f4),
-    borderRadius: new BorderRadius.all(new Radius.circular(8.0)),
+    highlightColor: new Color(0xffbae3fa),
+    padding: new EdgeInsets.all(12.0),
   );
 }

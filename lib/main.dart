@@ -1,4 +1,5 @@
-import 'package:demo_flutter/music_player.dart';
+import 'package:demo_flutter/medium_clap.dart';
+import 'package:demo_flutter/music_player/music_player.dart';
 import 'package:flutter/material.dart';
 import 'detail_info.dart';
 import 'english_word_list.dart';
@@ -49,7 +50,10 @@ class MainScreen extends StatelessWidget {
               _buildButton(context, 'Chat screen', new Chat()),
 
               new Container(height: 15.0,),
-              _buildButton(context, 'Music player screen', new MusicPlayer())
+              _buildButton(context, 'Music player screen', new MusicPlayer()),
+
+              new Container(height: 15.0,),
+              _buildButton(context, 'Medium clap screen', new MediumClap())
 
             ],
           )
@@ -58,23 +62,19 @@ class MainScreen extends StatelessWidget {
   }
 
   Widget _buildButton(BuildContext context, String name, StatelessWidget screenTo) {
-    return new Material(
-      child: new InkWell(
-        onTap: () =>
-            Navigator.push(context, new MaterialPageRoute(builder: (context) => screenTo))
-        ,
-        child: new Container(
-          child: new Text(
-            name,
-            style: new TextStyle(color: Colors.white),
-            textAlign: TextAlign.center,
-          ),
-          margin: new EdgeInsets.all(13.0),
-          width: 280.0,
+    return new FlatButton(
+      onPressed: () => Navigator.push(context, new MaterialPageRoute(builder: (context) => screenTo)),
+      child: new Container(
+        child: new Text(
+          name,
+          style: new TextStyle(color: Colors.white, fontSize: 16.0),
+          textAlign: TextAlign.center,
         ),
+        width: 270.0,
       ),
       color: new Color(0xff03a9f4),
-      borderRadius: new BorderRadius.all(new Radius.circular(8.0)),
+      highlightColor: new Color(0xffbae3fa),
+      padding: new EdgeInsets.all(12.0),
     );
   }
 }

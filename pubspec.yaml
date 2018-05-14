@@ -32,6 +32,7 @@ flutter:
   assets:
     - images/bg_lake.jpg
     - images/logo_uit.png
+    - images/clap.png
   #  - images/a_dot_burr.jpeg
   #  - images/a_dot_ham.jpeg
 
