@@ -144,8 +144,8 @@ class _LogoAppState extends State<LogoApp> with SingleTickerProviderStateMixin {
   }
 
   dispose() {
-    controller.dispose();
     super.dispose();
+    controller.dispose();
   }
 }
 
