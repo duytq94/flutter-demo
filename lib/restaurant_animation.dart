@@ -25,6 +25,7 @@ class RestaurantAnimationScreenState extends State<RestaurantAnimationScreen> wi
   Animation dropDownAnimation, fadeInAnimation;
   double thresholdMarginTop1 = 40.0,
       thresholdMarginTop2 = 60.0;
+  bool isBtnPressed = false;
 
   @override
   void initState() {
@@ -49,7 +50,7 @@ class RestaurantAnimationScreenState extends State<RestaurantAnimationScreen> wi
     animControlDropDown.forward();
 
     // Animation phrase 2
-    animControlZoomBtn = new AnimationController(vsync: this, duration: new Duration(milliseconds: 100));
+    animControlZoomBtn = new AnimationController(vsync: this, duration: new Duration(milliseconds: 200));
     animControlZoomBtn.addListener(() {
       setState(() {});
     });
@@ -79,6 +80,7 @@ class RestaurantAnimationScreenState extends State<RestaurantAnimationScreen> wi
 
   void onBtnPressed() {
     animControlZoomBtn.forward();
+    isBtnPressed = true;
   }
 
   Widget renderTabMenu() {
@@ -193,6 +195,8 @@ class RestaurantAnimationScreenState extends State<RestaurantAnimationScreen> wi
   // With press animation for demo
   Widget renderBigTable2(String colorTable, Function onPressed) {
     return new FlatButton(
+      highlightColor: Colors.transparent,
+      splashColor: Colors.transparent,
       onPressed: onPressed,
       child:
       new Container(
@@ -221,10 +225,11 @@ class RestaurantAnimationScreenState extends State<RestaurantAnimationScreen> wi
             new Stack(
               children: <Widget>[
                 new Image.asset(
-                    colorTable == 'green' ? 'images/table_big_green.png' : 'images/table_big_pink.png',
-                    width: 120.0 - animControlZoomBtn.value * 10,
-                    height: 60.0 - animControlZoomBtn.value * 5,
-                    fit: BoxFit.contain
+                  colorTable == 'green' ? 'images/table_big_green.png' : 'images/table_big_pink.png',
+                  width: 120.0 - animControlZoomBtn.value * 10,
+                  height: 60.0 - animControlZoomBtn.value * 5,
+                  fit: BoxFit.contain,
+                  color: isBtnPressed ? new Color(0xff7DD5AF) : null,
                 ),
                 new Container(
                   child: new Column(
@@ -233,7 +238,7 @@ class RestaurantAnimationScreenState extends State<RestaurantAnimationScreen> wi
                       new Text(
                           '01',
                           style: new TextStyle(
-                              color: new Color(0xFF575869),
+                              color: isBtnPressed ? Colors.white : new Color(0xFF575869),
                               fontSize: 14.0 - animControlZoomBtn.value * 2
                           )
                       ),
@@ -241,7 +246,7 @@ class RestaurantAnimationScreenState extends State<RestaurantAnimationScreen> wi
                       new Text(
                           'Available',
                           style: new TextStyle(
-                              color: new Color(0xFF575869),
+                              color: isBtnPressed ? Colors.white : new Color(0xFF575869),
                               fontSize: 10.0 - animControlZoomBtn.value * 2
                           )
                       )
