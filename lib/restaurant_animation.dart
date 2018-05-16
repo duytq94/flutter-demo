@@ -22,29 +22,49 @@ class RestaurantAnimationScreen extends StatefulWidget {
 class RestaurantAnimationScreenState extends State<RestaurantAnimationScreen> with TickerProviderStateMixin {
 
   AnimationController animationController;
-  Animation bounceAnimation, fadeInAnimation;
+  Animation dropDownAnimation, fadeInAnimation;
+  double thresholdMarginTop1 = 40.0,
+      thresholdMarginTop2 = 60.0;
 
   @override
   void initState() {
     super.initState();
-    animationController = new AnimationController(vsync: this, duration: new Duration(milliseconds: 2000));
+    animationController = new AnimationController(vsync: this, duration: new Duration(milliseconds: 1500));
     animationController.addStatusListener((status) {
-      if (status == AnimationStatus.completed) {
-        animationController.reverse();
-      }
+
     });
 
-    bounceAnimation = new Tween(begin: 0.0, end: 30.0).animate(animationController);
-    bounceAnimation.addListener(() {
+    dropDownAnimation =
+        new Tween (begin: 0.0, end: 70.0).animate(
+            new CurvedAnimation(parent: animationController, curve: new Interval(0.0, 1.0, curve: Curves.easeOut)));
+    dropDownAnimation.addListener(() {
       setState(() {});
     });
 
-    fadeInAnimation = new Tween(begin: 0.0, end: 1.0).animate(animationController);
+    fadeInAnimation = new Tween(begin: 0.0, end: 1.0).animate(
+        new CurvedAnimation(parent: animationController, curve: new Interval(0.0, 0.8, curve: Curves.easeOut)));
     fadeInAnimation.addListener(() {
       setState(() {});
     });
 
     animationController.forward();
+  }
+
+  // Process value for margin top with bounce
+  double processMarginTop(double value, double thresholdValue1, thresholdValue2) {
+    if (value < thresholdValue1) {
+      return value;
+    } else if (value < thresholdValue2) {
+      return value = thresholdValue1 - (value - thresholdValue1);
+    } else {
+      return value = value - thresholdValue1;
+    }
+  }
+
+  @override
+  void dispose() {
+    animationController.dispose();
+    super.dispose();
   }
 
   Widget renderTabMenu() {
@@ -234,7 +254,7 @@ class RestaurantAnimationScreenState extends State<RestaurantAnimationScreen> wi
                     // Text entrance
                     new Center(
                       child: new Padding(
-                        padding: const EdgeInsets.all(20.0),
+                        padding: const EdgeInsets.only(left: 20.0, right: 20.0, bottom: 20.0),
                         child: new Text(
                           'ENTRANCE', style: new TextStyle(color: new Color(0xFF575869), fontWeight: FontWeight.bold,),
                         ),
@@ -285,7 +305,8 @@ class RestaurantAnimationScreenState extends State<RestaurantAnimationScreen> wi
                     ),
                   ],
                 ),
-                margin: new EdgeInsets.only(top: bounceAnimation.value),
+                margin: new EdgeInsets.only(
+                    top: processMarginTop(dropDownAnimation.value, thresholdMarginTop1, thresholdMarginTop2)),
               ),
             ),
           ]
