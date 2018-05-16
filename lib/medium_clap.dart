@@ -237,7 +237,7 @@ class MediumClapScreenState extends State<MediumClapScreen> with TickerProviderS
         child: new Container(
             height: 60.0 + extraSize,
             width: 60.0 + extraSize,
-            padding: new EdgeInsets.all(10.0),
+            padding: new EdgeInsets.all(12.0),
             decoration: new BoxDecoration(
                 border: new Border.all(color: Colors.amber, width: 1.0),
                 borderRadius: new BorderRadius.circular(50.0),

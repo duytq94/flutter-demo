@@ -17,30 +17,30 @@ class LogoApp extends StatefulWidget {
 
 class _LogoAppState extends State<LogoApp> with SingleTickerProviderStateMixin {
   Animation<double> sizeAnim;
-  Animation<double> blinkAnim;
+  Animation<double> fadeAnim;
   Animation<double> goUpDownAnim;
   Animation<double> goLeftRightAnim;
   Animation<double> rotateAnim;
-  Animation<double> standAnim;
+  Animation<double> stopAnim;
 
   AnimationController controller;
-  int currentAnimation = 0;
+  int currentAnimation = 5;
 
   initState() {
     super.initState();
     controller = new AnimationController(duration: const Duration(milliseconds: 2000), vsync: this);
 
     sizeAnim = new Tween(begin: 0.0, end: 100.0).animate(controller);
-    blinkAnim = new Tween(begin: 0.0, end: 10.0).animate(controller);
+    fadeAnim = new Tween(begin: 0.0, end: 1.0).animate(controller);
     goUpDownAnim = new Tween(begin: 0.0, end: 100.0).animate(controller);
     goLeftRightAnim = new Tween(begin: 0.0, end: 100.0).animate(controller);
     rotateAnim = new Tween(begin: 0.0, end: 1.0).animate(controller);
-    standAnim = new Tween(begin: 0.0, end: 0.0).animate(controller);
+    stopAnim = new Tween(begin: 0.0, end: 0.0).animate(controller);
 
     sizeAnim.addListener(() {
       setState(() {});
     });
-    blinkAnim.addListener(() {
+    fadeAnim.addListener(() {
       setState(() {});
     });
     goUpDownAnim.addListener(() {
@@ -84,9 +84,9 @@ class _LogoAppState extends State<LogoApp> with SingleTickerProviderStateMixin {
             child: new Stack(
               children: <Widget>[
                 new RotationTransition(
-                  turns: currentAnimation == 4 ? rotateAnim : standAnim,
+                  turns: currentAnimation == 4 ? rotateAnim : stopAnim,
                   child: new Opacity(
-                    opacity: currentAnimation == 3 ? blinkAnim.value : 1.0,
+                    opacity: currentAnimation == 3 ? fadeAnim.value : 1.0,
                     child: new Container(
                         color: Colors.red,
                         width: currentAnimation == 0 ? sizeAnim.value : 50.0,

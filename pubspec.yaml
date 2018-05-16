@@ -35,8 +35,15 @@ flutter:
     - images/clap.png
     - images/clap_border.png
     - images/sparkles.png
-  #  - images/a_dot_burr.jpeg
-  #  - images/a_dot_ham.jpeg
+    - images/ic_home.png
+    - images/ic_menu.png
+    - images/ic_seat.png
+    - images/chair_top.png
+    - images/chair_bottom.png
+    - images/table_big_pink.png
+    - images/table_big_green.png
+    - images/table_small_yellow.png
+    - images/table_small_green.png
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.io/assets-and-images/#resolution-aware.
