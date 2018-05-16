@@ -21,7 +21,7 @@ class RestaurantAnimationScreen extends StatefulWidget {
 
 class RestaurantAnimationScreenState extends State<RestaurantAnimationScreen> with TickerProviderStateMixin {
 
-  AnimationController animationController;
+  AnimationController animControlDropDown, animControlZoomBtn;
   Animation dropDownAnimation, fadeInAnimation;
   double thresholdMarginTop1 = 40.0,
       thresholdMarginTop2 = 60.0;
@@ -29,25 +29,35 @@ class RestaurantAnimationScreenState extends State<RestaurantAnimationScreen> wi
   @override
   void initState() {
     super.initState();
-    animationController = new AnimationController(vsync: this, duration: new Duration(milliseconds: 1500));
-    animationController.addStatusListener((status) {
 
-    });
+    // Animation phrase 1
+    animControlDropDown = new AnimationController(vsync: this, duration: new Duration(milliseconds: 1500));
 
     dropDownAnimation =
         new Tween (begin: 0.0, end: 70.0).animate(
-            new CurvedAnimation(parent: animationController, curve: new Interval(0.0, 1.0, curve: Curves.easeOut)));
+            new CurvedAnimation(parent: animControlDropDown, curve: new Interval(0.0, 1.0, curve: Curves.easeOut)));
     dropDownAnimation.addListener(() {
       setState(() {});
     });
 
     fadeInAnimation = new Tween(begin: 0.0, end: 1.0).animate(
-        new CurvedAnimation(parent: animationController, curve: new Interval(0.0, 0.8, curve: Curves.easeOut)));
+        new CurvedAnimation(parent: animControlDropDown, curve: new Interval(0.0, 0.8, curve: Curves.easeOut)));
     fadeInAnimation.addListener(() {
       setState(() {});
     });
 
-    animationController.forward();
+    animControlDropDown.forward();
+
+    // Animation phrase 2
+    animControlZoomBtn = new AnimationController(vsync: this, duration: new Duration(milliseconds: 100));
+    animControlZoomBtn.addListener(() {
+      setState(() {});
+    });
+    animControlZoomBtn.addStatusListener((status) {
+      if (status == AnimationStatus.completed) {
+        animControlZoomBtn.reverse();
+      }
+    });
   }
 
   // Process value for margin top with bounce
@@ -63,8 +73,12 @@ class RestaurantAnimationScreenState extends State<RestaurantAnimationScreen> wi
 
   @override
   void dispose() {
-    animationController.dispose();
+    animControlDropDown.dispose();
     super.dispose();
+  }
+
+  void onBtnPressed() {
+    animControlZoomBtn.forward();
   }
 
   Widget renderTabMenu() {
@@ -114,9 +128,9 @@ class RestaurantAnimationScreenState extends State<RestaurantAnimationScreen> wi
     );
   }
 
-  Widget renderBigTable(String colorTable) {
+  Widget renderBigTable(String colorTable, Function onPressed) {
     return new FlatButton(
-      onPressed: () {},
+      onPressed: onPressed,
       child:
       new Container(
         width: 120.0,
@@ -146,12 +160,12 @@ class RestaurantAnimationScreenState extends State<RestaurantAnimationScreen> wi
                     children: <Widget>[
                       new Text(
                           '01',
-                          style: new TextStyle(color: new Color(0xFF575869))
+                          style: new TextStyle(color: new Color(0xFF575869), fontSize: 14.0)
                       ),
                       new Container(height: 15.0,),
                       new Text(
                           'Available',
-                          style: new TextStyle(color: new Color(0xFF575869))
+                          style: new TextStyle(color: new Color(0xFF575869), fontSize: 10.0)
                       )
                     ],
                   ),
@@ -176,9 +190,94 @@ class RestaurantAnimationScreenState extends State<RestaurantAnimationScreen> wi
     );
   }
 
-  Widget renderSmallTable(String colorTable) {
+  // With press animation for demo
+  Widget renderBigTable2(String colorTable, Function onPressed) {
     return new FlatButton(
-      onPressed: () {},
+      onPressed: onPressed,
+      child:
+      new Container(
+        width: 120.0 - animControlZoomBtn.value * 10,
+        child: new Column(
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: <Widget>[
+            new Container(
+              child: new Row(
+                children: <Widget>[
+                  new Image.asset(
+                      'images/chair_top.png',
+                      width: 40.0 - animControlZoomBtn.value * 5,
+                      height: 20.0 - animControlZoomBtn.value * 2
+                  ),
+                  new Container(width: 10.0 - animControlZoomBtn.value * 2),
+                  new Image.asset(
+                      'images/chair_top.png',
+                      width: 40.0 - animControlZoomBtn.value * 5,
+                      height: 20.0 - animControlZoomBtn.value * 2
+                  ),
+                ],
+              ),
+              width: 90.0 - animControlZoomBtn.value * 10,
+            ),
+            new Stack(
+              children: <Widget>[
+                new Image.asset(
+                    colorTable == 'green' ? 'images/table_big_green.png' : 'images/table_big_pink.png',
+                    width: 120.0 - animControlZoomBtn.value * 10,
+                    height: 60.0 - animControlZoomBtn.value * 5,
+                    fit: BoxFit.contain
+                ),
+                new Container(
+                  child: new Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: <Widget>[
+                      new Text(
+                          '01',
+                          style: new TextStyle(
+                              color: new Color(0xFF575869),
+                              fontSize: 14.0 - animControlZoomBtn.value * 2
+                          )
+                      ),
+                      new Container(height: 15.0),
+                      new Text(
+                          'Available',
+                          style: new TextStyle(
+                              color: new Color(0xFF575869),
+                              fontSize: 10.0 - animControlZoomBtn.value * 2
+                          )
+                      )
+                    ],
+                  ),
+                  margin: new EdgeInsets.only(left: 20.0, top: 5.0, bottom: 5.0, right: 10.0),
+                )
+              ],
+            ),
+            new Container(
+              child: new Row(
+                children: <Widget>[
+                  new Image.asset(
+                      'images/chair_bottom.png',
+                      width: 40.0 - animControlZoomBtn.value * 5,
+                      height: 20.0 - animControlZoomBtn.value * 2
+                  ),
+                  new Container(width: 10.0 - animControlZoomBtn.value * 2),
+                  new Image.asset('images/chair_bottom.png',
+                      width: 40.0 - animControlZoomBtn.value * 5,
+                      height: 20.0 - animControlZoomBtn.value * 2
+                  ),
+                ],
+              ),
+              width: 90.0 - animControlZoomBtn.value * 10,
+            ),
+          ],
+        ),
+      ),
+      padding: new EdgeInsets.all(0.0),
+    );
+  }
+
+  Widget renderSmallTable(String colorTable, Function onPressed) {
+    return new FlatButton(
+      onPressed: onPressed,
       child:
       new Container(
         width: 60.0,
@@ -207,12 +306,12 @@ class RestaurantAnimationScreenState extends State<RestaurantAnimationScreen> wi
                     children: <Widget>[
                       new Text(
                           '01',
-                          style: new TextStyle(color: new Color(0xFF575869))
+                          style: new TextStyle(color: new Color(0xFF575869), fontSize: 14.0)
                       ),
                       new Container(height: 15.0,),
                       new Text(
                           'Taken',
-                          style: new TextStyle(color: new Color(0xFF575869))
+                          style: new TextStyle(color: new Color(0xFF575869), fontSize: 10.0)
                       )
                     ],
                   ),
@@ -270,11 +369,11 @@ class RestaurantAnimationScreenState extends State<RestaurantAnimationScreen> wi
                           child: new Row(
                             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                             children: <Widget>[
-                              renderBigTable('green'),
-                              renderBigTable('pink'),
+                              new Container(child: renderBigTable2('green', onBtnPressed), width: 120.0,),
+                              renderBigTable('pink', null),
                             ],
                           ),
-                          margin: new EdgeInsets.only(left: 20.0, right: 20.0),
+                          margin: new EdgeInsets.only(left: 10.0, right: 10.0),
                         ),
 
                         // Table small
@@ -282,9 +381,9 @@ class RestaurantAnimationScreenState extends State<RestaurantAnimationScreen> wi
                           child: new Row(
                             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                             children: <Widget>[
-                              renderSmallTable('green'),
-                              renderSmallTable('yellow'),
-                              renderSmallTable('green'),
+                              renderSmallTable('green', null),
+                              renderSmallTable('yellow', null),
+                              renderSmallTable('green', null),
                             ],
                           ),
                           margin: new EdgeInsets.only(left: 20.0, right: 20.0),
@@ -295,11 +394,11 @@ class RestaurantAnimationScreenState extends State<RestaurantAnimationScreen> wi
                           child: new Row(
                             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                             children: <Widget>[
-                              renderBigTable('pink'),
-                              renderBigTable('green'),
+                              renderBigTable('pink', null),
+                              renderBigTable('green', null),
                             ],
                           ),
-                          margin: new EdgeInsets.only(left: 20.0, right: 20.0),
+                          margin: new EdgeInsets.only(left: 10.0, right: 10.0),
                         ),
 
                         // Table small
@@ -307,9 +406,9 @@ class RestaurantAnimationScreenState extends State<RestaurantAnimationScreen> wi
                           child: new Row(
                             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                             children: <Widget>[
-                              renderSmallTable('yellow'),
-                              renderSmallTable('green'),
-                              renderSmallTable('yellow'),
+                              renderSmallTable('yellow', null),
+                              renderSmallTable('green', null),
+                              renderSmallTable('yellow', null),
                             ],
                           ),
                           margin: new EdgeInsets.only(left: 20.0, right: 20.0),
