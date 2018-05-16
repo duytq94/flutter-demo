@@ -114,7 +114,7 @@ class RestaurantAnimationScreenState extends State<RestaurantAnimationScreen> wi
     );
   }
 
-  Widget renderTableBig(String colorTable) {
+  Widget renderBigTable(String colorTable) {
     return new FlatButton(
       onPressed: () {},
       child:
@@ -176,7 +176,7 @@ class RestaurantAnimationScreenState extends State<RestaurantAnimationScreen> wi
     );
   }
 
-  Widget renderTableSmall(String colorTable) {
+  Widget renderSmallTable(String colorTable) {
     return new FlatButton(
       onPressed: () {},
       child:
@@ -270,8 +270,8 @@ class RestaurantAnimationScreenState extends State<RestaurantAnimationScreen> wi
                           child: new Row(
                             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                             children: <Widget>[
-                              renderTableBig('green'),
-                              renderTableBig('pink'),
+                              renderBigTable('green'),
+                              renderBigTable('pink'),
                             ],
                           ),
                           margin: new EdgeInsets.only(left: 20.0, right: 20.0),
@@ -282,9 +282,9 @@ class RestaurantAnimationScreenState extends State<RestaurantAnimationScreen> wi
                           child: new Row(
                             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                             children: <Widget>[
-                              renderTableSmall('green'),
-                              renderTableSmall('yellow'),
-                              renderTableSmall('green'),
+                              renderSmallTable('green'),
+                              renderSmallTable('yellow'),
+                              renderSmallTable('green'),
                             ],
                           ),
                           margin: new EdgeInsets.only(left: 20.0, right: 20.0),
@@ -295,12 +295,26 @@ class RestaurantAnimationScreenState extends State<RestaurantAnimationScreen> wi
                           child: new Row(
                             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                             children: <Widget>[
-                              renderTableBig('pink'),
-                              renderTableBig('green'),
+                              renderBigTable('pink'),
+                              renderBigTable('green'),
                             ],
                           ),
                           margin: new EdgeInsets.only(left: 20.0, right: 20.0),
                         ),
+
+                        // Table small
+                        new Container(
+                          child: new Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                            children: <Widget>[
+                              renderSmallTable('yellow'),
+                              renderSmallTable('green'),
+                              renderSmallTable('yellow'),
+                            ],
+                          ),
+                          margin: new EdgeInsets.only(left: 20.0, right: 20.0),
+                        ),
+
                       ],
                     ),
                   ],
