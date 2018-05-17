@@ -22,7 +22,7 @@ class RestaurantAnimationScreen extends StatefulWidget {
 class RestaurantAnimationScreenState extends State<RestaurantAnimationScreen> with TickerProviderStateMixin {
 
   AnimationController animControlDropDown, animControlZoomBtn;
-  Animation dropDownAnimation, fadeInAnimation, zoomBtnAnimation;
+  Animation dropDownAnimation, fadeInAnimation, zoomBtnAnimation, opacityViewAnimation;
   double thresholdMarginTop1 = 40.0,
       thresholdMarginTop2 = 60.0,
       thresholdSizeBtn1 = 10.0,
@@ -34,16 +34,14 @@ class RestaurantAnimationScreenState extends State<RestaurantAnimationScreen> wi
   void initState() {
     super.initState();
 
-    // Animation phrase 1
+    // Animation phrase 1 (drop down view with bounce)
     animControlDropDown = new AnimationController(vsync: this, duration: new Duration(milliseconds: 1800));
-
     dropDownAnimation =
         new Tween (begin: 0.0, end: 70.0).animate(
             new CurvedAnimation(parent: animControlDropDown, curve: new Interval(0.3, 1.0, curve: Curves.easeOut)));
     dropDownAnimation.addListener(() {
       setState(() {});
     });
-
     fadeInAnimation = new Tween(begin: 0.0, end: 1.0).animate(
         new CurvedAnimation(parent: animControlDropDown, curve: new Interval(0.3, 0.8, curve: Curves.easeOut)));
     fadeInAnimation.addListener(() {
@@ -52,12 +50,18 @@ class RestaurantAnimationScreenState extends State<RestaurantAnimationScreen> wi
 
     animControlDropDown.forward();
 
-    // Animation phrase 2
-    animControlZoomBtn = new AnimationController(vsync: this, duration: new Duration(milliseconds: 1000));
+    // Animation phrase 2 (zoom button when be pressed)
+    animControlZoomBtn = new AnimationController(vsync: this, duration: new Duration(milliseconds: 800));
     zoomBtnAnimation =
         new Tween(begin: 0.0, end: 40.0).animate(
-            new CurvedAnimation(parent: animControlZoomBtn, curve: Curves.easeIn));
+            new CurvedAnimation(parent: animControlZoomBtn, curve: Curves.easeOut));
     zoomBtnAnimation.addListener(() {
+      setState(() {});
+    });
+    opacityViewAnimation = new Tween(begin: 1.0, end: 0.3).animate(
+        new CurvedAnimation(parent: animControlZoomBtn, curve: new Interval(0.2, 0.8, curve: Curves.easeOut))
+    );
+    opacityViewAnimation.addListener(() {
       setState(() {});
     });
   }
@@ -375,11 +379,15 @@ class RestaurantAnimationScreenState extends State<RestaurantAnimationScreen> wi
 
                     // Text entrance
                     new Center(
-                      child: new Padding(
-                        padding: const EdgeInsets.only(left: 20.0, right: 20.0, bottom: 20.0),
-                        child: new Text(
-                          'ENTRANCE', style: new TextStyle(color: new Color(0xFF575869), fontWeight: FontWeight.bold,),
+                      child: new Opacity(
+                        child: new Padding(
+                          padding: const EdgeInsets.only(left: 20.0, right: 20.0, bottom: 20.0),
+                          child: new Text(
+                            'ENTRANCE',
+                            style: new TextStyle(color: new Color(0xFF575869), fontWeight: FontWeight.bold,),
+                          ),
                         ),
+                        opacity: opacityViewAnimation.value,
                       ),
                     ),
 
@@ -392,8 +400,13 @@ class RestaurantAnimationScreenState extends State<RestaurantAnimationScreen> wi
                           child: new Row(
                             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                             children: <Widget>[
-                              new Container(child: renderBigTable2('green', onBtnPressed), width: 120.0,),
-                              renderBigTable('pink', null),
+                              new Container(
+                                  child: renderBigTable2('green', onBtnPressed), width: 120.0
+                              ),
+                              new Opacity(
+                                  child: renderBigTable('pink', null),
+                                  opacity: opacityViewAnimation.value
+                              ),
                             ],
                           ),
                           margin: new EdgeInsets.only(left: 10.0, right: 10.0),
@@ -402,27 +415,35 @@ class RestaurantAnimationScreenState extends State<RestaurantAnimationScreen> wi
 
                         // Small table
                         new Container(
-                          child: new Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                            children: <Widget>[
-                              renderSmallTable('green', null),
-                              renderSmallTable('yellow', null),
-                              renderSmallTable('green', null),
-                            ],
+                          child: new Opacity(
+                            child: new Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                              children: <Widget>[
+                                renderSmallTable('green', null),
+                                renderSmallTable('yellow', null),
+                                renderSmallTable('green', null),
+                              ],
+                            ),
+                            opacity: opacityViewAnimation.value,
                           ),
                           margin: new EdgeInsets.only(left: 20.0, right: 20.0),
+                          height: 100.0,
                         ),
 
                         // Big table
                         new Container(
-                          child: new Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                            children: <Widget>[
-                              renderBigTable('pink', null),
-                              renderBigTable('green', null),
-                            ],
+                          child: new Opacity(
+                            child: new Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                              children: <Widget>[
+                                renderBigTable('pink', null),
+                                renderBigTable('green', null),
+                              ],
+                            ),
+                            opacity: opacityViewAnimation.value,
                           ),
                           margin: new EdgeInsets.only(left: 10.0, right: 10.0),
+                          height: 120.0,
                         ),
 
                       ],
