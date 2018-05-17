@@ -24,15 +24,17 @@ class RestaurantAnimationScreenState extends State<RestaurantAnimationScreen> wi
   AnimationController animControlPhrase1, animControlPhrase2;
   Animation dropDownAnimation, fadeInViewAnimation,
       zoomBtnAnimation, fadeOutViewAnimation, fadeOutTextAnimation,
-      fadeInBottomMenuAnimation, comeUpBottomMenuAnimation
-  ;
+      fadeInBottomMenuAnimation, comeUpBottomMenuAnimation1, comeUpBottomMenuAnimation2, comeUpBottomMenuAnimation3,
+      comeUpBottomMenuAnimation4, comeUpTextBottomMenuAnimation;
 
   double thresholdMarginTop1 = 40.0,
       thresholdMarginTop2 = 60.0,
       thresholdSizeBtn1 = 10.0,
       thresholdSizeBtn2 = 30.0,
-      thresholdMarginBottomMenu1 = 30.0,
-      thresholdMarginBottomMenu2 = 30.0
+      thresholdBtnBottomMenu1 = 50.0,
+      thresholdBtnBottomMenu2 = 75.0,
+      thresholdTextBottomMenu1 = 50.0,
+      thresholdTextBottomMenu2 = 75.0
   ;
 
   bool isBtnPressed = false;
@@ -82,11 +84,23 @@ class RestaurantAnimationScreenState extends State<RestaurantAnimationScreen> wi
     });
 
     fadeInBottomMenuAnimation = new Tween(begin: 0.0, end: 1.0).animate(
-        new CurvedAnimation(parent: animControlPhrase2, curve: new Interval(0.5, 1.0))
+        new CurvedAnimation(parent: animControlPhrase2, curve: new Interval(0.3, 0.5))
     );
 
-    comeUpBottomMenuAnimation = new Tween(begin: 0.0, end: 40.0).animate(
-        new CurvedAnimation(parent: animControlPhrase2, curve: new Interval(0.5, 1.0))
+    comeUpBottomMenuAnimation1 = new Tween(begin: 0.0, end: 100.0).animate(
+        new CurvedAnimation(parent: animControlPhrase2, curve: new Interval(0.3, 0.7, curve: Curves.decelerate))
+    );
+    comeUpBottomMenuAnimation2 = new Tween(begin: 0.0, end: 100.0).animate(
+        new CurvedAnimation(parent: animControlPhrase2, curve: new Interval(0.35, 0.75, curve: Curves.decelerate))
+    );
+    comeUpBottomMenuAnimation3 = new Tween(begin: 0.0, end: 100.0).animate(
+        new CurvedAnimation(parent: animControlPhrase2, curve: new Interval(0.4, 0.8, curve: Curves.decelerate))
+    );
+    comeUpBottomMenuAnimation4 = new Tween(begin: 0.0, end: 100.0).animate(
+        new CurvedAnimation(parent: animControlPhrase2, curve: new Interval(0.45, 0.85, curve: Curves.decelerate))
+    );
+    comeUpTextBottomMenuAnimation = new Tween(begin: 0.0, end: 20.0).animate(
+        new CurvedAnimation(parent: animControlPhrase2, curve: new Interval(0.45, 0.85, curve: Curves.decelerate))
     );
   }
 
@@ -113,12 +127,19 @@ class RestaurantAnimationScreenState extends State<RestaurantAnimationScreen> wi
   }
 
   double processMarginBottomMenu(double value) {
-    return 0.0;
+    if (value < thresholdBtnBottomMenu1) {
+      return value;
+    } else if (value < thresholdBtnBottomMenu2) {
+      return value = thresholdBtnBottomMenu1 - (value - thresholdBtnBottomMenu1);
+    } else {
+      return value = value - thresholdBtnBottomMenu1;
+    }
   }
 
   @override
   void dispose() {
     animControlPhrase1.dispose();
+    animControlPhrase2.dispose();
     super.dispose();
   }
 
@@ -175,49 +196,132 @@ class RestaurantAnimationScreenState extends State<RestaurantAnimationScreen> wi
     );
   }
 
-  Widget renderBottomMenu() {
+  Widget renderBtnBottomMenu() {
+    double value1 = 0.0,
+        value2 = 0.0,
+        value3 = 0.0,
+        value4 = 0.0
+    ;
+    if (isBtnPressed) {
+      value1 = processMarginBottomMenu(comeUpBottomMenuAnimation1.value);
+      value2 = processMarginBottomMenu(comeUpBottomMenuAnimation2.value);
+      value3 = processMarginBottomMenu(comeUpBottomMenuAnimation3.value);
+      value4 = processMarginBottomMenu(comeUpBottomMenuAnimation4.value);
+    }
+
     return new Container(
       child: new Row(
         children: <Widget>[
-          new RawMaterialButton(
-            onPressed: () {},
-            child: new Image.asset(
-              'images/ic_book.png', width: 40.0, height: 40.0,
+          new Container(
+            child: new RawMaterialButton(
+              onPressed: () {},
+              child: new Image.asset(
+                'images/ic_book.png', width: 40.0, height: 40.0,
+              ),
+              constraints: new BoxConstraints(),
+              highlightColor: Colors.transparent,
+              splashColor: Colors.transparent,
             ),
-            constraints: new BoxConstraints(),
-            highlightColor: Colors.transparent,
-            splashColor: Colors.transparent,
+            margin: new EdgeInsets.only(bottom: value1),
           ),
-          new RawMaterialButton(
-            onPressed: () {},
-            child: new Image.asset(
-              'images/ic_add.png', width: 40.0, height: 40.0,
+          new Container(
+            child: new RawMaterialButton(
+              onPressed: () {},
+              child: new Image.asset(
+                'images/ic_add.png', width: 40.0, height: 40.0,
+              ),
+              constraints: new BoxConstraints(),
+              highlightColor: Colors.transparent,
+              splashColor: Colors.transparent,
             ),
-            constraints: new BoxConstraints(),
-            highlightColor: Colors.transparent,
-            splashColor: Colors.transparent,
+            margin: new EdgeInsets.only(bottom: value2),
           ),
-          new RawMaterialButton(
-            onPressed: () {},
-            child: new Image.asset(
-              'images/ic_clock.png', width: 40.0, height: 40.0,
+          new Container(
+            child: new RawMaterialButton(
+              onPressed: () {},
+              child: new Image.asset(
+                'images/ic_clock.png', width: 40.0, height: 40.0,
+              ),
+              constraints: new BoxConstraints(),
+              highlightColor: Colors.transparent,
+              splashColor: Colors.transparent,
             ),
-            constraints: new BoxConstraints(),
-            highlightColor: Colors.transparent,
-            splashColor: Colors.transparent,
+            margin: new EdgeInsets.only(bottom: value3),
           ),
-          new RawMaterialButton(
-            onPressed: () {},
-            child: new Image.asset(
-              'images/ic_cancel.png', width: 40.0, height: 40.0,
+          new Container(
+            child: new RawMaterialButton(
+              onPressed: () {},
+              child: new Image.asset(
+                'images/ic_cancel.png', width: 40.0, height: 40.0,
+              ),
+              constraints: new BoxConstraints(),
+              highlightColor: Colors.transparent,
+              splashColor: Colors.transparent,
             ),
-            constraints: new BoxConstraints(),
-            highlightColor: Colors.transparent,
-            splashColor: Colors.transparent,
+            margin: new EdgeInsets.only(bottom: value4),
           ),
         ],
         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+
       ),
+      height: 120.0,
+      margin: new EdgeInsets.only(left: 10.0, right: 10.0),
+    );
+  }
+
+  Widget renderTextBottomMenu() {
+    return new Container(
+      child: new Row(
+        children: <Widget>[
+          new Expanded(
+            child: new Text(
+              'Book',
+              style: new TextStyle(
+                  color: new Color(0xFF575869),
+                  fontSize: 11.0,
+                  fontWeight: FontWeight.bold
+              ),
+              textAlign: TextAlign.center,
+            ),
+          ),
+          new Expanded(
+            child: new Text(
+              'Order',
+              style: new TextStyle(
+                  color: new Color(0xFF575869),
+                  fontSize: 11.0,
+                  fontWeight: FontWeight.bold
+              ),
+              textAlign: TextAlign.center,
+            ),
+          ),
+          new Expanded(
+            child: new Text(
+              'Reservation',
+              style: new TextStyle(
+                  color: new Color(0xFF575869),
+                  fontSize: 11.0,
+                  fontWeight: FontWeight.bold
+              ),
+              textAlign: TextAlign.center,
+            ),
+          ),
+          new Expanded(
+            child: new Text(
+              'Cancel',
+              style: new TextStyle(
+                  color: new Color(0xFF575869),
+                  fontSize: 11.0,
+                  fontWeight: FontWeight.bold
+              ),
+              textAlign: TextAlign.center,
+            ),
+          ),
+        ],
+      ),
+      margin: new EdgeInsets.only(left: 25.0, right: 25.0, bottom: comeUpTextBottomMenuAnimation.value),
+      decoration: new BoxDecoration(color: Colors.red),
+      height: 30.0,
     );
   }
 
@@ -532,13 +636,24 @@ class RestaurantAnimationScreenState extends State<RestaurantAnimationScreen> wi
             ),
           ),
 
-          // Bottom menu
+          // Button bottom menu
           new Positioned(
             child: new Opacity(
                 opacity: fadeInBottomMenuAnimation.value,
-                child: renderBottomMenu()
+                child: renderBtnBottomMenu()
             ),
             bottom: 10.0,
+            left: 0.0,
+            right: 0.0,
+          ),
+
+          // Text bottom menu
+          new Positioned(
+            child: new Opacity(
+                opacity: fadeInBottomMenuAnimation.value,
+                child: renderTextBottomMenu()
+            ),
+            bottom: 0.0,
             left: 0.0,
             right: 0.0,
           ),
