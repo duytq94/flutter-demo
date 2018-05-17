@@ -21,8 +21,9 @@ class RestaurantAnimationScreen extends StatefulWidget {
 
 class RestaurantAnimationScreenState extends State<RestaurantAnimationScreen> with TickerProviderStateMixin {
 
-  AnimationController animControlDropDown, animControlZoomBtn;
-  Animation dropDownAnimation, fadeInAnimation, zoomBtnAnimation, opacityViewAnimation;
+  AnimationController animControlPhrase1, animControlPhrase2, animControlPhrase3;
+  Animation dropDownAnimation, fadeInAnimation,
+      zoomBtnAnimation, opacityViewAnimation, opacityTextAnimation;
   double thresholdMarginTop1 = 40.0,
       thresholdMarginTop2 = 60.0,
       thresholdSizeBtn1 = 10.0,
@@ -35,35 +36,44 @@ class RestaurantAnimationScreenState extends State<RestaurantAnimationScreen> wi
     super.initState();
 
     // Animation phrase 1 (drop down view with bounce)
-    animControlDropDown = new AnimationController(vsync: this, duration: new Duration(milliseconds: 1800));
+    animControlPhrase1 = new AnimationController(vsync: this, duration: new Duration(milliseconds: 1800));
     dropDownAnimation =
         new Tween (begin: 0.0, end: 70.0).animate(
-            new CurvedAnimation(parent: animControlDropDown, curve: new Interval(0.3, 1.0, curve: Curves.easeOut)));
+            new CurvedAnimation(parent: animControlPhrase1, curve: new Interval(0.3, 1.0, curve: Curves.easeOut)));
     dropDownAnimation.addListener(() {
       setState(() {});
     });
     fadeInAnimation = new Tween(begin: 0.0, end: 1.0).animate(
-        new CurvedAnimation(parent: animControlDropDown, curve: new Interval(0.3, 0.8, curve: Curves.easeOut)));
+        new CurvedAnimation(parent: animControlPhrase1, curve: new Interval(0.3, 0.8, curve: Curves.easeOut)));
     fadeInAnimation.addListener(() {
       setState(() {});
     });
 
-    animControlDropDown.forward();
+    animControlPhrase1.forward();
 
     // Animation phrase 2 (zoom button when be pressed)
-    animControlZoomBtn = new AnimationController(vsync: this, duration: new Duration(milliseconds: 800));
+    animControlPhrase2 = new AnimationController(vsync: this, duration: new Duration(milliseconds: 800));
     zoomBtnAnimation =
         new Tween(begin: 0.0, end: 40.0).animate(
-            new CurvedAnimation(parent: animControlZoomBtn, curve: Curves.easeOut));
+            new CurvedAnimation(parent: animControlPhrase2, curve: Curves.easeOut));
     zoomBtnAnimation.addListener(() {
       setState(() {});
     });
-    opacityViewAnimation = new Tween(begin: 1.0, end: 0.3).animate(
-        new CurvedAnimation(parent: animControlZoomBtn, curve: new Interval(0.2, 0.8, curve: Curves.easeOut))
+    opacityViewAnimation = new Tween(begin: 1.0, end: 0.2).animate(
+        new CurvedAnimation(parent: animControlPhrase2, curve: new Interval(0.2, 0.8, curve: Curves.easeOut))
     );
     opacityViewAnimation.addListener(() {
       setState(() {});
     });
+    opacityTextAnimation = new Tween(begin: 1.0, end: 0.0).animate(
+        new CurvedAnimation(parent: animControlPhrase2, curve: new Interval(0.2, 0.8, curve: Curves.easeOut))
+    );
+    opacityTextAnimation.addListener(() {
+      setState(() {});
+    });
+
+    // Animation phrase 3 (show bottom menu)
+    animControlPhrase3 = new AnimationController(vsync: this, duration: new Duration(milliseconds: 1000));
   }
 
   // Process value for margin top with bounce
@@ -90,12 +100,12 @@ class RestaurantAnimationScreenState extends State<RestaurantAnimationScreen> wi
 
   @override
   void dispose() {
-    animControlDropDown.dispose();
+    animControlPhrase1.dispose();
     super.dispose();
   }
 
   void onBtnPressed() {
-    animControlZoomBtn.forward();
+    animControlPhrase2.forward();
     isBtnPressed = true;
   }
 
@@ -143,6 +153,59 @@ class RestaurantAnimationScreenState extends State<RestaurantAnimationScreen> wi
       ),
       decoration: new BoxDecoration(color: new Color(0xFFf53970)),
       padding: new EdgeInsets.all(10.0),
+    );
+  }
+
+  Widget renderBottomMenu() {
+    return new Container(
+      child: new Column(
+        children: <Widget>[
+
+          // Icons
+          new Row(
+            children: <Widget>[
+              new RawMaterialButton(
+                onPressed: () {},
+                child: new Image.asset(
+                  'images/ic_book.png', width: 40.0, height: 40.0,
+                ),
+                constraints: new BoxConstraints(),
+                highlightColor: Colors.transparent,
+                splashColor: Colors.transparent,
+              ),
+              new RawMaterialButton(
+                onPressed: () {},
+                child: new Image.asset(
+                  'images/ic_add.png', width: 40.0, height: 40.0,
+                ),
+                constraints: new BoxConstraints(),
+                highlightColor: Colors.transparent,
+                splashColor: Colors.transparent,
+              ),
+              new RawMaterialButton(
+                onPressed: () {},
+                child: new Image.asset(
+                  'images/ic_clock.png', width: 40.0, height: 40.0,
+                ),
+                constraints: new BoxConstraints(),
+                highlightColor: Colors.transparent,
+                splashColor: Colors.transparent,
+              ),
+              new RawMaterialButton(
+                onPressed: () {},
+                child: new Image.asset(
+                  'images/ic_cancel.png', width: 40.0, height: 40.0,
+                ),
+                constraints: new BoxConstraints(),
+                highlightColor: Colors.transparent,
+                splashColor: Colors.transparent,
+              ),
+            ],
+            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+          ),
+        ],
+
+      ),
     );
   }
 
@@ -371,6 +434,7 @@ class RestaurantAnimationScreenState extends State<RestaurantAnimationScreen> wi
             // Tab menu
             renderTabMenu(),
 
+            // Main content
             new Opacity(
               opacity: fadeInAnimation.value,
               child: new Container(
@@ -387,7 +451,7 @@ class RestaurantAnimationScreenState extends State<RestaurantAnimationScreen> wi
                             style: new TextStyle(color: new Color(0xFF575869), fontWeight: FontWeight.bold,),
                           ),
                         ),
-                        opacity: opacityViewAnimation.value,
+                        opacity: opacityTextAnimation.value,
                       ),
                     ),
 
@@ -451,9 +515,13 @@ class RestaurantAnimationScreenState extends State<RestaurantAnimationScreen> wi
                   ],
                 ),
                 margin: new EdgeInsets.only(
-                    top: processMarginTop(dropDownAnimation.value, thresholdMarginTop1, thresholdMarginTop2)),
+                    top: processMarginTop(dropDownAnimation.value, thresholdMarginTop1, thresholdMarginTop2)
+                ),
               ),
             ),
+
+            // bottom menu
+            renderBottomMenu()
           ]
       ),
     );

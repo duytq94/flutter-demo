@@ -44,6 +44,10 @@ flutter:
     - images/table_big_green.png
     - images/table_small_yellow.png
     - images/table_small_green.png
+    - images/ic_add.png
+    - images/ic_book.png
+    - images/ic_clock.png
+    - images/ic_cancel.png
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.io/assets-and-images/#resolution-aware.
