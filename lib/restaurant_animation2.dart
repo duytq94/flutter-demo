@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/animation.dart';
 
-class RestaurantAnimation extends StatelessWidget {
+class RestaurantAnimation2 extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return new Scaffold(
@@ -9,17 +9,17 @@ class RestaurantAnimation extends StatelessWidget {
         title: new Text("RESTAURANT"),
         centerTitle: true,
       ),
-      body: new RestaurantAnimationScreen(),
+      body: new RestaurantAnimationScreen2(),
     );
   }
 }
 
-class RestaurantAnimationScreen extends StatefulWidget {
+class RestaurantAnimationScreen2 extends StatefulWidget {
   @override
-  State createState() => new RestaurantAnimationScreenState();
+  State createState() => new RestaurantAnimationScreenState2();
 }
 
-class RestaurantAnimationScreenState extends State<RestaurantAnimationScreen> with TickerProviderStateMixin {
+class RestaurantAnimationScreenState2 extends State<RestaurantAnimationScreen2> with TickerProviderStateMixin {
   AnimationController animControlPhrase1, animControlPhrase2, animControlPhrase3;
   Animation dropDownAnimation,
       fadeInViewAnim,
@@ -266,8 +266,6 @@ class RestaurantAnimationScreenState extends State<RestaurantAnimationScreen> wi
               splashColor: Colors.transparent,
             ),
             margin: new EdgeInsets.only(bottom: value1),
-            width: 40.0,
-            height: 40.0,
           ),
           new Container(
             child: new RawMaterialButton(
@@ -282,8 +280,6 @@ class RestaurantAnimationScreenState extends State<RestaurantAnimationScreen> wi
               splashColor: Colors.transparent,
             ),
             margin: new EdgeInsets.only(bottom: value2),
-            width: 40.0,
-            height: 40.0,
           ),
           new Container(
             child: new RawMaterialButton(
@@ -314,8 +310,6 @@ class RestaurantAnimationScreenState extends State<RestaurantAnimationScreen> wi
               splashColor: Colors.transparent,
             ),
             margin: new EdgeInsets.only(bottom: value4),
-            width: 40.0,
-            height: 40.0,
           ),
         ],
         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
