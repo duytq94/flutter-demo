@@ -1,3 +1,4 @@
+import 'package:demo_flutter/restaurant_animation2.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/animation.dart';
 
@@ -131,7 +132,7 @@ class RestaurantAnimationScreenState extends State<RestaurantAnimationScreen> wi
     animControlPhrase3 = new AnimationController(vsync: this, duration: new Duration(milliseconds: 200));
     animControlPhrase3.addStatusListener((status) {
       if (status == AnimationStatus.completed) {
-        animControlPhrase3.reverse();
+        navigateNextScreen();
       }
     });
     zoomBtnBottomMenuAnim = new Tween(begin: 0.0, end: 8.0).animate(animControlPhrase3);
@@ -176,6 +177,7 @@ class RestaurantAnimationScreenState extends State<RestaurantAnimationScreen> wi
   void dispose() {
     animControlPhrase1.dispose();
     animControlPhrase2.dispose();
+    animControlPhrase3.dispose();
     super.dispose();
   }
 
@@ -187,6 +189,12 @@ class RestaurantAnimationScreenState extends State<RestaurantAnimationScreen> wi
   void onBtnBottomMenuPressed() {
     animControlPhrase3.forward();
     isBtnBottomMenuPressed = true;
+  }
+
+  void navigateNextScreen() {
+    Navigator.pop(context);
+    Navigator.push(
+        context, new MaterialPageRoute(builder: (context) => new RestaurantAnimation2()));
   }
 
   Widget renderTabMenu() {
