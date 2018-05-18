@@ -22,7 +22,7 @@ class RestaurantAnimationScreen extends StatefulWidget {
 
 class RestaurantAnimationScreenState extends State<RestaurantAnimationScreen> with TickerProviderStateMixin {
   AnimationController animControlPhrase1, animControlPhrase2, animControlPhrase3;
-  Animation dropDownAnimation,
+  Animation dropDownAnim,
       fadeInViewAnim,
       zoomBtnAnim,
       fadeOutViewAnim,
@@ -52,9 +52,9 @@ class RestaurantAnimationScreenState extends State<RestaurantAnimationScreen> wi
 
     // Animation phrase 1 (drop down view with bounce)
     animControlPhrase1 = new AnimationController(vsync: this, duration: new Duration(milliseconds: 1500));
-    dropDownAnimation = new Tween(begin: 0.0, end: 70.0)
+    dropDownAnim = new Tween(begin: 0.0, end: 70.0)
         .animate(new CurvedAnimation(parent: animControlPhrase1, curve: new Interval(0.3, 1.0, curve: Curves.easeOut)));
-    dropDownAnimation.addListener(() {
+    dropDownAnim.addListener(() {
       setState(() {});
     });
     fadeInViewAnim = new Tween(begin: 0.0, end: 1.0)
@@ -597,7 +597,7 @@ class RestaurantAnimationScreenState extends State<RestaurantAnimationScreen> wi
 
           // Body content
           new Positioned(
-            top: 40.0 + processMarginBodyContent(dropDownAnimation.value),
+            top: 40.0 + processMarginBodyContent(dropDownAnim.value),
             left: 0.0,
             right: 0.0,
             child: new Opacity(

@@ -1,6 +1,7 @@
 import 'package:demo_flutter/medium_clap.dart';
 import 'package:demo_flutter/music_player/music_player.dart';
 import 'package:demo_flutter/restaurant_animation.dart';
+import 'package:demo_flutter/restaurant_animation2.dart';
 import 'package:flutter/material.dart';
 import 'detail_info.dart';
 import 'english_word_list.dart';
@@ -57,7 +58,7 @@ class MainScreen extends StatelessWidget {
               _buildButton(context, 'Medium clap screen', new MediumClap()),
 
               new Container(height: 15.0,),
-              _buildButton(context, 'Restaurant animation screen', new RestaurantAnimation())
+              _buildButton(context, 'Restaurant animation screen', new RestaurantAnimation2())
 
             ],
           )

@@ -48,6 +48,15 @@ flutter:
     - images/ic_book.png
     - images/ic_clock.png
     - images/ic_cancel.png
+    - images/flan.png
+    - images/curry.png
+    - images/salad.png
+    - images/chicken.png
+    - images/ic_cake.png
+    - images/ic_car.png
+    - images/ic_coffee.png
+    - images/ic_cook.png
+    - images/ic_restaurant.png
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.io/assets-and-images/#resolution-aware.
