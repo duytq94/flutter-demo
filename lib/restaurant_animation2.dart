@@ -30,27 +30,45 @@ class RestaurantAnimationScreen2 extends StatefulWidget {
 
 class RestaurantAnimationScreenState2 extends State<RestaurantAnimationScreen2> with TickerProviderStateMixin {
   AnimationController animControlPhrase1;
-  Animation comeUpPlateAnim1, comeUpPlateAnim2, comeUpPlateAnim3, fadeInPlateAnim1, fadeInPlateAnim2, fadeInPlateAnim3;
+  Animation comeUpPlateAnim1,
+      comeUpPlateAnim2,
+      comeUpPlateAnim3,
+      fadeInPlateAnim1,
+      fadeInPlateAnim2,
+      fadeInPlateAnim3,
+      comeUpBtnBottomMenuAnim1,
+      comeUpBtnBottomMenuAnim2,
+      comeUpBtnBottomMenuAnim3,
+      comeUpBtnBottomMenuAnim4,
+      comeUpBtnBottomMenuAnim5,
+      fadeInBtnBottomMenuAnim1,
+      fadeInBtnBottomMenuAnim2,
+      fadeInBtnBottomMenuAnim3,
+      fadeInBtnBottomMenuAnim4,
+      fadeInBtnBottomMenuAnim5,
+      fadeInTextBottomMenuAnim;
+
+  double thresholdBtnBottomMenu1 = 40.0, thresholdBtnBottomMenu2 = 50.0;
 
   @override
   void initState() {
     super.initState();
 
     // Animation phrase 1
-    animControlPhrase1 = new AnimationController(vsync: this, duration: new Duration(milliseconds: 2500));
+    animControlPhrase1 = new AnimationController(vsync: this, duration: new Duration(milliseconds: 1300));
 
     comeUpPlateAnim1 = new Tween(begin: 0.0, end: 20.0)
-        .animate(new CurvedAnimation(parent: animControlPhrase1, curve: new Interval(0.1, 0.4)));
+        .animate(new CurvedAnimation(parent: animControlPhrase1, curve: new Interval(0.1, 0.6)));
     comeUpPlateAnim1.addListener(() {
       setState(() {});
     });
     comeUpPlateAnim2 = new Tween(begin: 0.0, end: 40.0)
-        .animate(new CurvedAnimation(parent: animControlPhrase1, curve: new Interval(0.2, 0.5)));
+        .animate(new CurvedAnimation(parent: animControlPhrase1, curve: new Interval(0.2, 0.7)));
     comeUpPlateAnim2.addListener(() {
       setState(() {});
     });
     comeUpPlateAnim3 = new Tween(begin: 0.0, end: 20.0)
-        .animate(new CurvedAnimation(parent: animControlPhrase1, curve: new Interval(0.3, 0.6)));
+        .animate(new CurvedAnimation(parent: animControlPhrase1, curve: new Interval(0.4, 1.0)));
     comeUpPlateAnim3.addListener(() {
       setState(() {});
     });
@@ -73,6 +91,64 @@ class RestaurantAnimationScreenState2 extends State<RestaurantAnimationScreen2> 
       setState(() {});
     });
 
+    comeUpBtnBottomMenuAnim1 = new Tween(begin: 0.0, end: 60.0)
+        .animate(new CurvedAnimation(parent: animControlPhrase1, curve: new Interval(0.3, 0.7)));
+    comeUpBtnBottomMenuAnim1.addListener(() {
+      setState(() {});
+    });
+    comeUpBtnBottomMenuAnim2 = new Tween(begin: 0.0, end: 60.0)
+        .animate(new CurvedAnimation(parent: animControlPhrase1, curve: new Interval(0.35, 0.75)));
+    comeUpBtnBottomMenuAnim2.addListener(() {
+      setState(() {});
+    });
+    comeUpBtnBottomMenuAnim3 = new Tween(begin: 0.0, end: 60.0)
+        .animate(new CurvedAnimation(parent: animControlPhrase1, curve: new Interval(0.4, 0.8)));
+    comeUpBtnBottomMenuAnim3.addListener(() {
+      setState(() {});
+    });
+    comeUpBtnBottomMenuAnim4 = new Tween(begin: 0.0, end: 60.0)
+        .animate(new CurvedAnimation(parent: animControlPhrase1, curve: new Interval(0.45, 0.85)));
+    comeUpBtnBottomMenuAnim4.addListener(() {
+      setState(() {});
+    });
+    comeUpBtnBottomMenuAnim5 = new Tween(begin: 0.0, end: 60.0)
+        .animate(new CurvedAnimation(parent: animControlPhrase1, curve: new Interval(0.5, 0.9)));
+    comeUpBtnBottomMenuAnim5.addListener(() {
+      setState(() {});
+    });
+
+    fadeInTextBottomMenuAnim = new Tween(begin: 0.0, end: 1.0)
+        .animate(new CurvedAnimation(parent: animControlPhrase1, curve: new Interval(0.4, 0.7)));
+    fadeInTextBottomMenuAnim.addListener(() {
+      setState(() {});
+    });
+
+    fadeInBtnBottomMenuAnim1 = new Tween(begin: 0.0, end: 1.0)
+        .animate(new CurvedAnimation(parent: animControlPhrase1, curve: new Interval(0.2, 0.5)));
+    fadeInBtnBottomMenuAnim1.addListener(() {
+      setState(() {});
+    });
+    fadeInBtnBottomMenuAnim2 = new Tween(begin: 0.0, end: 1.0)
+        .animate(new CurvedAnimation(parent: animControlPhrase1, curve: new Interval(0.3, 0.5)));
+    fadeInBtnBottomMenuAnim2.addListener(() {
+      setState(() {});
+    });
+    fadeInBtnBottomMenuAnim3 = new Tween(begin: 0.0, end: 1.0)
+        .animate(new CurvedAnimation(parent: animControlPhrase1, curve: new Interval(0.3, 0.5)));
+    fadeInBtnBottomMenuAnim3.addListener(() {
+      setState(() {});
+    });
+    fadeInBtnBottomMenuAnim4 = new Tween(begin: 0.0, end: 1.0)
+        .animate(new CurvedAnimation(parent: animControlPhrase1, curve: new Interval(0.3, 0.5)));
+    fadeInBtnBottomMenuAnim4.addListener(() {
+      setState(() {});
+    });
+    fadeInBtnBottomMenuAnim5 = new Tween(begin: 0.0, end: 1.0)
+        .animate(new CurvedAnimation(parent: animControlPhrase1, curve: new Interval(0.3, 0.5)));
+    fadeInBtnBottomMenuAnim5.addListener(() {
+      setState(() {});
+    });
+
     animControlPhrase1.forward();
   }
 
@@ -84,8 +160,18 @@ class RestaurantAnimationScreenState2 extends State<RestaurantAnimationScreen2> 
 
   Future<bool> onWillPopScope() {
     Navigator.pop(context);
-    Navigator.push(context, new MaterialPageRoute(builder: (context) => new RestaurantAnimation()));
+//    Navigator.push(context, new MaterialPageRoute(builder: (context) => new RestaurantAnimation()));
     return new Future.value(false);
+  }
+
+  double processMarginBottomMenu(double value) {
+    if (value < thresholdBtnBottomMenu1) {
+      return value;
+    } else if (value < thresholdBtnBottomMenu2) {
+      return value = thresholdBtnBottomMenu1 - (value - thresholdBtnBottomMenu1);
+    } else {
+      return value = 80 - thresholdBtnBottomMenu2 + (value - thresholdBtnBottomMenu2);
+    }
   }
 
   Widget renderTabMenu() {
@@ -136,88 +222,110 @@ class RestaurantAnimationScreenState2 extends State<RestaurantAnimationScreen2> 
   }
 
   Widget renderBtnBottomMenu() {
+    double value1 = 0.0, value2 = 0.0, value3 = 0.0, value4 = 0.0, value5 = 0.0;
+    value1 = processMarginBottomMenu(comeUpBtnBottomMenuAnim1.value);
+    value2 = processMarginBottomMenu(comeUpBtnBottomMenuAnim2.value);
+    value3 = processMarginBottomMenu(comeUpBtnBottomMenuAnim3.value);
+    value4 = processMarginBottomMenu(comeUpBtnBottomMenuAnim4.value);
+    value5 = processMarginBottomMenu(comeUpBtnBottomMenuAnim5.value);
+
     return new Container(
       child: new Row(
         children: <Widget>[
-          new Container(
-            child: new RawMaterialButton(
-              onPressed: () {},
-              child: new Image.asset(
-                'images/ic_restaurant.png',
-                width: 40.0,
-                height: 40.0,
+          new Opacity(
+            child: new Container(
+              child: new RawMaterialButton(
+                onPressed: () {},
+                child: new Image.asset(
+                  'images/ic_restaurant.png',
+                  width: 40.0,
+                  height: 40.0,
+                ),
+                constraints: new BoxConstraints(),
+                highlightColor: Colors.transparent,
+                splashColor: Colors.transparent,
               ),
-              constraints: new BoxConstraints(),
-              highlightColor: Colors.transparent,
-              splashColor: Colors.transparent,
+              margin: new EdgeInsets.only(bottom: value1),
+              width: 40.0,
+              height: 40.0,
             ),
-            margin: new EdgeInsets.only(bottom: 0.0),
-            width: 40.0,
-            height: 40.0,
+            opacity: fadeInBtnBottomMenuAnim1.value,
           ),
-          new Container(
-            child: new RawMaterialButton(
-              onPressed: () {},
-              child: new Image.asset(
-                'images/ic_cake.png',
-                width: 40.0,
-                height: 40.0,
+          new Opacity(
+            child: new Container(
+              child: new RawMaterialButton(
+                onPressed: () {},
+                child: new Image.asset(
+                  'images/ic_cake.png',
+                  width: 40.0,
+                  height: 40.0,
+                ),
+                constraints: new BoxConstraints(),
+                highlightColor: Colors.transparent,
+                splashColor: Colors.transparent,
               ),
-              constraints: new BoxConstraints(),
-              highlightColor: Colors.transparent,
-              splashColor: Colors.transparent,
+              margin: new EdgeInsets.only(bottom: value2),
+              width: 40.0,
+              height: 40.0,
             ),
-            margin: new EdgeInsets.only(bottom: 0.0),
-            width: 40.0,
-            height: 40.0,
+            opacity: fadeInBtnBottomMenuAnim2.value,
           ),
-          new Container(
-            child: new RawMaterialButton(
-              onPressed: () {},
-              child: new Image.asset(
-                'images/ic_car.png',
-                width: 40.0,
-                height: 40.0,
+          new Opacity(
+            child: new Container(
+              child: new RawMaterialButton(
+                onPressed: () {},
+                child: new Image.asset(
+                  'images/ic_car.png',
+                  width: 40.0,
+                  height: 40.0,
+                ),
+                constraints: new BoxConstraints(),
+                highlightColor: Colors.transparent,
+                splashColor: Colors.transparent,
               ),
-              constraints: new BoxConstraints(),
-              highlightColor: Colors.transparent,
-              splashColor: Colors.transparent,
+              margin: new EdgeInsets.only(bottom: value3),
+              width: 40.0,
+              height: 40.0,
             ),
-            margin: new EdgeInsets.only(bottom: 0.0),
-            width: 40.0,
-            height: 40.0,
+            opacity: fadeInBtnBottomMenuAnim3.value,
           ),
-          new Container(
-            child: new RawMaterialButton(
-              onPressed: () {},
-              child: new Image.asset(
-                'images/ic_coffee.png',
-                width: 40.0,
-                height: 40.0,
+          new Opacity(
+            child: new Container(
+              child: new RawMaterialButton(
+                onPressed: () {},
+                child: new Image.asset(
+                  'images/ic_coffee.png',
+                  width: 40.0,
+                  height: 40.0,
+                ),
+                constraints: new BoxConstraints(),
+                highlightColor: Colors.transparent,
+                splashColor: Colors.transparent,
               ),
-              constraints: new BoxConstraints(),
-              highlightColor: Colors.transparent,
-              splashColor: Colors.transparent,
+              margin: new EdgeInsets.only(bottom: value4),
+              width: 40.0,
+              height: 40.0,
             ),
-            margin: new EdgeInsets.only(bottom: 0.0),
-            width: 40.0,
-            height: 40.0,
+            opacity: fadeInBtnBottomMenuAnim4.value,
           ),
-          new Container(
-            child: new RawMaterialButton(
-              onPressed: () {},
-              child: new Image.asset(
-                'images/ic_cook.png',
-                width: 40.0,
-                height: 40.0,
+          new Opacity(
+            child: new Container(
+              child: new RawMaterialButton(
+                onPressed: () {},
+                child: new Image.asset(
+                  'images/ic_cook.png',
+                  width: 40.0,
+                  height: 40.0,
+                ),
+                constraints: new BoxConstraints(),
+                highlightColor: Colors.transparent,
+                splashColor: Colors.transparent,
               ),
-              constraints: new BoxConstraints(),
-              highlightColor: Colors.transparent,
-              splashColor: Colors.transparent,
+              margin: new EdgeInsets.only(bottom: value5),
+              width: 40.0,
+              height: 40.0,
             ),
-            margin: new EdgeInsets.only(bottom: 0.0),
-            width: 40.0,
-            height: 40.0,
+            opacity: fadeInBtnBottomMenuAnim5.value,
           ),
         ],
         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
@@ -269,7 +377,7 @@ class RestaurantAnimationScreenState2 extends State<RestaurantAnimationScreen2> 
           ),
         ],
       ),
-      margin: new EdgeInsets.only(left: 25.0, right: 25.0, bottom: 0.0),
+      margin: new EdgeInsets.only(left: 25.0, right: 25.0, bottom: 20.0),
       height: 20.0,
     );
   }
@@ -419,7 +527,7 @@ class RestaurantAnimationScreenState2 extends State<RestaurantAnimationScreen2> 
 
               // Button bottom menu
               new Positioned(
-                child: new Opacity(opacity: 1.0, child: renderBtnBottomMenu()),
+                child: renderBtnBottomMenu(),
                 bottom: 0.0,
                 left: 0.0,
                 right: 0.0,
@@ -427,7 +535,7 @@ class RestaurantAnimationScreenState2 extends State<RestaurantAnimationScreen2> 
 
               // Text bottom menu
               new Positioned(
-                child: new Opacity(opacity: 1.0, child: renderTextBottomMenu()),
+                child: new Opacity(opacity: fadeInTextBottomMenuAnim.value, child: renderTextBottomMenu()),
                 bottom: 0.0,
                 left: 0.0,
                 right: 0.0,
