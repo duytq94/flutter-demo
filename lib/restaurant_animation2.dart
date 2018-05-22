@@ -55,12 +55,14 @@ class RestaurantAnimationScreenState2 extends State<RestaurantAnimationScreen2> 
       thresholdSizeBtnPlate2 = 30.0;
   bool isBtnPlatePressed = false, isCircleAddPressed = false;
 
+  int quantity = 1;
+
   @override
   void initState() {
     super.initState();
 
     // Animation phrase 1
-    animControlPhrase1 = new AnimationController(vsync: this, duration: new Duration(milliseconds: 1300));
+    animControlPhrase1 = new AnimationController(vsync: this, duration: new Duration(milliseconds: 1200));
 
     comeUpPlateAnim1 = new Tween(begin: 0.0, end: 20.0)
         .animate(new CurvedAnimation(parent: animControlPhrase1, curve: new Interval(0.2, 0.7)));
@@ -157,7 +159,7 @@ class RestaurantAnimationScreenState2 extends State<RestaurantAnimationScreen2> 
     animControlPhrase1.forward();
 
     // Animation phrase 2
-    animControlPhrase2 = new AnimationController(vsync: this, duration: new Duration(milliseconds: 800));
+    animControlPhrase2 = new AnimationController(vsync: this, duration: new Duration(milliseconds: 700));
     fadeOutPlateAnim = new Tween(begin: 0.0, end: 1.0)
         .animate(new CurvedAnimation(parent: animControlPhrase2, curve: new Interval(0.0, 1.0)));
     fadeOutPlateAnim.addListener(() {
@@ -170,7 +172,7 @@ class RestaurantAnimationScreenState2 extends State<RestaurantAnimationScreen2> 
     });
 
     // Animation phrase 3
-    animControlPhrase3 = new AnimationController(vsync: this, duration: new Duration(milliseconds: 800));
+    animControlPhrase3 = new AnimationController(vsync: this, duration: new Duration(milliseconds: 700));
     zoomPlateAnim2 = new Tween(begin: 0.0, end: 40.0)
         .animate(new CurvedAnimation(parent: animControlPhrase3, curve: new Interval(0.0, 1.0)));
     zoomPlateAnim2.addListener(() {
@@ -182,6 +184,8 @@ class RestaurantAnimationScreenState2 extends State<RestaurantAnimationScreen2> 
   void dispose() {
     super.dispose();
     animControlPhrase1.dispose();
+    animControlPhrase2.dispose();
+    animControlPhrase3.dispose();
   }
 
   Future<bool> onWillPopScope() {
@@ -327,7 +331,7 @@ class RestaurantAnimationScreenState2 extends State<RestaurantAnimationScreen2> 
                                                 onTapDown: (tapDownDetail) {},
                                               ),
                                               new Text(
-                                                '1',
+                                                quantity.toString(),
                                                 style: new TextStyle(fontWeight: FontWeight.bold, color: Colors.black),
                                               ),
                                               new GestureDetector(
@@ -361,8 +365,8 @@ class RestaurantAnimationScreenState2 extends State<RestaurantAnimationScreen2> 
                             children: <Widget>[
                               new Image.asset(
                                 'images/ic_red_circle.png',
-                                width: isBtnPlatePressed ? 40.0 - value / 4 : 40.0 - value2 / 4,
-                                height: isBtnPlatePressed ? 40.0 - value / 4 : 40.0 - value2 / 4,
+                                width: isBtnPlatePressed ? 40.0 - value / 2 : 40.0 - value2 / 2,
+                                height: isBtnPlatePressed ? 40.0 - value / 2 : 40.0 - value2 / 2,
                               ),
                               new Positioned(
                                 child: new Text(
@@ -378,6 +382,7 @@ class RestaurantAnimationScreenState2 extends State<RestaurantAnimationScreen2> 
                             ],
                           ),
                           right: isBtnPlatePressed ? 10.0 + value / 2 : 10.0 + value2 / 2,
+                          top: isBtnPlatePressed ? value / 2 : value2 / 2,
                         )
                       ],
                     ),
@@ -437,7 +442,7 @@ class RestaurantAnimationScreenState2 extends State<RestaurantAnimationScreen2> 
                               )
                             ],
                           ),
-                          right: 0.0,
+                          right: 10.0,
                         )
                       ],
                     ),
@@ -582,7 +587,6 @@ class RestaurantAnimationScreenState2 extends State<RestaurantAnimationScreen2> 
           )
         ],
       ),
-//                          decoration: new BoxDecoration(color: Colors.blue),
       height: 200.0,
       margin: new EdgeInsets.only(top: 170.0),
     );
@@ -676,7 +680,6 @@ class RestaurantAnimationScreenState2 extends State<RestaurantAnimationScreen2> 
           )
         ],
       ),
-//                          decoration: new BoxDecoration(color: Colors.amber),
       height: 150.0,
       margin: new EdgeInsets.only(top: 350.0),
     );
@@ -849,6 +852,7 @@ class RestaurantAnimationScreenState2 extends State<RestaurantAnimationScreen2> 
   }
 
   void onCircleAddPressed(tapDownDetails) {
+    quantity++;
     isCircleAddPressed = true;
     animControlPhrase3.forward();
   }
