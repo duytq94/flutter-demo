@@ -47,13 +47,13 @@ class RestaurantAnimationScreenState2 extends State<RestaurantAnimationScreen2> 
       fadeInBtnBottomMenuAnim4,
       fadeInBtnBottomMenuAnim5,
       fadeInTextBottomMenuAnim;
-  Animation zoomPlateAnim, fadeOutPlateAnim;
+  Animation zoomPlateAnim1, zoomPlateAnim2, fadeOutPlateAnim;
 
   double thresholdBtnBottomMenu1 = 40.0,
       thresholdBtnBottomMenu2 = 50.0,
       thresholdSizeBtnPlate1 = 10.0,
       thresholdSizeBtnPlate2 = 30.0;
-  bool isBtnPlatePressed = false;
+  bool isBtnPlatePressed = false, isCircleAddPressed = false;
 
   @override
   void initState() {
@@ -63,12 +63,12 @@ class RestaurantAnimationScreenState2 extends State<RestaurantAnimationScreen2> 
     animControlPhrase1 = new AnimationController(vsync: this, duration: new Duration(milliseconds: 1300));
 
     comeUpPlateAnim1 = new Tween(begin: 0.0, end: 20.0)
-        .animate(new CurvedAnimation(parent: animControlPhrase1, curve: new Interval(0.1, 0.6)));
+        .animate(new CurvedAnimation(parent: animControlPhrase1, curve: new Interval(0.2, 0.7)));
     comeUpPlateAnim1.addListener(() {
       setState(() {});
     });
     comeUpPlateAnim2 = new Tween(begin: 0.0, end: 40.0)
-        .animate(new CurvedAnimation(parent: animControlPhrase1, curve: new Interval(0.2, 0.7)));
+        .animate(new CurvedAnimation(parent: animControlPhrase1, curve: new Interval(0.3, 0.8)));
     comeUpPlateAnim2.addListener(() {
       setState(() {});
     });
@@ -79,25 +79,25 @@ class RestaurantAnimationScreenState2 extends State<RestaurantAnimationScreen2> 
     });
 
     fadeInPlateAnim1 = new Tween(begin: 0.0, end: 1.0)
-        .animate(new CurvedAnimation(parent: animControlPhrase1, curve: new Interval(0.1, 0.4)));
+        .animate(new CurvedAnimation(parent: animControlPhrase1, curve: new Interval(0.2, 0.5)));
     fadeInPlateAnim1.addListener(() {
       setState(() {});
     });
 
     fadeInPlateAnim2 = new Tween(begin: 0.0, end: 1.0)
-        .animate(new CurvedAnimation(parent: animControlPhrase1, curve: new Interval(0.2, 0.5)));
+        .animate(new CurvedAnimation(parent: animControlPhrase1, curve: new Interval(0.3, 0.6)));
     fadeInPlateAnim2.addListener(() {
       setState(() {});
     });
 
     fadeInPlateAnim3 = new Tween(begin: 0.0, end: 1.0)
-        .animate(new CurvedAnimation(parent: animControlPhrase1, curve: new Interval(0.3, 0.6)));
+        .animate(new CurvedAnimation(parent: animControlPhrase1, curve: new Interval(0.4, 1.0)));
     fadeInPlateAnim3.addListener(() {
       setState(() {});
     });
 
     comeUpBtnBottomMenuAnim1 = new Tween(begin: 0.0, end: 60.0)
-        .animate(new CurvedAnimation(parent: animControlPhrase1, curve: new Interval(0.3, 0.7)));
+        .animate(new CurvedAnimation(parent: animControlPhrase1, curve: new Interval(0.4, 0.8)));
     comeUpBtnBottomMenuAnim1.addListener(() {
       setState(() {});
     });
@@ -157,20 +157,25 @@ class RestaurantAnimationScreenState2 extends State<RestaurantAnimationScreen2> 
     animControlPhrase1.forward();
 
     // Animation phrase 2
-    animControlPhrase2 = new AnimationController(vsync: this, duration: new Duration(milliseconds: 1300));
+    animControlPhrase2 = new AnimationController(vsync: this, duration: new Duration(milliseconds: 800));
     fadeOutPlateAnim = new Tween(begin: 0.0, end: 1.0)
         .animate(new CurvedAnimation(parent: animControlPhrase2, curve: new Interval(0.0, 1.0)));
     fadeOutPlateAnim.addListener(() {
       setState(() {});
     });
-    zoomPlateAnim = new Tween(begin: 0.0, end: 40.0)
+    zoomPlateAnim1 = new Tween(begin: 0.0, end: 40.0)
         .animate(new CurvedAnimation(parent: animControlPhrase2, curve: new Interval(0.0, 1.0)));
-    zoomPlateAnim.addListener(() {
+    zoomPlateAnim1.addListener(() {
       setState(() {});
     });
 
-    //
-    animControlPhrase3 = new AnimationController(vsync: this, duration: new Duration(milliseconds: 1300));
+    // Animation phrase 3
+    animControlPhrase3 = new AnimationController(vsync: this, duration: new Duration(milliseconds: 800));
+    zoomPlateAnim2 = new Tween(begin: 0.0, end: 40.0)
+        .animate(new CurvedAnimation(parent: animControlPhrase3, curve: new Interval(0.0, 1.0)));
+    zoomPlateAnim2.addListener(() {
+      setState(() {});
+    });
   }
 
   @override
@@ -261,7 +266,12 @@ class RestaurantAnimationScreenState2 extends State<RestaurantAnimationScreen2> 
   Widget renderPlateLine1() {
     double value = 0.0;
     if (isBtnPlatePressed) {
-      value = processSizeBtnTable(zoomPlateAnim.value);
+      value = processSizeBtnTable(zoomPlateAnim1.value);
+    }
+
+    double value2 = 0.0;
+    if (isCircleAddPressed) {
+      value = processSizeBtnTable(zoomPlateAnim2.value);
     }
 
     return new Container(
@@ -300,8 +310,8 @@ class RestaurantAnimationScreenState2 extends State<RestaurantAnimationScreen2> 
                                       new Center(
                                         child: new Image.asset(
                                           'images/ic_white_circle.png',
-                                          width: 130.0 - value,
-                                          height: 130.0 - value,
+                                          width: isBtnPlatePressed ? 130.0 - value : 130.0 - value2,
+                                          height: isBtnPlatePressed ? 130.0 - value : 130.0 - value2,
                                         ),
                                       ),
                                       new Center(
@@ -318,7 +328,7 @@ class RestaurantAnimationScreenState2 extends State<RestaurantAnimationScreen2> 
                                               ),
                                               new Text(
                                                 '1',
-                                                style: new TextStyle(fontWeight: FontWeight.bold),
+                                                style: new TextStyle(fontWeight: FontWeight.bold, color: Colors.black),
                                               ),
                                               new GestureDetector(
                                                 child: new Image.asset(
@@ -342,6 +352,7 @@ class RestaurantAnimationScreenState2 extends State<RestaurantAnimationScreen2> 
                             ),
                           ),
                           width: 140.0,
+                          height: 140.0,
                         ),
 
                         // Icon price
@@ -350,21 +361,23 @@ class RestaurantAnimationScreenState2 extends State<RestaurantAnimationScreen2> 
                             children: <Widget>[
                               new Image.asset(
                                 'images/ic_red_circle.png',
-                                width: 40.0 - value / 4,
-                                height: 40.0 - value / 4,
+                                width: isBtnPlatePressed ? 40.0 - value / 4 : 40.0 - value2 / 4,
+                                height: isBtnPlatePressed ? 40.0 - value / 4 : 40.0 - value2 / 4,
                               ),
                               new Positioned(
                                 child: new Text(
                                   '\$16',
                                   style: new TextStyle(
-                                      fontWeight: FontWeight.bold, fontSize: 10.0 - value / 4, color: Colors.white),
+                                      fontWeight: FontWeight.bold,
+                                      fontSize: isBtnPlatePressed ? 10.0 - value / 4 : 10.0 - value2 / 4,
+                                      color: Colors.white),
                                 ),
                                 right: 10.0,
                                 top: 10.0,
                               )
                             ],
                           ),
-                          right: 0.0,
+                          right: isBtnPlatePressed ? 10.0 + value / 2 : 10.0 + value2 / 2,
                         )
                       ],
                     ),
@@ -392,14 +405,18 @@ class RestaurantAnimationScreenState2 extends State<RestaurantAnimationScreen2> 
                   new Container(
                     child: new Stack(
                       children: <Widget>[
-                        new FlatButton(
-                          onPressed: () {},
-                          padding: new EdgeInsets.all(0.0),
-                          child: new Image.asset(
-                            'images/curry.png',
-                            width: 130.0,
-                            height: 130.0,
+                        new Container(
+                          child: new FlatButton(
+                            onPressed: () {},
+                            padding: new EdgeInsets.all(0.0),
+                            child: new Image.asset(
+                              'images/curry.png',
+                              width: 130.0,
+                              height: 130.0,
+                            ),
                           ),
+                          width: 140.0,
+                          height: 140.0,
                         ),
                         new Positioned(
                           child: new Stack(
@@ -832,6 +849,7 @@ class RestaurantAnimationScreenState2 extends State<RestaurantAnimationScreen2> 
   }
 
   void onCircleAddPressed(tapDownDetails) {
+    isCircleAddPressed = true;
     animControlPhrase3.forward();
   }
 
