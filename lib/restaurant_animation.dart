@@ -24,7 +24,7 @@ class RestaurantAnimationScreenState extends State<RestaurantAnimationScreen> wi
   AnimationController animControlPhrase1, animControlPhrase2, animControlPhrase3;
   Animation dropDownAnim,
       fadeInViewAnim,
-      zoomBtnAnim,
+      zoomBtnTableAnim,
       fadeOutViewAnim,
       fadeOutTextAnimation,
       fadeInBtnBottomMenuAnim,
@@ -38,8 +38,8 @@ class RestaurantAnimationScreenState extends State<RestaurantAnimationScreen> wi
 
   double thresholdMarginTop1 = 40.0,
       thresholdMarginTop2 = 60.0,
-      thresholdSizeBtn1 = 10.0,
-      thresholdSizeBtn2 = 30.0,
+      thresholdSizeBtnTable1 = 10.0,
+      thresholdSizeBtnTable2 = 30.0,
       thresholdBtnBottomMenu1 = 40.0,
       thresholdBtnBottomMenu2 = 60.0;
 
@@ -68,9 +68,9 @@ class RestaurantAnimationScreenState extends State<RestaurantAnimationScreen> wi
     // Animation phrase 2 (zoom button when be pressed and show up bottom menu)
     animControlPhrase2 = new AnimationController(vsync: this, duration: new Duration(milliseconds: 1500));
 
-    zoomBtnAnim = new Tween(begin: 0.0, end: 40.0)
+    zoomBtnTableAnim = new Tween(begin: 0.0, end: 40.0)
         .animate(new CurvedAnimation(parent: animControlPhrase2, curve: Curves.easeOut));
-    zoomBtnAnim.addListener(() {
+    zoomBtnTableAnim.addListener(() {
       setState(() {});
     });
 
@@ -153,13 +153,13 @@ class RestaurantAnimationScreenState extends State<RestaurantAnimationScreen> wi
   }
 
   // Process size button, zoom out -> zoom in -> zoom out
-  double processSizeBtn(double value) {
+  double processSizeBtnTable(double value) {
     if (value < 10.0) {
       return value;
-    } else if (value < thresholdSizeBtn2) {
-      return value = thresholdSizeBtn2 - thresholdSizeBtn1 - value;
+    } else if (value < thresholdSizeBtnTable2) {
+      return value = thresholdSizeBtnTable2 - thresholdSizeBtnTable1 - value;
     } else {
-      return value = value - (thresholdSizeBtn2 + thresholdSizeBtn1);
+      return value = value - (thresholdSizeBtnTable2 + thresholdSizeBtnTable1);
     }
   }
 
@@ -187,8 +187,8 @@ class RestaurantAnimationScreenState extends State<RestaurantAnimationScreen> wi
   }
 
   void onBtnBottomMenuPressed() {
-    animControlPhrase3.forward();
     isBtnBottomMenuPressed = true;
+    animControlPhrase3.forward();
   }
 
   void navigateNextScreen() {
@@ -455,7 +455,7 @@ class RestaurantAnimationScreenState extends State<RestaurantAnimationScreen> wi
   Widget renderBigTable2(String colorTable, Function onPressed) {
     double value = 0.0;
     if (isBtnTablePressed) {
-      value = processSizeBtn(zoomBtnAnim.value);
+      value = processSizeBtnTable(zoomBtnTableAnim.value);
     }
 
     return new FlatButton(

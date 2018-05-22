@@ -61,6 +61,9 @@ flutter:
     - images/ic_cook.png
     - images/ic_restaurant.png
     - images/shadow_white.png
+    - images/ic_white_circle.png
+    - images/ic_add_circle.png
+    - images/ic_remove_circle.png
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.io/assets-and-images/#resolution-aware.

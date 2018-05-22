@@ -29,7 +29,7 @@ class RestaurantAnimationScreen2 extends StatefulWidget {
 }
 
 class RestaurantAnimationScreenState2 extends State<RestaurantAnimationScreen2> with TickerProviderStateMixin {
-  AnimationController animControlPhrase1;
+  AnimationController animControlPhrase1, animControlPhrase2, animControlPhrase3;
   Animation comeUpPlateAnim1,
       comeUpPlateAnim2,
       comeUpPlateAnim3,
@@ -47,8 +47,13 @@ class RestaurantAnimationScreenState2 extends State<RestaurantAnimationScreen2> 
       fadeInBtnBottomMenuAnim4,
       fadeInBtnBottomMenuAnim5,
       fadeInTextBottomMenuAnim;
+  Animation zoomPlateAnim, fadeOutPlateAnim;
 
-  double thresholdBtnBottomMenu1 = 40.0, thresholdBtnBottomMenu2 = 50.0;
+  double thresholdBtnBottomMenu1 = 40.0,
+      thresholdBtnBottomMenu2 = 50.0,
+      thresholdSizeBtnPlate1 = 10.0,
+      thresholdSizeBtnPlate2 = 30.0;
+  bool isBtnPlatePressed = false;
 
   @override
   void initState() {
@@ -150,6 +155,22 @@ class RestaurantAnimationScreenState2 extends State<RestaurantAnimationScreen2> 
     });
 
     animControlPhrase1.forward();
+
+    // Animation phrase 2
+    animControlPhrase2 = new AnimationController(vsync: this, duration: new Duration(milliseconds: 1300));
+    fadeOutPlateAnim = new Tween(begin: 0.0, end: 1.0)
+        .animate(new CurvedAnimation(parent: animControlPhrase2, curve: new Interval(0.0, 1.0)));
+    fadeOutPlateAnim.addListener(() {
+      setState(() {});
+    });
+    zoomPlateAnim = new Tween(begin: 0.0, end: 40.0)
+        .animate(new CurvedAnimation(parent: animControlPhrase2, curve: new Interval(0.0, 1.0)));
+    zoomPlateAnim.addListener(() {
+      setState(() {});
+    });
+
+    //
+    animControlPhrase3 = new AnimationController(vsync: this, duration: new Duration(milliseconds: 1300));
   }
 
   @override
@@ -234,11 +255,15 @@ class RestaurantAnimationScreenState2 extends State<RestaurantAnimationScreen2> 
               renderPlateLine3(),
             ],
           ),
-//                    decoration: new BoxDecoration(color: Colors.red),
         ));
   }
 
   Widget renderPlateLine1() {
+    double value = 0.0;
+    if (isBtnPlatePressed) {
+      value = processSizeBtnTable(zoomPlateAnim.value);
+    }
+
     return new Container(
       child: new Row(
         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
@@ -251,28 +276,88 @@ class RestaurantAnimationScreenState2 extends State<RestaurantAnimationScreen2> 
                   new Container(
                     child: new Stack(
                       children: <Widget>[
-                        new FlatButton(
-                          onPressed: () {},
-                          padding: new EdgeInsets.all(0.0),
-                          child: new Image.asset(
-                            'images/flan.png',
-                            width: 130.0,
-                            height: 130.0,
+                        new Container(
+                          child: new FlatButton(
+                            onPressed: !isBtnPlatePressed ? onBtnPlatePressed : null,
+                            highlightColor: Colors.transparent,
+                            splashColor: Colors.transparent,
+                            padding: new EdgeInsets.all(0.0),
+                            child: new Stack(
+                              children: <Widget>[
+                                // Photo food
+                                new Center(
+                                  child: new Image.asset(
+                                    'images/flan.png',
+                                    width: 130.0 - value,
+                                    height: 130.0 - value,
+                                  ),
+                                ),
+
+                                // Photo white circle cover
+                                new Opacity(
+                                  child: new Stack(
+                                    children: <Widget>[
+                                      new Center(
+                                        child: new Image.asset(
+                                          'images/ic_white_circle.png',
+                                          width: 130.0 - value,
+                                          height: 130.0 - value,
+                                        ),
+                                      ),
+                                      new Center(
+                                        child: new Container(
+                                          child: new Row(
+                                            children: <Widget>[
+                                              new GestureDetector(
+                                                child: new Image.asset(
+                                                  'images/ic_remove_circle.png',
+                                                  width: 20.0,
+                                                  height: 20.0,
+                                                ),
+                                                onTapDown: (tapDownDetail) {},
+                                              ),
+                                              new Text(
+                                                '1',
+                                                style: new TextStyle(fontWeight: FontWeight.bold),
+                                              ),
+                                              new GestureDetector(
+                                                child: new Image.asset(
+                                                  'images/ic_add_circle.png',
+                                                  width: 20.0,
+                                                  height: 20.0,
+                                                ),
+                                                onTapDown: onCircleAddPressed,
+                                              )
+                                            ],
+                                            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                                          ),
+                                          height: 130.0,
+                                        ),
+                                      )
+                                    ],
+                                  ),
+                                  opacity: fadeOutPlateAnim.value,
+                                )
+                              ],
+                            ),
                           ),
+                          width: 140.0,
                         ),
+
+                        // Icon price
                         new Positioned(
                           child: new Stack(
                             children: <Widget>[
                               new Image.asset(
                                 'images/ic_red_circle.png',
-                                width: 40.0,
-                                height: 40.0,
+                                width: 40.0 - value / 4,
+                                height: 40.0 - value / 4,
                               ),
                               new Positioned(
                                 child: new Text(
                                   '\$16',
-                                  style:
-                                      new TextStyle(fontWeight: FontWeight.bold, fontSize: 10.0, color: Colors.white),
+                                  style: new TextStyle(
+                                      fontWeight: FontWeight.bold, fontSize: 10.0 - value / 4, color: Colors.white),
                                 ),
                                 right: 10.0,
                                 top: 10.0,
@@ -294,8 +379,7 @@ class RestaurantAnimationScreenState2 extends State<RestaurantAnimationScreen2> 
                 ],
               ),
               margin: new EdgeInsets.only(bottom: 20.0 + comeUpPlateAnim1.value),
-              height: 160.0,
-//                                  decoration: new BoxDecoration(color: Colors.cyan),
+              height: 180.0,
             ),
             opacity: fadeInPlateAnim1.value,
           ),
@@ -351,15 +435,13 @@ class RestaurantAnimationScreenState2 extends State<RestaurantAnimationScreen2> 
                 ],
               ),
               margin: new EdgeInsets.only(bottom: 0.0 + comeUpPlateAnim2.value),
-              height: 160.0,
-//                                  decoration: new BoxDecoration(color: Colors.cyan),
+              height: 180.0,
             ),
             opacity: fadeInPlateAnim2.value,
           )
         ],
       ),
-//                          decoration: new BoxDecoration(color: Colors.blue),
-      height: 200.0,
+      height: 220.0,
     );
   }
 
@@ -742,6 +824,25 @@ class RestaurantAnimationScreenState2 extends State<RestaurantAnimationScreen2> 
       margin: new EdgeInsets.only(left: 25.0, right: 25.0, bottom: 20.0),
       height: 20.0,
     );
+  }
+
+  void onBtnPlatePressed() {
+    isBtnPlatePressed = true;
+    animControlPhrase2.forward();
+  }
+
+  void onCircleAddPressed(tapDownDetails) {
+    animControlPhrase3.forward();
+  }
+
+  double processSizeBtnTable(double value) {
+    if (value < 10.0) {
+      return value;
+    } else if (value < thresholdSizeBtnPlate2) {
+      return value = thresholdSizeBtnPlate2 - thresholdSizeBtnPlate1 - value;
+    } else {
+      return value = value - (thresholdSizeBtnPlate2 + thresholdSizeBtnPlate1);
+    }
   }
 
   @override
