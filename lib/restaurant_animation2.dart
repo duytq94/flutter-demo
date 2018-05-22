@@ -221,6 +221,368 @@ class RestaurantAnimationScreenState2 extends State<RestaurantAnimationScreen2> 
     );
   }
 
+  Widget renderBodyContent() {
+    return new Positioned(
+        top: 50.0,
+        left: 0.0,
+        right: 0.0,
+        child: new Container(
+          child: new Stack(
+            children: <Widget>[
+              renderPlateLine1(),
+              renderPlateLine2(),
+              renderPlateLine3(),
+            ],
+          ),
+//                    decoration: new BoxDecoration(color: Colors.red),
+        ));
+  }
+
+  Widget renderPlateLine1() {
+    return new Container(
+      child: new Row(
+        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+        children: <Widget>[
+          // Plate 1
+          new Opacity(
+            child: new Container(
+              child: new Column(
+                children: <Widget>[
+                  new Container(
+                    child: new Stack(
+                      children: <Widget>[
+                        new FlatButton(
+                          onPressed: () {},
+                          padding: new EdgeInsets.all(0.0),
+                          child: new Image.asset(
+                            'images/flan.png',
+                            width: 130.0,
+                            height: 130.0,
+                          ),
+                        ),
+                        new Positioned(
+                          child: new Stack(
+                            children: <Widget>[
+                              new Image.asset(
+                                'images/ic_red_circle.png',
+                                width: 40.0,
+                                height: 40.0,
+                              ),
+                              new Positioned(
+                                child: new Text(
+                                  '\$16',
+                                  style:
+                                      new TextStyle(fontWeight: FontWeight.bold, fontSize: 10.0, color: Colors.white),
+                                ),
+                                right: 10.0,
+                                top: 10.0,
+                              )
+                            ],
+                          ),
+                          right: 0.0,
+                        )
+                      ],
+                    ),
+                    margin: new EdgeInsets.only(bottom: 5.0),
+                  ),
+                  new Text('Flan',
+                      style: new TextStyle(
+                        color: new Color(0xFF575869),
+                        fontSize: 14.0,
+                        fontWeight: FontWeight.bold,
+                      )),
+                ],
+              ),
+              margin: new EdgeInsets.only(bottom: 20.0 + comeUpPlateAnim1.value),
+              height: 160.0,
+//                                  decoration: new BoxDecoration(color: Colors.cyan),
+            ),
+            opacity: fadeInPlateAnim1.value,
+          ),
+
+          // Plate 2
+          new Opacity(
+            child: new Container(
+              child: new Column(
+                children: <Widget>[
+                  new Container(
+                    child: new Stack(
+                      children: <Widget>[
+                        new FlatButton(
+                          onPressed: () {},
+                          padding: new EdgeInsets.all(0.0),
+                          child: new Image.asset(
+                            'images/curry.png',
+                            width: 130.0,
+                            height: 130.0,
+                          ),
+                        ),
+                        new Positioned(
+                          child: new Stack(
+                            children: <Widget>[
+                              new Image.asset(
+                                'images/ic_red_circle.png',
+                                width: 40.0,
+                                height: 40.0,
+                              ),
+                              new Positioned(
+                                child: new Text(
+                                  '\$22',
+                                  style:
+                                      new TextStyle(fontWeight: FontWeight.bold, fontSize: 10.0, color: Colors.white),
+                                ),
+                                right: 10.0,
+                                top: 10.0,
+                              )
+                            ],
+                          ),
+                          right: 0.0,
+                        )
+                      ],
+                    ),
+                    margin: new EdgeInsets.only(bottom: 5.0),
+                  ),
+                  new Text('Chicken Curry',
+                      style: new TextStyle(
+                        color: new Color(0xFF575869),
+                        fontSize: 14.0,
+                        fontWeight: FontWeight.bold,
+                      )),
+                ],
+              ),
+              margin: new EdgeInsets.only(bottom: 0.0 + comeUpPlateAnim2.value),
+              height: 160.0,
+//                                  decoration: new BoxDecoration(color: Colors.cyan),
+            ),
+            opacity: fadeInPlateAnim2.value,
+          )
+        ],
+      ),
+//                          decoration: new BoxDecoration(color: Colors.blue),
+      height: 200.0,
+    );
+  }
+
+  Widget renderPlateLine2() {
+    return new Container(
+      child: new Row(
+        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+        children: <Widget>[
+          // Plate 3
+          new Opacity(
+            child: new Container(
+              child: new Column(
+                children: <Widget>[
+                  new Container(
+                    child: new Stack(
+                      children: <Widget>[
+                        new FlatButton(
+                          onPressed: () {},
+                          padding: new EdgeInsets.all(0.0),
+                          child: new Image.asset(
+                            'images/salad.png',
+                            width: 130.0,
+                            height: 130.0,
+                          ),
+                        ),
+                        new Positioned(
+                          child: new Stack(
+                            children: <Widget>[
+                              new Image.asset(
+                                'images/ic_red_circle.png',
+                                width: 40.0,
+                                height: 40.0,
+                              ),
+                              new Positioned(
+                                child: new Text(
+                                  '\$13',
+                                  style:
+                                      new TextStyle(fontWeight: FontWeight.bold, fontSize: 10.0, color: Colors.white),
+                                ),
+                                right: 10.0,
+                                top: 10.0,
+                              )
+                            ],
+                          ),
+                          right: 0.0,
+                        )
+                      ],
+                    ),
+                    margin: new EdgeInsets.only(bottom: 5.0),
+                  ),
+                  new Text('Salmon Salad',
+                      style: new TextStyle(
+                        color: new Color(0xFF575869),
+                        fontSize: 14.0,
+                        fontWeight: FontWeight.bold,
+                      )),
+                ],
+              ),
+              margin: new EdgeInsets.only(bottom: 0.0 + comeUpPlateAnim3.value),
+              height: 160.0,
+//                                  decoration: new BoxDecoration(color: Colors.cyan),
+            ),
+            opacity: fadeInPlateAnim3.value,
+          ),
+
+          // Plate 4
+          new Opacity(
+            child: new Container(
+              child: new Column(
+                children: <Widget>[
+                  new Container(
+                    child: new Stack(
+                      children: <Widget>[
+                        new FlatButton(
+                          onPressed: () {},
+                          padding: new EdgeInsets.all(0.0),
+                          child: new Image.asset(
+                            'images/pizza.png',
+                            width: 130.0,
+                            height: 130.0,
+                          ),
+                        ),
+                        new Positioned(
+                          child: new Stack(
+                            children: <Widget>[
+                              new Image.asset(
+                                'images/ic_red_circle.png',
+                                width: 40.0,
+                                height: 40.0,
+                              ),
+                              new Positioned(
+                                child: new Text(
+                                  '\$25',
+                                  style:
+                                      new TextStyle(fontWeight: FontWeight.bold, fontSize: 10.0, color: Colors.white),
+                                ),
+                                right: 10.0,
+                                top: 10.0,
+                              )
+                            ],
+                          ),
+                          right: 0.0,
+                        )
+                      ],
+                    ),
+                    margin: new EdgeInsets.only(bottom: 5.0),
+                  ),
+                  new Text('Pizza',
+                      style: new TextStyle(
+                        color: new Color(0xFF575869),
+                        fontSize: 14.0,
+                        fontWeight: FontWeight.bold,
+                      )),
+                ],
+              ),
+              margin: new EdgeInsets.only(bottom: 0.0 + comeUpPlateAnim3.value),
+              height: 160.0,
+//                                  decoration: new BoxDecoration(color: Colors.cyan),
+            ),
+            opacity: fadeInPlateAnim3.value,
+          )
+        ],
+      ),
+//                          decoration: new BoxDecoration(color: Colors.blue),
+      height: 200.0,
+      margin: new EdgeInsets.only(top: 170.0),
+    );
+  }
+
+  Widget renderPlateLine3() {
+    return new Container(
+      child: new Row(
+        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+        children: <Widget>[
+          // Plate 5
+          new Opacity(
+            child: new Container(
+              child: new Stack(
+                children: <Widget>[
+                  new FlatButton(
+                    onPressed: () {},
+                    padding: new EdgeInsets.all(0.0),
+                    child: new Image.asset(
+                      'images/chicken.png',
+                      width: 130.0,
+                      height: 130.0,
+                    ),
+                  ),
+                  new Positioned(
+                    child: new Stack(
+                      children: <Widget>[
+                        new Image.asset(
+                          'images/ic_red_circle.png',
+                          width: 40.0,
+                          height: 40.0,
+                        ),
+                        new Positioned(
+                          child: new Text(
+                            '\$20',
+                            style: new TextStyle(fontWeight: FontWeight.bold, fontSize: 10.0, color: Colors.white),
+                          ),
+                          right: 10.0,
+                          top: 10.0,
+                        )
+                      ],
+                    ),
+                    right: 0.0,
+                  )
+                ],
+              ),
+              margin: new EdgeInsets.only(bottom: 0.0 + comeUpPlateAnim3.value),
+            ),
+            opacity: fadeInPlateAnim3.value,
+          ),
+
+          // Plate 6
+          new Opacity(
+            child: new Container(
+              child: new Stack(
+                children: <Widget>[
+                  new FlatButton(
+                    onPressed: () {},
+                    padding: new EdgeInsets.all(0.0),
+                    child: new Image.asset(
+                      'images/salad.png',
+                      width: 130.0,
+                      height: 130.0,
+                    ),
+                  ),
+                  new Positioned(
+                    child: new Stack(
+                      children: <Widget>[
+                        new Image.asset(
+                          'images/ic_red_circle.png',
+                          width: 40.0,
+                          height: 40.0,
+                        ),
+                        new Positioned(
+                          child: new Text(
+                            '\$11',
+                            style: new TextStyle(fontWeight: FontWeight.bold, fontSize: 10.0, color: Colors.white),
+                          ),
+                          right: 10.0,
+                          top: 10.0,
+                        )
+                      ],
+                    ),
+                    right: 0.0,
+                  )
+                ],
+              ),
+              margin: new EdgeInsets.only(bottom: 0.0 + comeUpPlateAnim3.value),
+            ),
+            opacity: fadeInPlateAnim3.value,
+          )
+        ],
+      ),
+//                          decoration: new BoxDecoration(color: Colors.amber),
+      height: 150.0,
+      margin: new EdgeInsets.only(top: 350.0),
+    );
+  }
+
   Widget renderBtnBottomMenu() {
     double value1 = 0.0, value2 = 0.0, value3 = 0.0, value4 = 0.0, value5 = 0.0;
     value1 = processMarginBottomMenu(comeUpBtnBottomMenuAnim1.value);
@@ -388,142 +750,26 @@ class RestaurantAnimationScreenState2 extends State<RestaurantAnimationScreen2> 
         child: new Container(
           width: double.infinity,
           height: double.infinity,
-//          decoration: new BoxDecoration(color: new Color(0xfff8f9fb)),
           child: new Stack(
             children: <Widget>[
               // Tab menu
               renderTabMenu(),
 
               // Body content
+              renderBodyContent(),
+
+              // Cover color
               new Positioned(
-                  top: 70.0,
-                  left: 0.0,
-                  right: 0.0,
-                  child: new Container(
-                    child: new Column(
-                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                      children: <Widget>[
-                        new Container(
-                          // Line 1
-                          child: new Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                            children: <Widget>[
-                              // Plate 1
-                              new Opacity(
-                                child: new Container(
-                                  child: new Column(
-                                    children: <Widget>[
-                                      new Container(
-                                        child: new FlatButton(
-                                          onPressed: () {},
-                                          padding: new EdgeInsets.all(0.0),
-                                          child: new Image.asset(
-                                            'images/flan.png',
-                                            width: 130.0,
-                                            height: 130.0,
-                                          ),
-                                        ),
-                                        margin: new EdgeInsets.only(bottom: 5.0),
-                                      ),
-                                      new Text('Salmon Salad',
-                                          style: new TextStyle(
-                                            color: new Color(0xFF575869),
-                                            fontSize: 14.0,
-                                            fontWeight: FontWeight.bold,
-                                          )),
-                                    ],
-                                  ),
-                                  margin: new EdgeInsets.only(bottom: 20.0 + comeUpPlateAnim1.value),
-                                  height: 160.0,
-//                                  decoration: new BoxDecoration(color: Colors.cyan),
-                                ),
-                                opacity: fadeInPlateAnim1.value,
-                              ),
-
-                              // Plate 2
-                              new Opacity(
-                                child: new Container(
-                                  child: new Column(
-                                    children: <Widget>[
-                                      new Container(
-                                        child: new FlatButton(
-                                          onPressed: () {},
-                                          padding: new EdgeInsets.all(0.0),
-                                          child: new Image.asset(
-                                            'images/curry.png',
-                                            width: 130.0,
-                                            height: 130.0,
-                                          ),
-                                        ),
-                                        margin: new EdgeInsets.only(bottom: 5.0),
-                                      ),
-                                      new Text('Chicken Curry',
-                                          style: new TextStyle(
-                                            color: new Color(0xFF575869),
-                                            fontSize: 14.0,
-                                            fontWeight: FontWeight.bold,
-                                          )),
-                                    ],
-                                  ),
-                                  margin: new EdgeInsets.only(bottom: 0.0 + comeUpPlateAnim2.value),
-                                  height: 160.0,
-//                                  decoration: new BoxDecoration(color: Colors.cyan),
-                                ),
-                                opacity: fadeInPlateAnim2.value,
-                              )
-                            ],
-                          ),
-//                          decoration: new BoxDecoration(color: Colors.blue),
-                          height: 200.0,
-                        ),
-
-                        // Line 2
-                        new Container(
-                          child: new Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                            children: <Widget>[
-                              // Plate 3
-                              new Opacity(
-                                child: new Container(
-                                  child: new FlatButton(
-                                    onPressed: () {},
-                                    padding: new EdgeInsets.all(0.0),
-                                    child: new Image.asset(
-                                      'images/chicken.png',
-                                      width: 130.0,
-                                      height: 130.0,
-                                    ),
-                                  ),
-                                  margin: new EdgeInsets.only(bottom: 0.0 + comeUpPlateAnim3.value),
-                                ),
-                                opacity: fadeInPlateAnim3.value,
-                              ),
-
-                              // Plate 4
-                              new Opacity(
-                                child: new Container(
-                                  child: new FlatButton(
-                                    onPressed: () {},
-                                    padding: new EdgeInsets.all(0.0),
-                                    child: new Image.asset(
-                                      'images/salad.png',
-                                      width: 130.0,
-                                      height: 130.0,
-                                    ),
-                                  ),
-                                  margin: new EdgeInsets.only(bottom: 0.0 + comeUpPlateAnim3.value),
-                                ),
-                                opacity: fadeInPlateAnim3.value,
-                              )
-                            ],
-                          ),
-//                          decoration: new BoxDecoration(color: Colors.amber),
-                          height: 150.0,
-                        ),
-                      ],
-                    ),
-//                    decoration: new BoxDecoration(color: Colors.red),
-                  )),
+                child: new Image.asset(
+                  'images/shadow_white.png',
+                  width: double.infinity,
+                  height: 250.0,
+                  fit: BoxFit.cover,
+                ),
+                bottom: 0.0,
+                left: 0.0,
+                right: 0.0,
+              ),
 
               // Button bottom menu
               new Positioned(

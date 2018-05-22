@@ -38,6 +38,7 @@ flutter:
     - images/ic_home.png
     - images/ic_menu.png
     - images/ic_seat.png
+    - images/ic_red_circle.png
     - images/chair_top.png
     - images/chair_bottom.png
     - images/table_big_pink.png
@@ -52,11 +53,14 @@ flutter:
     - images/curry.png
     - images/salad.png
     - images/chicken.png
+    - images/duck.png
+    - images/pizza.png
     - images/ic_cake.png
     - images/ic_car.png
     - images/ic_coffee.png
     - images/ic_cook.png
     - images/ic_restaurant.png
+    - images/shadow_white.png
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.io/assets-and-images/#resolution-aware.
