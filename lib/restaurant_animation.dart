@@ -193,8 +193,7 @@ class RestaurantAnimationScreenState extends State<RestaurantAnimationScreen> wi
 
   void navigateNextScreen() {
     Navigator.pop(context);
-    Navigator.push(
-        context, new MaterialPageRoute(builder: (context) => new RestaurantAnimation2()));
+    Navigator.push(context, new MaterialPageRoute(builder: (context) => new RestaurantAnimation2()));
   }
 
   Widget renderTabMenu() {
@@ -373,11 +372,12 @@ class RestaurantAnimationScreenState extends State<RestaurantAnimationScreen> wi
     );
   }
 
-  Widget renderBigTable(String colorTable, Function onPressed) {
+  Widget renderBigTable(String colorTable) {
     return new FlatButton(
-      onPressed: onPressed,
+      onPressed: (){},
       child: new Container(
         width: 120.0,
+        height: 100.0,
         child: new Column(
           crossAxisAlignment: CrossAxisAlignment.center,
           children: <Widget>[
@@ -464,6 +464,7 @@ class RestaurantAnimationScreenState extends State<RestaurantAnimationScreen> wi
       onPressed: onPressed,
       child: new Container(
         width: 120.0 - value,
+        height: 100.0 - value,
         child: new Column(
           crossAxisAlignment: CrossAxisAlignment.center,
           children: <Widget>[
@@ -629,8 +630,12 @@ class RestaurantAnimationScreenState extends State<RestaurantAnimationScreen> wi
                         child: new Row(
                           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                           children: <Widget>[
-                            new Container(child: renderBigTable2('green', onBtnTablePressed), width: 120.0),
-                            new Opacity(child: renderBigTable('pink', null), opacity: fadeOutViewAnim.value),
+                            new Container(
+                              child: renderBigTable2('green', onBtnTablePressed),
+                              height: 120.0,
+                              width: 120.0,
+                            ),
+                            new Opacity(child: renderBigTable('pink'), opacity: fadeOutViewAnim.value),
                           ],
                         ),
                         margin: new EdgeInsets.only(left: 10.0, right: 10.0),
@@ -660,8 +665,8 @@ class RestaurantAnimationScreenState extends State<RestaurantAnimationScreen> wi
                           child: new Row(
                             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                             children: <Widget>[
-                              renderBigTable('pink', null),
-                              renderBigTable('green', null),
+                              renderBigTable('pink'),
+                              renderBigTable('green'),
                             ],
                           ),
                           opacity: fadeOutViewAnim.value,
