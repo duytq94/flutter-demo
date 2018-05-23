@@ -1,8 +1,10 @@
 import 'dart:async';
+import 'dart:math';
 
 import 'package:demo_flutter/restaurant_animation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/animation.dart';
+import 'package:meta/meta.dart';
 
 class RestaurantAnimation2 extends StatelessWidget {
   @override
@@ -18,19 +20,24 @@ class RestaurantAnimation2 extends StatelessWidget {
               Navigator.push(context, new MaterialPageRoute(builder: (context) => new RestaurantAnimation()));
             }),
       ),
-      body: new RestaurantAnimationScreen2(),
+      body: new RestaurantAnimationScreen2(screenSize: MediaQuery.of(context).size),
     );
   }
 }
 
 class RestaurantAnimationScreen2 extends StatefulWidget {
+  final Size screenSize;
+
+  RestaurantAnimationScreen2({Key key, @required this.screenSize}) : super(key: key);
+
   @override
   State createState() => new RestaurantAnimationScreenState2();
 }
 
 class RestaurantAnimationScreenState2 extends State<RestaurantAnimationScreen2> with TickerProviderStateMixin {
   AnimationController animControlPhrase1, animControlPhrase2, animControlPhrase3;
-  Animation comeUpPlateAnim1,
+  Animation moveIndicatorAnim,
+      comeUpPlateAnim1,
       comeUpPlateAnim2,
       comeUpPlateAnim3,
       fadeInPlateAnim1,
@@ -57,12 +64,29 @@ class RestaurantAnimationScreenState2 extends State<RestaurantAnimationScreen2> 
 
   int quantity = 1;
 
+  Size screenSize;
+  double marginEdgeTopMenu, marginMiddleTopMenu;
+  double sizeItemTopMenu = 90.0;
+  double sizeIconTopMenu = 15.0;
+
   @override
   void initState() {
     super.initState();
 
+    screenSize = widget.screenSize;
+    marginEdgeTopMenu = (screenSize.width - (sizeItemTopMenu * 3)) / 3;
+    marginMiddleTopMenu = marginEdgeTopMenu / 2;
+
     // Animation phrase 1
-    animControlPhrase1 = new AnimationController(vsync: this, duration: new Duration(milliseconds: 1200));
+    animControlPhrase1 = new AnimationController(vsync: this, duration: new Duration(milliseconds: 8000));
+
+    moveIndicatorAnim = new Tween(
+            begin: screenSize.width - sizeItemTopMenu - marginEdgeTopMenu,
+            end: marginEdgeTopMenu + sizeItemTopMenu + marginMiddleTopMenu - 2)
+        .animate(new CurvedAnimation(parent: animControlPhrase1, curve: new Interval(0.2, 0.5)));
+    moveIndicatorAnim.addListener(() {
+      setState(() {});
+    });
 
     comeUpPlateAnim1 = new Tween(begin: 0.0, end: 20.0)
         .animate(new CurvedAnimation(parent: animControlPhrase1, curve: new Interval(0.2, 0.7)));
@@ -206,36 +230,67 @@ class RestaurantAnimationScreenState2 extends State<RestaurantAnimationScreen2> 
 
   Widget renderTabMenu() {
     return new Container(
-      child: new Row(
+      child: new Stack(
         children: <Widget>[
-          // Dashboard
-          new Row(
-            children: <Widget>[
-              new Image.asset('images/ic_home.png', width: 15.0, height: 15.0),
-              new Container(width: 10.0),
-              new Text('Dashboard', style: new TextStyle(color: Colors.white))
-            ],
+          new CustomPaint(
+            foregroundPainter: new TabIndicatorPainter(moveIndicatorAnim),
           ),
-
-          // Menus
           new Row(
             children: <Widget>[
-              new Image.asset('images/ic_menu.png', width: 15.0, height: 15.0),
-              new Container(width: 10.0),
-              new Text('Menus', style: new TextStyle(color: Colors.white))
-            ],
-          ),
+              // Dashboard
+              new Container(
+                child: new Row(
+                  children: <Widget>[
+                    new Image.asset('images/ic_home.png', width: sizeIconTopMenu, height: sizeIconTopMenu),
+                    new Container(width: 10.0),
+                    new Text('Dashboard',
+                        style: new TextStyle(color: Colors.white70, fontWeight: FontWeight.bold, fontSize: 12.0))
+                  ],
+                ),
+                width: sizeItemTopMenu,
+              ),
 
-          // Seats
-          new Row(
-            children: <Widget>[
-              new Image.asset('images/ic_seat.png', width: 15.0, height: 15.0),
-              new Container(width: 10.0),
-              new Text('Seats', style: new TextStyle(color: Colors.white))
+              // Menus
+              new Container(
+                child: new Row(
+                  children: <Widget>[
+                    new Image.asset(
+                      'images/ic_menu.png',
+                      width: sizeIconTopMenu,
+                      height: sizeIconTopMenu,
+                      color: moveIndicatorAnim.value == marginEdgeTopMenu + sizeItemTopMenu + marginMiddleTopMenu - 2
+                          ? new Color(0xFFf53970)
+                          : Colors.white,
+                    ),
+                    new Container(width: 10.0),
+                    new Text('Menus',
+                        style: new TextStyle(color: Colors.white70, fontWeight: FontWeight.bold, fontSize: 12.0))
+                  ],
+                ),
+                width: sizeItemTopMenu,
+              ),
+
+              // Seats
+              new Container(
+                child: new Row(
+                  children: <Widget>[
+                    new Image.asset('images/ic_seat.png',
+                        width: sizeIconTopMenu,
+                        height: sizeIconTopMenu,
+                        color: moveIndicatorAnim.value == screenSize.width - sizeItemTopMenu - marginEdgeTopMenu
+                            ? new Color(0xFFf53970)
+                            : Colors.white),
+                    new Container(width: 10.0),
+                    new Text('Seats Plan',
+                        style: new TextStyle(color: Colors.white70, fontWeight: FontWeight.bold, fontSize: 12.0))
+                  ],
+                ),
+                width: sizeItemTopMenu,
+              ),
             ],
+            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
           ),
         ],
-        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
       ),
       decoration: new BoxDecoration(color: new Color(0xFFf53970)),
       padding: new EdgeInsets.all(10.0),
@@ -905,5 +960,27 @@ class RestaurantAnimationScreenState2 extends State<RestaurantAnimationScreen2> 
           ),
         ),
         onWillPop: onWillPopScope);
+  }
+}
+
+class TabIndicatorPainter extends CustomPainter {
+  Paint painter;
+  Animation xPos;
+
+  TabIndicatorPainter(Animation xPos) {
+    painter = new Paint()
+      ..color = Colors.white
+      ..style = PaintingStyle.fill;
+    this.xPos = xPos;
+  }
+
+  @override
+  void paint(Canvas canvas, Size size) {
+    canvas.drawCircle(new Offset(xPos.value, 10.0), 10.0, painter);
+  }
+
+  @override
+  bool shouldRepaint(CustomPainter oldDelegate) {
+    return true;
   }
 }
