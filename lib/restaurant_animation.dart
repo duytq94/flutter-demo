@@ -374,7 +374,7 @@ class RestaurantAnimationScreenState extends State<RestaurantAnimationScreen> wi
 
   Widget renderBigTable(String colorTable) {
     return new FlatButton(
-      onPressed: (){},
+      onPressed: () {},
       child: new Container(
         width: 120.0,
         height: 100.0,
@@ -523,9 +523,9 @@ class RestaurantAnimationScreenState extends State<RestaurantAnimationScreen> wi
     );
   }
 
-  Widget renderSmallTable(String colorTable, Function onPressed) {
+  Widget renderSmallTable(String colorTable) {
     return new FlatButton(
-      onPressed: onPressed,
+      onPressed: () {},
       child: new Container(
         width: 60.0,
         child: new Column(
@@ -648,9 +648,9 @@ class RestaurantAnimationScreenState extends State<RestaurantAnimationScreen> wi
                           child: new Row(
                             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                             children: <Widget>[
-                              renderSmallTable('green', null),
-                              renderSmallTable('yellow', null),
-                              renderSmallTable('green', null),
+                              renderSmallTable('green'),
+                              renderSmallTable('yellow'),
+                              renderSmallTable('green'),
                             ],
                           ),
                           opacity: fadeOutViewAnim.value,

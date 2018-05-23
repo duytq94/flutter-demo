@@ -209,41 +209,33 @@ class RestaurantAnimationScreenState2 extends State<RestaurantAnimationScreen2> 
       child: new Row(
         children: <Widget>[
           // Dashboard
-          new FlatButton(
-            child: new Row(
-              children: <Widget>[
-                new Image.asset('images/ic_home.png', width: 15.0, height: 15.0),
-                new Container(width: 10.0),
-                new Text('Dashboard', style: new TextStyle(color: Colors.white))
-              ],
-            ),
-            onPressed: () {},
+          new Row(
+            children: <Widget>[
+              new Image.asset('images/ic_home.png', width: 15.0, height: 15.0),
+              new Container(width: 10.0),
+              new Text('Dashboard', style: new TextStyle(color: Colors.white))
+            ],
           ),
 
           // Menus
-          new FlatButton(
-            child: new Row(
-              children: <Widget>[
-                new Image.asset('images/ic_menu.png', width: 15.0, height: 15.0),
-                new Container(width: 10.0),
-                new Text('Menus', style: new TextStyle(color: Colors.white))
-              ],
-            ),
-            onPressed: () {},
+          new Row(
+            children: <Widget>[
+              new Image.asset('images/ic_menu.png', width: 15.0, height: 15.0),
+              new Container(width: 10.0),
+              new Text('Menus', style: new TextStyle(color: Colors.white))
+            ],
           ),
 
           // Seats
-          new FlatButton(
-            child: new Row(
-              children: <Widget>[
-                new Image.asset('images/ic_seat.png', width: 15.0, height: 15.0),
-                new Container(width: 10.0),
-                new Text('Seats', style: new TextStyle(color: Colors.white))
-              ],
-            ),
-            onPressed: () {},
+          new Row(
+            children: <Widget>[
+              new Image.asset('images/ic_seat.png', width: 15.0, height: 15.0),
+              new Container(width: 10.0),
+              new Text('Seats', style: new TextStyle(color: Colors.white))
+            ],
           ),
         ],
+        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
       ),
       decoration: new BoxDecoration(color: new Color(0xFFf53970)),
       padding: new EdgeInsets.all(10.0),
