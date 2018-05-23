@@ -37,6 +37,7 @@ class RestaurantAnimationScreen2 extends StatefulWidget {
 class RestaurantAnimationScreenState2 extends State<RestaurantAnimationScreen2> with TickerProviderStateMixin {
   AnimationController animControlPhrase1, animControlPhrase2, animControlPhrase3;
   Animation moveIndicatorAnim,
+      zoomIndicatorAnim,
       comeUpPlateAnim1,
       comeUpPlateAnim2,
       comeUpPlateAnim3,
@@ -81,10 +82,15 @@ class RestaurantAnimationScreenState2 extends State<RestaurantAnimationScreen2> 
     animControlPhrase1 = new AnimationController(vsync: this, duration: new Duration(milliseconds: 8000));
 
     moveIndicatorAnim = new Tween(
-            begin: screenSize.width - sizeItemTopMenu - marginEdgeTopMenu,
-            end: marginEdgeTopMenu + sizeItemTopMenu + marginMiddleTopMenu - 2)
-        .animate(new CurvedAnimation(parent: animControlPhrase1, curve: new Interval(0.2, 0.5)));
+            begin: screenSize.width - sizeItemTopMenu - marginEdgeTopMenu - 10.0,
+            end: marginEdgeTopMenu + sizeItemTopMenu + marginMiddleTopMenu - 13.0)
+        .animate(new CurvedAnimation(parent: animControlPhrase1, curve: new Interval(0.2, 0.4)));
     moveIndicatorAnim.addListener(() {
+      setState(() {});
+    });
+    zoomIndicatorAnim = new Tween(begin: 20.0, end: 50.0)
+        .animate(new CurvedAnimation(parent: animControlPhrase1, curve: new Interval(0.2, 0.5)));
+    zoomIndicatorAnim.addListener(() {
       setState(() {});
     });
 
@@ -233,7 +239,7 @@ class RestaurantAnimationScreenState2 extends State<RestaurantAnimationScreen2> 
       child: new Stack(
         children: <Widget>[
           new CustomPaint(
-            foregroundPainter: new TabIndicatorPainter(moveIndicatorAnim),
+            foregroundPainter: new TabIndicatorPainter(moveIndicatorAnim.value, zoomIndicatorAnim.value),
           ),
           new Row(
             children: <Widget>[
@@ -258,7 +264,7 @@ class RestaurantAnimationScreenState2 extends State<RestaurantAnimationScreen2> 
                       'images/ic_menu.png',
                       width: sizeIconTopMenu,
                       height: sizeIconTopMenu,
-                      color: moveIndicatorAnim.value == marginEdgeTopMenu + sizeItemTopMenu + marginMiddleTopMenu - 2
+                      color: moveIndicatorAnim.value == marginEdgeTopMenu + sizeItemTopMenu + marginMiddleTopMenu - 13.0
                           ? new Color(0xFFf53970)
                           : Colors.white,
                     ),
@@ -277,7 +283,7 @@ class RestaurantAnimationScreenState2 extends State<RestaurantAnimationScreen2> 
                     new Image.asset('images/ic_seat.png',
                         width: sizeIconTopMenu,
                         height: sizeIconTopMenu,
-                        color: moveIndicatorAnim.value == screenSize.width - sizeItemTopMenu - marginEdgeTopMenu
+                        color: moveIndicatorAnim.value == screenSize.width - sizeItemTopMenu - marginEdgeTopMenu - 10.0
                             ? new Color(0xFFf53970)
                             : Colors.white),
                     new Container(width: 10.0),
@@ -965,18 +971,44 @@ class RestaurantAnimationScreenState2 extends State<RestaurantAnimationScreen2> 
 
 class TabIndicatorPainter extends CustomPainter {
   Paint painter;
-  Animation xPos;
+  double xPos, radiusOval;
 
-  TabIndicatorPainter(Animation xPos) {
+  double radiusOvalOrigin = 20.0;
+
+  TabIndicatorPainter(double xPos, double radiusOval) {
     painter = new Paint()
       ..color = Colors.white
       ..style = PaintingStyle.fill;
     this.xPos = xPos;
+    this.radiusOval = radiusOval;
+  }
+
+  double processRadiusOval(double value) {
+    if (value <= 30.0) {
+      return value;
+    } else if (value <= 40.0) {
+      return value = radiusOvalOrigin + (40.0 - value);
+    } else {
+      return radiusOvalOrigin;
+    }
+  }
+
+  double processRadiusOval2(double value) {
+    if (value <= 40.0) {
+      return 0.0;
+    } else if (value <= 45.0) {
+      return value = value - 40.0;
+    } else {
+      return value =  40.0 - value;
+    }
   }
 
   @override
   void paint(Canvas canvas, Size size) {
-    canvas.drawCircle(new Offset(xPos.value, 10.0), 10.0, painter);
+//    canvas.drawOval(new Rect.fromLTWH(xPos, 0.0, processRadiusOval(radiusOval), radiusOvalOrigin), painter);
+    canvas.drawOval(
+        new Rect.fromLTRB(xPos - processRadiusOval2(radiusOval), 0.0, xPos + processRadiusOval(radiusOval), 20.0),
+        painter);
   }
 
   @override
