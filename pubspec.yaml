@@ -11,6 +11,7 @@ dependencies:
   english_words: ^3.1.0
   fluttery: 0.0.5
   fluttery_audio: 0.0.3
+  http: 0.11.3+16
 
 dev_dependencies:
   flutter_test:

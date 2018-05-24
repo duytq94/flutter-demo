@@ -1,3 +1,4 @@
+import 'package:demo_flutter/fetch_api.dart';
 import 'package:demo_flutter/medium_clap.dart';
 import 'package:demo_flutter/music_player/music_player.dart';
 import 'package:demo_flutter/restaurant_animation.dart';
@@ -35,6 +36,8 @@ class MainScreen extends StatelessWidget {
         children: <Widget>[
           new Container(height: 15.0),
           _buildButton(context, 'Detail info screen', new DetailInfo()),
+          new Container(height: 15.0),
+          _buildButton(context, 'Fetch api screen', new FetchApi()),
           new Container(height: 15.0),
           _buildButton(context, 'English word list screen', new EnglishWordList()),
           new Container(height: 15.0),
