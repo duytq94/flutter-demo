@@ -79,7 +79,7 @@ class RestaurantAnimationScreenState2 extends State<RestaurantAnimationScreen2> 
     marginMiddleTopMenu = marginEdgeTopMenu / 2;
 
     // Animation phrase 1
-    animControlPhrase1 = new AnimationController(vsync: this, duration: new Duration(milliseconds: 8000));
+    animControlPhrase1 = new AnimationController(vsync: this, duration: new Duration(milliseconds: 1200));
 
     moveIndicatorAnim = new Tween(
             begin: screenSize.width - sizeItemTopMenu - marginEdgeTopMenu - 10.0,
@@ -988,8 +988,10 @@ class TabIndicatorPainter extends CustomPainter {
       return value;
     } else if (value <= 40.0) {
       return value = radiusOvalOrigin + (40.0 - value);
+    } else if (value <= 45) {
+      return value = radiusOvalOrigin + (value - 40.0);
     } else {
-      return radiusOvalOrigin;
+      return value = radiusOvalOrigin + (50.0 - value);
     }
   }
 
@@ -999,13 +1001,12 @@ class TabIndicatorPainter extends CustomPainter {
     } else if (value <= 45.0) {
       return value = value - 40.0;
     } else {
-      return value =  40.0 - value;
+      return value = (50.0 - value);
     }
   }
 
   @override
   void paint(Canvas canvas, Size size) {
-//    canvas.drawOval(new Rect.fromLTWH(xPos, 0.0, processRadiusOval(radiusOval), radiusOvalOrigin), painter);
     canvas.drawOval(
         new Rect.fromLTRB(xPos - processRadiusOval2(radiusOval), 0.0, xPos + processRadiusOval(radiusOval), 20.0),
         painter);
