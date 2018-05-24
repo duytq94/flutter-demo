@@ -79,7 +79,7 @@ class RestaurantAnimationScreenState2 extends State<RestaurantAnimationScreen2> 
     marginMiddleTopMenu = marginEdgeTopMenu / 2;
 
     // Animation phrase 1
-    animControlPhrase1 = new AnimationController(vsync: this, duration: new Duration(milliseconds: 1200));
+    animControlPhrase1 = new AnimationController(vsync: this, duration: new Duration(milliseconds: 1800));
 
     moveIndicatorAnim = new Tween(
             begin: screenSize.width - sizeItemTopMenu - marginEdgeTopMenu - 10.0,
@@ -189,7 +189,7 @@ class RestaurantAnimationScreenState2 extends State<RestaurantAnimationScreen2> 
     animControlPhrase1.forward();
 
     // Animation phrase 2
-    animControlPhrase2 = new AnimationController(vsync: this, duration: new Duration(milliseconds: 700));
+    animControlPhrase2 = new AnimationController(vsync: this, duration: new Duration(milliseconds: 1300));
     fadeOutPlateAnim = new Tween(begin: 0.0, end: 1.0)
         .animate(new CurvedAnimation(parent: animControlPhrase2, curve: new Interval(0.0, 1.0)));
     fadeOutPlateAnim.addListener(() {
@@ -202,11 +202,16 @@ class RestaurantAnimationScreenState2 extends State<RestaurantAnimationScreen2> 
     });
 
     // Animation phrase 3
-    animControlPhrase3 = new AnimationController(vsync: this, duration: new Duration(milliseconds: 700));
+    animControlPhrase3 = new AnimationController(vsync: this, duration: new Duration(milliseconds: 1300));
     zoomPlateAnim2 = new Tween(begin: 0.0, end: 40.0)
         .animate(new CurvedAnimation(parent: animControlPhrase3, curve: new Interval(0.0, 1.0)));
     zoomPlateAnim2.addListener(() {
       setState(() {});
+    });
+    zoomPlateAnim2.addStatusListener((status) {
+      if (status == AnimationStatus.completed) {
+        isCircleAddPressed = false;
+      }
     });
   }
 
@@ -220,7 +225,7 @@ class RestaurantAnimationScreenState2 extends State<RestaurantAnimationScreen2> 
 
   Future<bool> onWillPopScope() {
     Navigator.pop(context);
-//    Navigator.push(context, new MaterialPageRoute(builder: (context) => new RestaurantAnimation()));
+    Navigator.push(context, new MaterialPageRoute(builder: (context) => new RestaurantAnimation()));
     return new Future.value(false);
   }
 

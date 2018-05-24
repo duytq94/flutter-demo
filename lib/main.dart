@@ -15,19 +15,14 @@ class MainApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return new MaterialApp(
         title: 'Welcome to Flutter',
-        theme: new ThemeData(
-            primaryColor: Colors.amber,
-            accentColor: Colors.amber
-        ),
+        theme: new ThemeData(primaryColor: Colors.amber, accentColor: Colors.amber),
         debugShowCheckedModeBanner: false,
         home: new Scaffold(
             appBar: new AppBar(
               title: new Text('MAIN'),
               centerTitle: true,
             ),
-            body: new MainScreen()
-        )
-    );
+            body: new MainScreen()));
   }
 }
 
@@ -37,32 +32,29 @@ class MainScreen extends StatelessWidget {
     return new Material(
       child: new Center(
           child: new Column(
-            children: <Widget>[
-
-              new Container(height: 15.0),
-              _buildButton(context, 'Detail info screen', new DetailInfo()),
-
-              new Container(height: 15.0),
-              _buildButton(context, 'English word list screen', new EnglishWordList()),
-
-              new Container(height: 15.0),
-              _buildButton(context, 'Animation screen', new AnimationScreen()),
-
-              new Container(height: 15.0),
-              _buildButton(context, 'Chat screen', new Chat()),
-
-              new Container(height: 15.0,),
-              _buildButton(context, 'Music player screen', new MusicPlayer()),
-
-              new Container(height: 15.0,),
-              _buildButton(context, 'Medium clap screen', new MediumClap()),
-
-              new Container(height: 15.0,),
-              _buildButton(context, 'Restaurant animation screen', new RestaurantAnimation2())
-
-            ],
-          )
-      ),
+        children: <Widget>[
+          new Container(height: 15.0),
+          _buildButton(context, 'Detail info screen', new DetailInfo()),
+          new Container(height: 15.0),
+          _buildButton(context, 'English word list screen', new EnglishWordList()),
+          new Container(height: 15.0),
+          _buildButton(context, 'Animation screen', new AnimationScreen()),
+          new Container(height: 15.0),
+          _buildButton(context, 'Chat screen', new Chat()),
+          new Container(
+            height: 15.0,
+          ),
+          _buildButton(context, 'Music player screen', new MusicPlayer()),
+          new Container(
+            height: 15.0,
+          ),
+          _buildButton(context, 'Medium clap screen', new MediumClap()),
+          new Container(
+            height: 15.0,
+          ),
+          _buildButton(context, 'Restaurant animation screen', new RestaurantAnimation())
+        ],
+      )),
     );
   }
 
