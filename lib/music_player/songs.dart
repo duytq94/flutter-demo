@@ -4,9 +4,9 @@ final demoPlaylist = new DemoPlaylist(
   songs: [
     new DemoSong(
       audioUrl: 'https://api.soundcloud.com/tracks/434370309/stream?secret_token=s-tj3IS&client_id=LBCcHmRB8XSStWL6wKH2HPACspQlXg2P',
-      albumArtUrl: 'https://i1.sndcdn.com/avatars-000312484264-af28qp-t200x200.jpg',
-      songTitle: 'Perfect Saxophone',
-      artist: 'Simon More',
+      albumArtUrl: 'https://avatar-nct.nixcdn.com/song/2017/05/19/0/4/d/e/1495165764676_640.jpg',
+      songTitle: 'Nơi này có anh',
+      artist: 'Sơn Tùng - MTP',
     ),
     new DemoSong(
       audioUrl: 'https://api.soundcloud.com/tracks/402538329/stream?secret_token=s-tj3IS&client_id=LBCcHmRB8XSStWL6wKH2HPACspQlXg2P',

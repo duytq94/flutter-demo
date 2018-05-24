@@ -5,7 +5,7 @@ class DetailInfo extends StatelessWidget {
   Widget build(BuildContext context) {
     return new Scaffold(
         appBar: new AppBar(
-          title: new Text('DEATAIL INFO'),
+          title: new Text('DETAIL INFO'),
           centerTitle: true,
         ),
         body: new Info()
@@ -64,14 +64,14 @@ class _InfoState extends State<Info> {
                 new Container(
                   padding: const EdgeInsets.only(bottom: 8.0),
                   child: new Text(
-                    'Oeschinen Lake Campground',
+                    'UIT campus',
                     style: new TextStyle(
                       fontWeight: FontWeight.bold,
                     ),
                   ),
                 ),
                 new Text(
-                  'Kandersteg, Switzerland',
+                  'Ho Chi Minh city, Viet Nam',
                   style: new TextStyle(
                     color: Colors.grey[500],
                   ),
@@ -85,7 +85,7 @@ class _InfoState extends State<Info> {
     );
 
     Widget imageSection = new Image.asset(
-      'images/bg_lake.jpg',
+      'images/bg_uit.jpg',
       width: 600.0,
       height: 240.0,
       fit: BoxFit.cover,
@@ -105,9 +105,7 @@ class _InfoState extends State<Info> {
     Widget textSection = new Container(
       padding: const EdgeInsets.all(32.0),
       child: new Text(
-        '''
-Lake Oeschinen lies at the foot of the Blüemlisalp in the Bernese Alps. Situated 1,578 meters above sea level, it is one of the larger Alpine Lakes. A gondola ride from Kandersteg, followed by a half-hour walk through pastures and pine forest, leads you to the lake, which warms to 20 degrees Celsius in the summer. Activities enjoyed here include rowing, and riding the summer toboggan run.
-        ''',
+        'The University of Information Technology (UIT) is a member of Vietnam National University - Ho Chi Minh City (VNU-HCM) and is the only university of Vietnam that undertakes information and communication technology research and focused, in-depth training. The University has the youngest management, research and teaching staff of any VNU-HCM member, bringing great enthusiasm along with dynamic and creative advantages.',
         softWrap: true,
       ),
     );
