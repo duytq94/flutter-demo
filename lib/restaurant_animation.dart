@@ -7,7 +7,10 @@ class RestaurantAnimation extends StatelessWidget {
   Widget build(BuildContext context) {
     return new Scaffold(
       appBar: new AppBar(
-        title: new Text("RESTAURANT"),
+        title: new Text(
+          'RESTAURANT',
+          style: new TextStyle(fontSize: 18.0, fontWeight: FontWeight.bold),
+        ),
         centerTitle: true,
       ),
       body: new RestaurantAnimationScreen(),

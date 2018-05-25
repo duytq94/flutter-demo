@@ -13,7 +13,10 @@ class MusicPlayer extends StatelessWidget {
   Widget build(BuildContext context) {
     return new Scaffold(
       appBar: new AppBar(
-        title: new Text("MUSIC PLAYER"),
+        title: new Text(
+          'MUSIC PLAYER',
+          style: new TextStyle(fontSize: 18.0, fontWeight: FontWeight.bold),
+        ),
         centerTitle: true,
       ),
       body: new MusicPlayerScreen(),
@@ -27,7 +30,6 @@ class MusicPlayerScreen extends StatefulWidget {
 }
 
 class MusicPlayerScreenState extends State<MusicPlayerScreen> {
-
   @override
   Widget build(BuildContext context) {
     return new AudioPlaylist(
@@ -60,9 +62,7 @@ class MusicPlayerScreenState extends State<MusicPlayerScreen> {
   }
 }
 
-
 class AudioRadialSeekBar extends StatefulWidget {
-
   final String albumArtUrl;
 
   AudioRadialSeekBar({
@@ -76,7 +76,6 @@ class AudioRadialSeekBar extends StatefulWidget {
 }
 
 class AudioRadialSeekBarState extends State<AudioRadialSeekBar> {
-
   double _seekPercent;
 
   @override
@@ -116,9 +115,7 @@ class AudioRadialSeekBarState extends State<AudioRadialSeekBar> {
   }
 }
 
-
 class RadialSeekBar extends StatefulWidget {
-
   final double progress;
   final double seekPercent;
   final Function(double) onSeekRequested;
@@ -138,12 +135,10 @@ class RadialSeekBar extends StatefulWidget {
 }
 
 class RadialSeekBarState extends State<RadialSeekBar> {
-
   double _progress = 0.0;
   PolarCoord _startDragCoord;
   double _startDragPercent;
   double _currentDragPercent;
-
 
   @override
   void initState() {
@@ -200,30 +195,27 @@ class RadialSeekBarState extends State<RadialSeekBar> {
         color: Colors.transparent,
         child: new Center(
             child: new Container(
-              width: 140.0,
-              height: 140.0,
-              child: new RadialProgressBar(
-                trackColor: const Color(0xFFDDDDDD),
-                progressPercent: _progress,
-                progressColor: accentColor,
-                thumbPosition: thumbPosition,
-                thumbColor: lightAccentColor,
-                innerPadding: const EdgeInsets.all(10.0),
-                child: new ClipOval(
-                  clipper: new CircleClipper(),
-                  child: widget.child,
-                ),
-              ),
-            )
-        ),
+          width: 140.0,
+          height: 140.0,
+          child: new RadialProgressBar(
+            trackColor: const Color(0xFFDDDDDD),
+            progressPercent: _progress,
+            progressColor: accentColor,
+            thumbPosition: thumbPosition,
+            thumbColor: lightAccentColor,
+            innerPadding: const EdgeInsets.all(10.0),
+            child: new ClipOval(
+              clipper: new CircleClipper(),
+              child: widget.child,
+            ),
+          ),
+        )),
       ),
     );
   }
 }
 
-
 class RadialProgressBar extends StatefulWidget {
-
   final double trackWidth;
   final Color trackColor;
   final double progressWidth;
@@ -255,18 +247,18 @@ class RadialProgressBar extends StatefulWidget {
 }
 
 class _RadialProgressBarState extends State<RadialProgressBar> {
-
   EdgeInsets _insetsForPainter() {
     // Make room for the painted track, progress, and thumb.  We divide by 2.0
     // because we want to allow flush painting against the track, so we only
     // need to account the thickness outside the track, not inside.
     final outerThickness = max(
-      widget.trackWidth,
-      max(
-        widget.progressWidth,
-        widget.thumbSize,
-      ),
-    ) / 2.0;
+          widget.trackWidth,
+          max(
+            widget.progressWidth,
+            widget.thumbSize,
+          ),
+        ) /
+        2.0;
     return new EdgeInsets.all(outerThickness);
   }
 
@@ -294,9 +286,7 @@ class _RadialProgressBarState extends State<RadialProgressBar> {
   }
 }
 
-
 class RadialSeekBarPainter extends CustomPainter {
-
   final double trackWidth;
   final Paint trackPaint;
   final double progressWidth;
@@ -315,11 +305,10 @@ class RadialSeekBarPainter extends CustomPainter {
     @required this.thumbSize,
     @required thumbColor,
     @required this.thumbPosition,
-  })
-      : trackPaint = new Paint()
-    ..color = trackColor
-    ..style = PaintingStyle.stroke
-    ..strokeWidth = trackWidth,
+  })  : trackPaint = new Paint()
+          ..color = trackColor
+          ..style = PaintingStyle.stroke
+          ..strokeWidth = trackWidth,
         progressPaint = new Paint()
           ..color = progressColor
           ..style = PaintingStyle.stroke
@@ -377,5 +366,4 @@ class RadialSeekBarPainter extends CustomPainter {
   bool shouldRepaint(CustomPainter oldDelegate) {
     return true;
   }
-
 }

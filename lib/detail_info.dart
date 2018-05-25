@@ -5,11 +5,13 @@ class DetailInfo extends StatelessWidget {
   Widget build(BuildContext context) {
     return new Scaffold(
         appBar: new AppBar(
-          title: new Text('DETAIL INFO'),
+          title: new Text(
+            'DETAIL INFO',
+            style: new TextStyle(fontSize: 18.0, fontWeight: FontWeight.bold),
+          ),
           centerTitle: true,
         ),
-        body: new Info()
-    );
+        body: new Info());
   }
 }
 
@@ -22,16 +24,13 @@ class _InfoState extends State<Info> {
   @override
   Widget build(BuildContext context) {
     return new Scaffold(
-
       body: _content(),
     );
   }
 
   Widget _content() {
     Column buildButtonColumn(IconData icon, String label) {
-      Color color = Theme
-          .of(context)
-          .primaryColor;
+      Color color = Theme.of(context).primaryColor;
 
       return new Column(
         mainAxisSize: MainAxisSize.min,
@@ -111,14 +110,7 @@ class _InfoState extends State<Info> {
     );
 
     return new Scaffold(
-        body: new Container(
-            child: new ListView(
-                children: [
-                  imageSection,
-                  titleSection,
-                  buttonSection,
-                  textSection
-                ])));
+        body: new Container(child: new ListView(children: [imageSection, titleSection, buttonSection, textSection])));
   }
 }
 
@@ -151,8 +143,7 @@ class _FavoriteWidgetState extends State<FavoriteWidget> {
         new Container(
           padding: new EdgeInsets.all(0.0),
           child: new IconButton(
-              icon: (_isFavorite ? new Icon(Icons.star) : new Icon(
-                  Icons.star_border)),
+              icon: (_isFavorite ? new Icon(Icons.star) : new Icon(Icons.star_border)),
               color: Colors.red[500],
               onPressed: _toggleFavorite),
         ),

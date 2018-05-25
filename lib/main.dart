@@ -1,3 +1,4 @@
+import 'package:demo_flutter/edit_profile.dart';
 import 'package:demo_flutter/fetch_api.dart';
 import 'package:demo_flutter/medium_clap.dart';
 import 'package:demo_flutter/music_player/music_player.dart';
@@ -20,7 +21,10 @@ class MainApp extends StatelessWidget {
         debugShowCheckedModeBanner: false,
         home: new Scaffold(
             appBar: new AppBar(
-              title: new Text('MAIN'),
+              title: new Text(
+                'MAIN',
+                style: new TextStyle(fontSize: 18.0, fontWeight: FontWeight.bold),
+              ),
               centerTitle: true,
             ),
             body: new MainScreen()));
@@ -36,6 +40,8 @@ class MainScreen extends StatelessWidget {
         children: <Widget>[
           new Container(height: 15.0),
           _buildButton(context, 'Detail info screen', new DetailInfo()),
+          new Container(height: 15.0),
+          _buildButton(context, 'Edit profile screen', new EditProfile()),
           new Container(height: 15.0),
           _buildButton(context, 'Fetch api screen', new FetchApi()),
           new Container(height: 15.0),

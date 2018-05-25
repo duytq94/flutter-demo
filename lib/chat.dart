@@ -5,9 +5,11 @@ class Chat extends StatelessWidget {
   Widget build(BuildContext context) {
     return new Scaffold(
       appBar: new AppBar(
-          title: new Text("CHAT"),
-          centerTitle: true
-      ),
+          title: new Text(
+            'CHAT',
+            style: new TextStyle(fontSize: 18.0, fontWeight: FontWeight.bold),
+          ),
+          centerTitle: true),
       body: new ChatScreen(),
     );
   }
@@ -34,7 +36,6 @@ class ChatScreenState extends State<ChatScreen> with TickerProviderStateMixin {
             itemBuilder: (_, int index) => _messages[index],
             itemCount: _messages.length,
           ),
-
         ),
         new Divider(height: 1.0, color: Colors.grey),
         new Material(
@@ -47,9 +48,7 @@ class ChatScreenState extends State<ChatScreen> with TickerProviderStateMixin {
 
   Widget _buildInputText() {
     return new IconTheme(
-      data: new IconThemeData(color: Theme
-          .of(context)
-          .accentColor),
+      data: new IconThemeData(color: Theme.of(context).accentColor),
       child: new Container(
         margin: const EdgeInsets.symmetric(horizontal: 8.0),
         child: new Row(
@@ -70,14 +69,11 @@ class ChatScreenState extends State<ChatScreen> with TickerProviderStateMixin {
                 margin: new EdgeInsets.symmetric(horizontal: 4.0),
                 child: new IconButton(
                   icon: new Icon(Icons.send),
-                  onPressed: _isComposing
-                      ? () => _handleSubmitted(_textController.text)
-                      : null,
+                  onPressed: _isComposing ? () => _handleSubmitted(_textController.text) : null,
                 )),
           ],
         ),
-      )
-      ,
+      ),
     );
   }
 
@@ -98,8 +94,7 @@ class ChatScreenState extends State<ChatScreen> with TickerProviderStateMixin {
 
   @override
   void dispose() {
-    for (ItemMessage message in _messages)
-      message.animationController.dispose();
+    for (ItemMessage message in _messages) message.animationController.dispose();
     super.dispose();
   }
 }
@@ -130,10 +125,7 @@ class ItemMessage extends StatelessWidget {
                 child: new Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: <Widget>[
-                    new Text(_name, style: Theme
-                        .of(context)
-                        .textTheme
-                        .subhead),
+                    new Text(_name, style: Theme.of(context).textTheme.subhead),
                     new Container(
                       margin: const EdgeInsets.only(top: 5.0),
                       child: new Text(text),
@@ -143,7 +135,6 @@ class ItemMessage extends StatelessWidget {
               ),
             ],
           ),
-        )
-    );
+        ));
   }
 }

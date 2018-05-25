@@ -4,28 +4,28 @@ import 'package:url_launcher/url_launcher.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 
-class FetchApi extends StatelessWidget {
+class EditProfile extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return new Scaffold(
       appBar: new AppBar(
         title: new Text(
-          'FETCH',
+          "EDIT PROFILE",
           style: new TextStyle(fontSize: 18.0, fontWeight: FontWeight.bold),
         ),
         centerTitle: true,
       ),
-      body: new FetchApiScreen(),
+      body: new EditProfileScreen(),
     );
   }
 }
 
-class FetchApiScreen extends StatefulWidget {
+class EditProfileScreen extends StatefulWidget {
   @override
-  State createState() => new FetchApiScreenState();
+  State createState() => new EditProfileScreenState();
 }
 
-class FetchApiScreenState extends State<FetchApiScreen> {
+class EditProfileScreenState extends State<EditProfileScreen> {
   List data;
 
   Future<Null> fetchData() async {

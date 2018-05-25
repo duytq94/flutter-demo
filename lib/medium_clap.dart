@@ -28,15 +28,20 @@ class MediumClapScreenState extends State<MediumClapScreen> with TickerProviderS
   final oneSecond = new Duration(seconds: 1);
   Random random;
   Timer holdTimer, releaseBtnClapTimer;
-  AnimationController scoreInAnimationController, scoreOutAnimationController,
-      scoreSizeAnimationController, sparklesAnimationController;
+  AnimationController scoreInAnimationController,
+      scoreOutAnimationController,
+      scoreSizeAnimationController,
+      sparklesAnimationController;
   Animation scoreOutPositionAnimation, sparklesAnimation;
 
   @override
   Widget build(BuildContext context) {
     return new Scaffold(
       appBar: new AppBar(
-        title: new Text('MEDIUM CLAP'),
+        title: new Text(
+          'MEDIUM CLAP',
+          style: new TextStyle(fontSize: 18.0, fontWeight: FontWeight.bold),
+        ),
         centerTitle: true,
       ),
       body: new Center(
@@ -182,9 +187,7 @@ class MediumClapScreenState extends State<MediumClapScreen> with TickerProviderS
         child: new Transform.rotate(
           angle: currentAngle - pi / 2,
           child: new Opacity(
-              opacity: sparklesOpacity,
-              child: new Image.asset("images/sparkles.png", width: 14.0, height: 14.0)
-          ),
+              opacity: sparklesOpacity, child: new Image.asset("images/sparkles.png", width: 14.0, height: 14.0)),
         ),
         left: sparkleRadius * cos(currentAngle) + 20,
         top: sparkleRadius * sin(currentAngle) + 20,
@@ -205,22 +208,18 @@ class MediumClapScreenState extends State<MediumClapScreen> with TickerProviderS
             ),
             child: new Center(
                 child: new Text(
-                  "+" + _counter.toString(),
-                  style: new TextStyle(color: Colors.white, fontWeight: FontWeight.bold, fontSize: 15.0),
-                )
-            )
-        )
-    ));
+              "+" + _counter.toString(),
+              style: new TextStyle(color: Colors.white, fontWeight: FontWeight.bold, fontSize: 15.0),
+            )))));
 
     return new Positioned(
-      // Use Stack so the circle can cover the sparkles
+        // Use Stack so the circle can cover the sparkles
         child: new Stack(
           alignment: FractionalOffset.center,
           overflow: Overflow.visible,
           children: groupSparkle,
         ),
-        bottom: scorePosition
-    );
+        bottom: scorePosition);
   }
 
   // Clap button
@@ -244,12 +243,11 @@ class MediumClapScreenState extends State<MediumClapScreen> with TickerProviderS
                 color: Colors.white,
                 boxShadow: [new BoxShadow(color: Colors.amber, blurRadius: 8.0)]),
             child: new ImageIcon(
-                circleScoreStatus == CIRCLE_SCORE_STATUS.HIDDEN ?
-                new AssetImage("images/clap.png") :
-                new AssetImage("images/clap_border.png"),
-                color: Colors.amber, size: 40.0)
-        )
-    );
+                circleScoreStatus == CIRCLE_SCORE_STATUS.HIDDEN
+                    ? new AssetImage("images/clap.png")
+                    : new AssetImage("images/clap_border.png"),
+                color: Colors.amber,
+                size: 40.0)));
   }
 
   // Text number clap
@@ -257,20 +255,13 @@ class MediumClapScreenState extends State<MediumClapScreen> with TickerProviderS
     if (circleScoreStatus == CIRCLE_SCORE_STATUS.HIDDEN) {
       return new Text(
         '$_counter',
-        style: Theme
-            .of(context)
-            .textTheme
-            .title,
+        style: Theme.of(context).textTheme.title,
       );
     } else {
       return new Text(
         '',
-        style: Theme
-            .of(context)
-            .textTheme
-            .title,
+        style: Theme.of(context).textTheme.title,
       );
     }
   }
-
 }

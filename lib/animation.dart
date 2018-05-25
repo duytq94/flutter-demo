@@ -5,7 +5,12 @@ class AnimationScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return new Scaffold(
-      appBar: new AppBar(title: new Text("ANIMATION"), centerTitle: true),
+      appBar: new AppBar(
+          title: new Text(
+            'ANIMATION',
+            style: new TextStyle(fontSize: 18.0, fontWeight: FontWeight.bold),
+          ),
+          centerTitle: true),
       body: new LogoApp(),
     );
   }
@@ -75,7 +80,6 @@ class _LogoAppState extends State<LogoApp> with SingleTickerProviderStateMixin {
       body: new Column(
         children: <Widget>[
           new Container(height: 15.0),
-
           new Container(
 //            color: Colors.black,
             alignment: Alignment.center,
@@ -93,14 +97,12 @@ class _LogoAppState extends State<LogoApp> with SingleTickerProviderStateMixin {
                         height: currentAnimation == 0 ? sizeAnim.value : 50.0,
                         margin: (currentAnimation == 1
                             ? new EdgeInsets.only(bottom: goUpDownAnim.value)
-                            : (currentAnimation == 2 ? new EdgeInsets.only(left: goLeftRightAnim.value) : null))
-                    ),
+                            : (currentAnimation == 2 ? new EdgeInsets.only(left: goLeftRightAnim.value) : null))),
                   ),
                 )
               ],
             ),
           ),
-
           new Container(height: 15.0),
           new Padding(
             padding: const EdgeInsets.all(8.0),
@@ -112,7 +114,6 @@ class _LogoAppState extends State<LogoApp> with SingleTickerProviderStateMixin {
               ],
             ),
           ),
-
           new Container(height: 15.0),
           new Padding(
             padding: const EdgeInsets.all(8.0),
@@ -124,7 +125,6 @@ class _LogoAppState extends State<LogoApp> with SingleTickerProviderStateMixin {
               ],
             ),
           ),
-
           new Container(height: 15.0),
           new Padding(
             padding: const EdgeInsets.all(8.0),
@@ -136,10 +136,8 @@ class _LogoAppState extends State<LogoApp> with SingleTickerProviderStateMixin {
               ],
             ),
           ),
-
         ],
       ),
-
     );
   }
 
