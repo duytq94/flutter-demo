@@ -16,7 +16,7 @@
 <img src="https://raw.githubusercontent.com/duytq94/demo-flutter/master/ScreenShots/RestaurantAnimation.gif" height="30%" width="30%">
 
 <img src="https://raw.githubusercontent.com/duytq94/demo-flutter/master/ScreenShots/DetailInfo.jpg" height="30%" width="30%">
-<img src="https://raw.githubusercontent.com/duytq94/demo-flutter/master/ScreenShots/EndlishWord.jpg" height="30%" width="30%">
+<img src="https://raw.githubusercontent.com/duytq94/demo-flutter/master/ScreenShots/EnglishWord.jpg" height="30%" width="30%">
 <img src="https://raw.githubusercontent.com/duytq94/demo-flutter/master/ScreenShots/Animation.jpg" height="30%" width="30%">
 
 <img src="https://raw.githubusercontent.com/duytq94/demo-flutter/master/ScreenShots/Chat.jpg" height="30%" width="30%">
