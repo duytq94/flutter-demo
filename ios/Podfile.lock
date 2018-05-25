@@ -1,0 +1,28 @@
+PODS:
+  - Flutter (1.0.0)
+  - fluttery_audio (0.0.1):
+    - Flutter
+  - url_launcher (0.0.1):
+    - Flutter
+
+DEPENDENCIES:
+  - Flutter (from `.symlinks/flutter/ios`)
+  - fluttery_audio (from `.symlinks/plugins/fluttery_audio/ios`)
+  - url_launcher (from `.symlinks/plugins/url_launcher/ios`)
+
+EXTERNAL SOURCES:
+  Flutter:
+    :path: .symlinks/flutter/ios
+  fluttery_audio:
+    :path: .symlinks/plugins/fluttery_audio/ios
+  url_launcher:
+    :path: .symlinks/plugins/url_launcher/ios
+
+SPEC CHECKSUMS:
+  Flutter: 58dd7d1b27887414a370fcccb9e645c08ffd7a6a
+  fluttery_audio: 17c2bd11162094493476e32432b58eef7a0da641
+  url_launcher: 0067ddb8f10d36786672aa0722a21717dba3a298
+
+PODFILE CHECKSUM: 1e5af4103afd21ca5ead147d7b81d06f494f51a2
+
+COCOAPODS: 1.3.1
