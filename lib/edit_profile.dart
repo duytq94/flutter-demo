@@ -1,8 +1,8 @@
 import 'dart:async';
-import 'dart:convert';
-import 'package:url_launcher/url_launcher.dart';
+import 'dart:io';
+
 import 'package:flutter/material.dart';
-import 'package:http/http.dart' as http;
+import 'package:image_picker/image_picker.dart';
 
 class EditProfile extends StatelessWidget {
   @override
@@ -26,72 +26,191 @@ class EditProfileScreen extends StatefulWidget {
 }
 
 class EditProfileScreenState extends State<EditProfileScreen> {
-  List data;
+  File avatarImageFile, backgroundImageFile;
 
-  Future<Null> fetchData() async {
-    final response = await http.get('https://api.stackexchange.com/2.2/questions?sort=activity&site=stackoverflow');
-    this.setState(() {
-      data = json.decode(response.body)['items'];
+  Future getImage(bool isAvatar) async {
+    var result = await ImagePicker.pickImage(source: ImageSource.gallery);
+    setState(() {
+      if (isAvatar) {
+        avatarImageFile = result;
+      } else {
+        backgroundImageFile = result;
+      }
     });
-  }
-
-  void openBrowser(String url) async {
-    if (await canLaunch(url)) {
-      await launch(url);
-    } else {
-      throw 'Could not launch $url';
-    }
-  }
-
-  @override
-  void initState() {
-    super.initState();
-    fetchData();
   }
 
   @override
   Widget build(BuildContext context) {
-    if (data != null) {
-      return new RefreshIndicator(
-        child: new ListView.builder(
-          itemBuilder: (BuildContext context, int index) {
-            return new Card(
-              margin: new EdgeInsets.only(left: 10.0, right: 10.0, top: 5.0, bottom: 5.0),
-              child: new FlatButton(
-                onPressed: () => openBrowser(data[index]['link']),
-                padding: new EdgeInsets.all(0.0),
-                child: new Row(
-                  children: <Widget>[
-                    new Container(
-                      width: 40.0,
-                      height: 40.0,
-                      margin: new EdgeInsets.all(10.0),
-                      decoration: new BoxDecoration(
-                          image: new DecorationImage(
-                              image: new NetworkImage(data[index]['owner']['profile_image']), fit: BoxFit.cover),
-                          borderRadius: new BorderRadius.all(new Radius.circular(20.0))),
+    return new Column(
+      children: <Widget>[
+        new Container(
+          child: new Stack(
+            children: <Widget>[
+              // Background
+              (backgroundImageFile == null)
+                  ? new Image.asset(
+                      'images/bg_uit.jpg',
+                      width: double.infinity,
+                      height: 150.0,
+                      fit: BoxFit.cover,
+                    )
+                  : new Image.file(
+                      backgroundImageFile,
+                      width: double.infinity,
+                      height: 150.0,
+                      fit: BoxFit.cover,
                     ),
-                    new Flexible(
-                        child: new Container(
-                      child: new Text(
-                        data[index]['title'],
-                        maxLines: 2,
-                        overflow: TextOverflow.ellipsis,
+
+              // Button change background
+              new Positioned(
+                child: new Material(
+                  child: new IconButton(
+                    icon: new Image.asset(
+                      'images/ic_camera.png',
+                      width: 30.0,
+                      height: 30.0,
+                      fit: BoxFit.cover,
+                    ),
+                    onPressed: () => getImage(false),
+                    padding: new EdgeInsets.all(0.0),
+                    highlightColor: Colors.black,
+                    iconSize: 30.0,
+                  ),
+                  borderRadius: new BorderRadius.all(new Radius.circular(30.0)),
+                  color: Colors.grey.withOpacity(0.5),
+                ),
+                right: 5.0,
+                top: 5.0,
+              ),
+
+              // Avatar and button
+              new Positioned(
+                child: new Stack(
+                  children: <Widget>[
+                    (avatarImageFile == null)
+                        ? new Image.asset(
+                            'images/ic_avatar.png',
+                            width: 70.0,
+                            height: 70.0,
+                          )
+                        : new Material(
+                            child: new Image.file(
+                              avatarImageFile,
+                              width: 70.0,
+                              height: 70.0,
+                              fit: BoxFit.cover,
+                            ),
+                            borderRadius: new BorderRadius.all(new Radius.circular(40.0)),
+                          ),
+                    new Material(
+                      child: new IconButton(
+                        icon: new Image.asset(
+                          'images/ic_camera.png',
+                          width: 40.0,
+                          height: 40.0,
+                          fit: BoxFit.cover,
+                        ),
+                        onPressed: () => getImage(true),
+                        padding: new EdgeInsets.all(0.0),
+                        highlightColor: Colors.black,
+                        iconSize: 70.0,
                       ),
-                      margin: new EdgeInsets.all(10.0),
-                    )),
+                      borderRadius: new BorderRadius.all(new Radius.circular(40.0)),
+                      color: Colors.grey.withOpacity(0.5),
+                    ),
                   ],
                 ),
-              ),
-            );
-          },
-          padding: new EdgeInsets.only(top: 10.0, bottom: 10.0),
-          itemCount: data.length,
+                top: 115.0,
+                left: MediaQuery.of(context).size.width / 2 - 70 / 2,
+              )
+            ],
+          ),
+          width: double.infinity,
+          height: 200.0,
         ),
-        onRefresh: fetchData,
-      );
-    } else {
-      return new Center(child: new CircularProgressIndicator());
-    }
+        new Column(
+          children: <Widget>[
+            // Username
+            new Container(
+              child: new Text(
+                'Username',
+                style: new TextStyle(fontWeight: FontWeight.bold, fontSize: 14.0, color: Colors.amber),
+              ),
+              margin: new EdgeInsets.only(left: 10.0, bottom: 5.0, top: 10.0),
+            ),
+            new Container(
+              child: new TextFormField(
+                decoration: new InputDecoration(
+                    hintText: 'Tran Quang Duy',
+                    border: new UnderlineInputBorder(),
+                    contentPadding: new EdgeInsets.all(5.0),
+                    hintStyle: new TextStyle(color: Colors.grey)),
+              ),
+              margin: new EdgeInsets.only(left: 30.0, right: 30.0),
+            ),
+
+            // Country
+            new Container(
+              child: new Text(
+                'Country',
+                style: new TextStyle(fontWeight: FontWeight.bold, fontSize: 14.0, color: Colors.amber),
+              ),
+              margin: new EdgeInsets.only(left: 10.0, top: 30.0, bottom: 5.0),
+            ),
+            new Container(
+              child: new TextFormField(
+                decoration: new InputDecoration(
+                    hintText: 'Viet Nam',
+                    border: new UnderlineInputBorder(),
+                    contentPadding: new EdgeInsets.all(5.0),
+                    hintStyle: new TextStyle(color: Colors.grey)),
+              ),
+              margin: new EdgeInsets.only(left: 30.0, right: 30.0),
+            ),
+
+            // Address
+            new Container(
+              child: new Text(
+                'Address',
+                style: new TextStyle(fontWeight: FontWeight.bold, fontSize: 14.0, color: Colors.amber),
+              ),
+              margin: new EdgeInsets.only(left: 10.0, top: 30.0, bottom: 5.0),
+            ),
+            new Container(
+              child: new TextFormField(
+                decoration: new InputDecoration(
+                    hintText: '320/12 Trường Chinh, HCM',
+                    border: new UnderlineInputBorder(),
+                    contentPadding: new EdgeInsets.all(5.0),
+                    hintStyle: new TextStyle(color: Colors.grey)),
+                maxLines: 2,
+              ),
+              margin: new EdgeInsets.only(left: 30.0, right: 30.0),
+            ),
+
+            // About me
+            new Container(
+              child: new Text(
+                'About me',
+                style: new TextStyle(fontWeight: FontWeight.bold, fontSize: 14.0, color: Colors.amber),
+              ),
+              margin: new EdgeInsets.only(left: 10.0, top: 30.0, bottom: 5.0),
+            ),
+            new Container(
+              child: new TextFormField(
+                decoration: new InputDecoration(
+                    hintText: 'Fun, like travel, read book and play PES!!!',
+                    border: new UnderlineInputBorder(),
+                    contentPadding: new EdgeInsets.all(5.0),
+                    hintStyle: new TextStyle(color: Colors.grey)),
+                maxLines: 3,
+              ),
+              margin: new EdgeInsets.only(left: 30.0, right: 30.0),
+            )
+          ],
+          crossAxisAlignment: CrossAxisAlignment.start,
+        )
+      ],
+    );
   }
 }

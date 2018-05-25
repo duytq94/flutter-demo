@@ -69,7 +69,7 @@ class FetchApiScreenState extends State<FetchApiScreen> {
                       decoration: new BoxDecoration(
                           image: new DecorationImage(
                               image: new NetworkImage(data[index]['owner']['profile_image']), fit: BoxFit.cover),
-                          borderRadius: new BorderRadius.all(new Radius.circular(20.0))),
+                          shape: BoxShape.circle),
                     ),
                     new Flexible(
                         child: new Container(

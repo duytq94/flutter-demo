@@ -13,6 +13,7 @@ dependencies:
   fluttery_audio: 0.0.3
   http: 0.11.3+16
   url_launcher: ^3.0.1
+  image_picker: ^0.4.1
 
 dev_dependencies:
   flutter_test:
@@ -66,6 +67,8 @@ flutter:
     - images/ic_white_circle.png
     - images/ic_add_circle.png
     - images/ic_remove_circle.png
+    - images/ic_avatar.png
+    - images/ic_camera.png
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.io/assets-and-images/#resolution-aware.
