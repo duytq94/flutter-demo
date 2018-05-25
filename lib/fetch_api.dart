@@ -83,6 +83,7 @@ class FetchApiScreenState extends State<FetchApiScreen> {
             );
           },
           padding: new EdgeInsets.only(top: 10.0, bottom: 10.0),
+          itemCount: data.length,
         ),
         onRefresh: fetchData,
       );
