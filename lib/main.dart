@@ -33,33 +33,23 @@ class MainApp extends StatelessWidget {
 class MainScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return new Material(
-      child: new ListView(
-        children: <Widget>[
-          new Column(
-            children: <Widget>[
-          
-              _buildButton(context, 'Detail info screen', new DetailInfo()),
-          
-              _buildButton(context, 'Edit profile screen', new EditProfile()),
-          
-              _buildButton(context, 'Fetch api screen', new FetchApi()),
-          
-              _buildButton(context, 'English word list screen', new EnglishWordList()),
-          
-              _buildButton(context, 'Animation screen', new AnimationScreen()),
-          
-              _buildButton(context, 'Chat screen', new Chat()),
-
-              _buildButton(context, 'Music player screen', new MusicPlayer()),
-
-              _buildButton(context, 'Medium clap screen', new MediumClap()),
-         
-              _buildButton(context, 'Restaurant animation screen', new RestaurantAnimation())
-            ],
-          ),
-        ],
+    return new SingleChildScrollView(
+      child: new Center(
+        child: new Column(
+          children: <Widget>[
+            _buildButton(context, 'Detail info screen', new DetailInfo()),
+            _buildButton(context, 'Edit profile screen', new EditProfile()),
+            _buildButton(context, 'Fetch api screen', new FetchApi()),
+            _buildButton(context, 'English word list screen', new EnglishWordList()),
+            _buildButton(context, 'Animation screen', new AnimationScreen()),
+            _buildButton(context, 'Chat screen', new Chat()),
+            _buildButton(context, 'Music player screen', new MusicPlayer()),
+            _buildButton(context, 'Medium clap screen', new MediumClap()),
+            _buildButton(context, 'Restaurant animation screen', new RestaurantAnimation())
+          ],
+        ),
       ),
+      padding: new EdgeInsets.only(top: 15.0, bottom: 15.0),
     );
   }
 
