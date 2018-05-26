@@ -55,34 +55,36 @@ class FetchApiScreenState extends State<FetchApiScreen> {
       return new RefreshIndicator(
         child: new ListView.builder(
           itemBuilder: (BuildContext context, int index) {
-            return new Card(
-              margin: new EdgeInsets.only(left: 10.0, right: 10.0, top: 5.0, bottom: 5.0),
-              child: new FlatButton(
-                onPressed: () => openBrowser(data[index]['link']),
-                padding: new EdgeInsets.all(0.0),
-                child: new Row(
-                  children: <Widget>[
-                    new Container(
-                      width: 40.0,
-                      height: 40.0,
-                      margin: new EdgeInsets.all(10.0),
-                      decoration: new BoxDecoration(
-                          image: new DecorationImage(
-                              image: new NetworkImage(data[index]['owner']['profile_image']), fit: BoxFit.cover),
-                          shape: BoxShape.circle),
-                    ),
-                    new Flexible(
-                        child: new Container(
-                      child: new Text(
-                        data[index]['title'],
-                        maxLines: 2,
-                        overflow: TextOverflow.ellipsis,
+            return new Container(
+              child: new Card(
+                child: new FlatButton(
+                  onPressed: () => openBrowser(data[index]['link']),
+                  padding: new EdgeInsets.all(0.0),
+                  child: new Row(
+                    children: <Widget>[
+                      new Container(
+                        width: 40.0,
+                        height: 40.0,
+                        margin: new EdgeInsets.all(10.0),
+                        decoration: new BoxDecoration(
+                            image: new DecorationImage(
+                                image: new NetworkImage(data[index]['owner']['profile_image']), fit: BoxFit.cover),
+                            shape: BoxShape.circle),
                       ),
-                      margin: new EdgeInsets.all(10.0),
-                    )),
-                  ],
+                      new Flexible(
+                          child: new Container(
+                        child: new Text(
+                          data[index]['title'],
+                          maxLines: 2,
+                          overflow: TextOverflow.ellipsis,
+                        ),
+                        margin: new EdgeInsets.all(10.0),
+                      )),
+                    ],
+                  ),
                 ),
               ),
+              margin: new EdgeInsets.only(left: 10.0, right: 10.0, top: 5.0, bottom: 5.0),
             );
           },
           padding: new EdgeInsets.only(top: 10.0, bottom: 10.0),

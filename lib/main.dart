@@ -3,7 +3,6 @@ import 'package:demo_flutter/fetch_api.dart';
 import 'package:demo_flutter/medium_clap.dart';
 import 'package:demo_flutter/music_player/music_player.dart';
 import 'package:demo_flutter/restaurant_animation.dart';
-import 'package:demo_flutter/restaurant_animation2.dart';
 import 'package:flutter/material.dart';
 import 'detail_info.dart';
 import 'english_word_list.dart';
@@ -35,52 +34,52 @@ class MainScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return new Material(
-      child: new Center(
-          child: new Column(
+      child: new ListView(
         children: <Widget>[
-          new Container(height: 15.0),
-          _buildButton(context, 'Detail info screen', new DetailInfo()),
-          new Container(height: 15.0),
-          _buildButton(context, 'Edit profile screen', new EditProfile()),
-          new Container(height: 15.0),
-          _buildButton(context, 'Fetch api screen', new FetchApi()),
-          new Container(height: 15.0),
-          _buildButton(context, 'English word list screen', new EnglishWordList()),
-          new Container(height: 15.0),
-          _buildButton(context, 'Animation screen', new AnimationScreen()),
-          new Container(height: 15.0),
-          _buildButton(context, 'Chat screen', new Chat()),
-          new Container(
-            height: 15.0,
+          new Column(
+            children: <Widget>[
+          
+              _buildButton(context, 'Detail info screen', new DetailInfo()),
+          
+              _buildButton(context, 'Edit profile screen', new EditProfile()),
+          
+              _buildButton(context, 'Fetch api screen', new FetchApi()),
+          
+              _buildButton(context, 'English word list screen', new EnglishWordList()),
+          
+              _buildButton(context, 'Animation screen', new AnimationScreen()),
+          
+              _buildButton(context, 'Chat screen', new Chat()),
+
+              _buildButton(context, 'Music player screen', new MusicPlayer()),
+
+              _buildButton(context, 'Medium clap screen', new MediumClap()),
+         
+              _buildButton(context, 'Restaurant animation screen', new RestaurantAnimation())
+            ],
           ),
-          _buildButton(context, 'Music player screen', new MusicPlayer()),
-          new Container(
-            height: 15.0,
-          ),
-          _buildButton(context, 'Medium clap screen', new MediumClap()),
-          new Container(
-            height: 15.0,
-          ),
-          _buildButton(context, 'Restaurant animation screen', new RestaurantAnimation())
         ],
-      )),
+      ),
     );
   }
 
   Widget _buildButton(BuildContext context, String name, StatelessWidget screenTo) {
-    return new FlatButton(
-      onPressed: () => Navigator.push(context, new MaterialPageRoute(builder: (context) => screenTo)),
-      child: new Container(
-        child: new Text(
-          name,
-          style: new TextStyle(color: Colors.white, fontSize: 16.0),
-          textAlign: TextAlign.center,
+    return new Container(
+      child: new FlatButton(
+        onPressed: () => Navigator.push(context, new MaterialPageRoute(builder: (context) => screenTo)),
+        child: new Container(
+          child: new Text(
+            name,
+            style: new TextStyle(color: Colors.white, fontSize: 16.0),
+            textAlign: TextAlign.center,
+          ),
+          width: 270.0,
         ),
-        width: 270.0,
+        color: new Color(0xff03a9f4),
+        highlightColor: new Color(0xffbae3fa),
+        padding: new EdgeInsets.all(12.0),
       ),
-      color: new Color(0xff03a9f4),
-      highlightColor: new Color(0xffbae3fa),
-      padding: new EdgeInsets.all(12.0),
+      margin: new EdgeInsets.all(8.0),
     );
   }
 }
