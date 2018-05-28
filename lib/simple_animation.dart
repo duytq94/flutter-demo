@@ -1,13 +1,13 @@
 import 'package:flutter/animation.dart';
 import 'package:flutter/material.dart';
 
-class AnimationScreen extends StatelessWidget {
+class SimpleAnimationScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return new Scaffold(
       appBar: new AppBar(
           title: new Text(
-            'ANIMATION',
+            'SIMPLE ANIMATION',
             style: new TextStyle(fontSize: 18.0, fontWeight: FontWeight.bold),
           ),
           centerTitle: true),
@@ -81,7 +81,6 @@ class _LogoAppState extends State<LogoApp> with SingleTickerProviderStateMixin {
         children: <Widget>[
           new Container(height: 15.0),
           new Container(
-//            color: Colors.black,
             alignment: Alignment.center,
             width: 200.0,
             height: 200.0,
@@ -92,7 +91,9 @@ class _LogoAppState extends State<LogoApp> with SingleTickerProviderStateMixin {
                   child: new Opacity(
                     opacity: currentAnimation == 3 ? fadeAnim.value : 1.0,
                     child: new Container(
-                        color: Colors.red,
+                        child: new Image.asset(
+                          'images/logo_uit.png',
+                        ),
                         width: currentAnimation == 0 ? sizeAnim.value : 50.0,
                         height: currentAnimation == 0 ? sizeAnim.value : 50.0,
                         margin: (currentAnimation == 1

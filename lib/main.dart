@@ -7,7 +7,7 @@ import 'package:flutter/material.dart';
 import 'detail_info.dart';
 import 'english_word_list.dart';
 import 'chat.dart';
-import 'animation.dart';
+import 'simple_animation.dart';
 
 void main() => runApp(new MainApp());
 
@@ -37,15 +37,15 @@ class MainScreen extends StatelessWidget {
       child: new Center(
         child: new Column(
           children: <Widget>[
-            _buildButton(context, 'Detail info screen', new DetailInfo()),
+            _buildButton(context, 'Restaurant animation screen', new RestaurantAnimation()),
+            _buildButton(context, 'Simple animation screen', new SimpleAnimationScreen()),
             _buildButton(context, 'Edit profile screen', new EditProfile()),
-            _buildButton(context, 'Fetch api screen', new FetchApi()),
-            _buildButton(context, 'English word list screen', new EnglishWordList()),
-            _buildButton(context, 'Animation screen', new AnimationScreen()),
-            _buildButton(context, 'Chat screen', new Chat()),
             _buildButton(context, 'Music player screen', new MusicPlayer()),
             _buildButton(context, 'Medium clap screen', new MediumClap()),
-            _buildButton(context, 'Restaurant animation screen', new RestaurantAnimation())
+            _buildButton(context, 'Fetch api screen', new FetchApi()),
+            _buildButton(context, 'Detail info screen', new DetailInfo()),
+            _buildButton(context, 'English word list screen', new EnglishWordList()),
+            _buildButton(context, 'Chat screen', new Chat()),
           ],
         ),
       ),
