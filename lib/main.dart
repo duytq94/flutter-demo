@@ -1,5 +1,6 @@
 import 'package:demo_flutter/edit_profile.dart';
 import 'package:demo_flutter/fetch_api.dart';
+import 'package:demo_flutter/hero_animation.dart';
 import 'package:demo_flutter/medium_clap.dart';
 import 'package:demo_flutter/music_player/music_player.dart';
 import 'package:demo_flutter/restaurant_animation.dart';
@@ -38,6 +39,7 @@ class MainScreen extends StatelessWidget {
         child: new Column(
           children: <Widget>[
             _buildButton(context, 'Restaurant animation screen', new RestaurantAnimation()),
+            _buildButton(context, 'Hero animation screen', new HeroAnimation()),
             _buildButton(context, 'Simple animation screen', new SimpleAnimationScreen()),
             _buildButton(context, 'Edit profile screen', new EditProfile()),
             _buildButton(context, 'Music player screen', new MusicPlayer()),
