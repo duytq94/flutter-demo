@@ -40,12 +40,13 @@ class HeroAnimationScreenState extends State<HeroAnimationScreen> with TickerPro
   Animation fadeAnim1, fadeAnim2, fadeAnim3, fadeAnim4, sizeAnim, rotateAnim;
   Size screenSize;
   List<Star> listStar;
+  int numStars;
 
   RectTween createRectTween(Rect begin, Rect end) {
     return new MaterialRectArcTween(begin: begin, end: end);
   }
 
-  Widget buildPage(BuildContext context, String imageName, String description) {
+  Widget buildPlanetPage(BuildContext context, String imageName, String description) {
     return new Container(
       color: Theme.of(context).canvasColor,
       child: new Center(
@@ -112,7 +113,7 @@ class HeroAnimationScreenState extends State<HeroAnimationScreen> with TickerPro
                         ),
                         body: new Opacity(
                           opacity: opacityCurve.transform(animation.value),
-                          child: buildPage(context, imageName, description),
+                          child: buildPlanetPage(context, imageName, description),
                         ),
                       );
                     });
@@ -162,6 +163,26 @@ class HeroAnimationScreenState extends State<HeroAnimationScreen> with TickerPro
         buildStar(listStar[7].left, listStar[7].top, listStar[7].extraSize, listStar[7].angle, listStar[7].typeFade),
         buildStar(listStar[8].left, listStar[8].top, listStar[8].extraSize, listStar[8].angle, listStar[8].typeFade),
         buildStar(listStar[9].left, listStar[9].top, listStar[9].extraSize, listStar[9].angle, listStar[9].typeFade),
+        buildStar(
+            listStar[10].left, listStar[10].top, listStar[10].extraSize, listStar[10].angle, listStar[10].typeFade),
+        buildStar(
+            listStar[11].left, listStar[11].top, listStar[11].extraSize, listStar[11].angle, listStar[11].typeFade),
+        buildStar(
+            listStar[12].left, listStar[12].top, listStar[12].extraSize, listStar[12].angle, listStar[12].typeFade),
+        buildStar(
+            listStar[13].left, listStar[13].top, listStar[13].extraSize, listStar[13].angle, listStar[13].typeFade),
+        buildStar(
+            listStar[14].left, listStar[14].top, listStar[14].extraSize, listStar[14].angle, listStar[14].typeFade),
+        buildStar(
+            listStar[15].left, listStar[15].top, listStar[15].extraSize, listStar[15].angle, listStar[15].typeFade),
+        buildStar(
+            listStar[16].left, listStar[16].top, listStar[16].extraSize, listStar[16].angle, listStar[16].typeFade),
+        buildStar(
+            listStar[17].left, listStar[17].top, listStar[17].extraSize, listStar[17].angle, listStar[17].typeFade),
+        buildStar(
+            listStar[18].left, listStar[18].top, listStar[18].extraSize, listStar[18].angle, listStar[18].typeFade),
+        buildStar(
+            listStar[19].left, listStar[19].top, listStar[19].extraSize, listStar[19].angle, listStar[19].typeFade),
       ],
     );
   }
@@ -172,6 +193,7 @@ class HeroAnimationScreenState extends State<HeroAnimationScreen> with TickerPro
 
     screenSize = widget.screenSize;
     listStar = new List();
+    numStars = 20;
 
     animControl = new AnimationController(vsync: this, duration: new Duration(milliseconds: 2000));
     fadeAnim1 = new Tween(begin: 0.0, end: 1.0)
@@ -213,7 +235,7 @@ class HeroAnimationScreenState extends State<HeroAnimationScreen> with TickerPro
       }
     });
 
-    for (int i = 0; i < 10; i++) {
+    for (int i = 0; i < numStars; i++) {
       listStar.add(new Star(
           left: new Random().nextDouble() * screenSize.width,
           top: Random().nextDouble() * screenSize.height,
