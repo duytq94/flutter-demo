@@ -39,7 +39,7 @@ class HeroAnimationScreen extends StatefulWidget {
 class HeroAnimationScreenState extends State<HeroAnimationScreen> with TickerProviderStateMixin {
   static const double kMinRadius = 32.0;
   static const double kMaxRadius = 128.0;
-  static const double durationSlowMode = 1.0;
+  static const double durationSlowMode = 2.0;
 
   Color gradientStartFrom = Colors.deepPurple;
   Color gradientStartTo = Colors.purple;
@@ -172,6 +172,7 @@ class HeroAnimationScreenState extends State<HeroAnimationScreen> with TickerPro
     listStar = new List();
     numStars = 30;
 
+    // Star
     animControlStar = new AnimationController(vsync: this, duration: new Duration(milliseconds: 2000));
     fadeAnimStar1 = new Tween(begin: 0.0, end: 1.0)
         .animate(new CurvedAnimation(parent: animControlStar, curve: new Interval(0.0, 0.5)));
@@ -221,6 +222,7 @@ class HeroAnimationScreenState extends State<HeroAnimationScreen> with TickerPro
           typeFade: Random().nextInt(4)));
     }
 
+    // Planet
     animControlPlanet = new AnimationController(vsync: this, duration: new Duration(milliseconds: 2000));
     fadeAnimPlanet1 = new Tween(begin: 0.0, end: 1.0)
         .animate(new CurvedAnimation(parent: animControlPlanet, curve: new Interval(0.0, 0.5)));
@@ -263,6 +265,7 @@ class HeroAnimationScreenState extends State<HeroAnimationScreen> with TickerPro
       setState(() {});
     });
 
+    // Background
     animControlBg = new AnimationController(vsync: this, duration: new Duration(milliseconds: 5000));
     animControlBg.addStatusListener((status) {
       if (status == AnimationStatus.completed) {
@@ -274,6 +277,7 @@ class HeroAnimationScreenState extends State<HeroAnimationScreen> with TickerPro
     colorAnimBgStart = new ColorTween(begin: gradientStartFrom, end: gradientStartTo).animate(animControlBg);
     colorAnimBgEnd = new ColorTween(begin: gradientEndFrom, end: gradientEndTo).animate(animControlBg);
 
+    // Let's go
     animControlStar.forward();
     animControlPlanet.forward();
     animControlBg.forward();
