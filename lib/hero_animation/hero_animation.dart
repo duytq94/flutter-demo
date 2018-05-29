@@ -14,9 +14,11 @@ class HeroAnimation extends StatelessWidget {
       appBar: new AppBar(
         title: new Text(
           'HERO ANIMATION',
-          style: new TextStyle(fontSize: 18.0, fontWeight: FontWeight.bold),
+          style: new TextStyle(fontSize: 18.0, fontWeight: FontWeight.bold, color: Colors.white),
         ),
         centerTitle: true,
+        backgroundColor: Colors.deepPurple,
+        iconTheme: new IconThemeData(color: Colors.white),
       ),
       body: new HeroAnimationScreen(
         screenSize: MediaQuery.of(context).size,
@@ -39,13 +41,16 @@ class HeroAnimationScreenState extends State<HeroAnimationScreen> with TickerPro
   static const double kMaxRadius = 128.0;
   static const double durationSlowMode = 1.0;
 
-  Color gradientStart = Colors.deepPurple;
-  Color gradientEnd = Colors.purple;
+  Color gradientStartFrom = Colors.deepPurple;
+  Color gradientStartTo = Colors.purple;
+  Color gradientEndFrom = new Color(0xff483475);
+  Color gradientEndTo = new Color(0xff070B34);
 
-  AnimationController animControlStar, animControlPlanet;
+  AnimationController animControlStar, animControlPlanet, animControlBg;
   Animation fadeAnimStar1, fadeAnimStar2, fadeAnimStar3, fadeAnimStar4, sizeAnimStar, rotateAnimStar;
   Animation fadeAnimPlanet1, fadeAnimPlanet2, fadeAnimPlanet3, fadeAnimPlanet4;
   Animation sizeAnimPlanet1, sizeAnimPlanet2, sizeAnimPlanet3, sizeAnimPlanet4;
+  Animation colorAnimBgStart, colorAnimBgEnd;
   Size screenSize;
   List<Star> listStar;
   int numStars;
@@ -77,8 +82,7 @@ class HeroAnimationScreenState extends State<HeroAnimationScreen> with TickerPro
                       (BuildContext context, Animation<double> animation, Animation<double> secondaryAnimation) {
                     return new AnimatedBuilder(
                         animation: animation,
-                        builder: (context, child) =>
-                            new HeroAnimation2(planet, animation, durationSlowMode));
+                        builder: (context, child) => new HeroAnimation2(planet, animation, durationSlowMode));
                   },
                 ));
               },
@@ -259,8 +263,20 @@ class HeroAnimationScreenState extends State<HeroAnimationScreen> with TickerPro
       setState(() {});
     });
 
+    animControlBg = new AnimationController(vsync: this, duration: new Duration(milliseconds: 5000));
+    animControlBg.addStatusListener((status) {
+      if (status == AnimationStatus.completed) {
+        animControlBg.reverse();
+      } else if (status == AnimationStatus.dismissed) {
+        animControlBg.forward();
+      }
+    });
+    colorAnimBgStart = new ColorTween(begin: gradientStartFrom, end: gradientStartTo).animate(animControlBg);
+    colorAnimBgEnd = new ColorTween(begin: gradientEndFrom, end: gradientEndTo).animate(animControlBg);
+
     animControlStar.forward();
     animControlPlanet.forward();
+    animControlBg.forward();
   }
 
   @override
@@ -281,10 +297,10 @@ class HeroAnimationScreenState extends State<HeroAnimationScreen> with TickerPro
             height: double.infinity,
             decoration: new BoxDecoration(
                 gradient: new LinearGradient(
-                    colors: [gradientStart, gradientEnd],
+                    colors: [colorAnimBgStart.value, colorAnimBgEnd.value],
                     begin: new FractionalOffset(0.0, 0.5),
                     end: new FractionalOffset(0.5, 1.0),
-                    tileMode: TileMode.clamp)),
+                    tileMode: TileMode.mirror)),
             child: buildGroupStar()),
         new SingleChildScrollView(
           child: new Container(

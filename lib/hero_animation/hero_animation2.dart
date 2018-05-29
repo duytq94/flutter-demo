@@ -18,9 +18,11 @@ class HeroAnimation2 extends StatelessWidget {
       appBar: new AppBar(
         title: new Text(
           'PLANET',
-          style: new TextStyle(fontSize: 18.0, fontWeight: FontWeight.bold),
+          style: new TextStyle(fontSize: 18.0, fontWeight: FontWeight.bold, color: Colors.white),
         ),
         centerTitle: true,
+        backgroundColor: Colors.purple,
+        iconTheme: new IconThemeData(color: Colors.white),
       ),
       body: new HeroAnimation2Screen(
           screenSize: MediaQuery.of(context).size,
@@ -80,6 +82,7 @@ class HeroAnimation2ScreenState extends State<HeroAnimation2Screen> with TickerP
       child: new Center(
         child: new Column(
           children: [
+            // Photo
             new SizedBox(
               width: kMaxRadius * 2.0,
               height: kMaxRadius * 2.0,
@@ -100,11 +103,51 @@ class HeroAnimation2ScreenState extends State<HeroAnimation2Screen> with TickerP
                 turns: rotateAnim,
               ),
             ),
+
+            // Title
             new Text(
               planet.name.toUpperCase(),
               style: new TextStyle(fontWeight: FontWeight.bold, color: Colors.white, fontSize: 10.0),
               textScaleFactor: 3.0,
             ),
+
+            // Bars indicator
+            new Container(
+              child: new Row(
+                children: <Widget>[
+                  new Expanded(
+                    flex: 1,
+                    child: new Container(
+                      color: Colors.white,
+                      width: double.infinity,
+                      height: 5.0,
+                      margin: new EdgeInsets.only(left: 10.0, right: 10.0),
+                    ),
+                  ),
+                  new Expanded(
+                    flex: 1,
+                    child: new Container(
+                      color: Colors.white,
+                      width: double.infinity,
+                      height: 5.0,
+                      margin: new EdgeInsets.only(left: 10.0, right: 10.0),
+                    ),
+                  ),
+                  new Expanded(
+                    flex: 1,
+                    child: new Container(
+                      color: Colors.white,
+                      width: double.infinity,
+                      height: 5.0,
+                      margin: new EdgeInsets.only(left: 10.0, right: 10.0),
+                    ),
+                  ),
+                ],
+              ),
+              margin: new EdgeInsets.only(left: 20.0, right: 20.0, top: 10.0),
+            ),
+
+            // Description
             new Expanded(
               child: new Card(
                 child: new Container(
