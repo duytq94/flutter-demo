@@ -2,6 +2,7 @@ import 'dart:async';
 import 'dart:math';
 
 import 'package:demo_flutter/hero_animation/hero_animation2.dart';
+import 'package:demo_flutter/hero_animation/planet.dart';
 import 'package:flutter/material.dart';
 import 'dart:math' as math;
 import 'package:flutter/scheduler.dart' show timeDilation;
@@ -38,8 +39,13 @@ class HeroAnimationScreenState extends State<HeroAnimationScreen> with TickerPro
   static const double kMaxRadius = 128.0;
   static const double durationSlowMode = 1.0;
 
-  AnimationController animControl;
-  Animation fadeAnim1, fadeAnim2, fadeAnim3, fadeAnim4, sizeAnim, rotateAnim;
+  Color gradientStart = Colors.deepPurple;
+  Color gradientEnd = Colors.purple;
+
+  AnimationController animControlStar, animControlPlanet;
+  Animation fadeAnimStar1, fadeAnimStar2, fadeAnimStar3, fadeAnimStar4, sizeAnimStar, rotateAnimStar;
+  Animation fadeAnimPlanet1, fadeAnimPlanet2, fadeAnimPlanet3, fadeAnimPlanet4;
+  Animation sizeAnimPlanet1, sizeAnimPlanet2, sizeAnimPlanet3, sizeAnimPlanet4;
   Size screenSize;
   List<Star> listStar;
   int numStars;
@@ -48,30 +54,41 @@ class HeroAnimationScreenState extends State<HeroAnimationScreen> with TickerPro
     return new MaterialRectArcTween(begin: begin, end: end);
   }
 
-  Widget buildHeroIcon(BuildContext context, String imageName, String description) {
-    return new Container(
-      width: 100.0,
-      height: 100.0,
-      margin: new EdgeInsets.all(15.0),
-      child: new Hero(
-        createRectTween: createRectTween,
-        tag: imageName,
-        child: new RadialExpansion(
-          maxRadius: kMaxRadius,
-          child: new Photo(
-            photo: imageName,
-            onTap: () {
-              Navigator.of(context).push(new PageRouteBuilder(
-                pageBuilder: (BuildContext context, Animation<double> animation, Animation<double> secondaryAnimation) {
-                  return new AnimatedBuilder(
-                      animation: animation,
-                      builder: (context, child) => new HeroAnimation2(imageName, description, animation, durationSlowMode));
-                },
-              ));
-            },
+  Widget buildHeroIcon(BuildContext context, Planet planet, int typeFade) {
+    return new Opacity(
+      child: new Container(
+        width: (typeFade == 1)
+            ? sizeAnimPlanet1.value
+            : (typeFade == 2) ? sizeAnimPlanet2.value : (typeFade == 3) ? sizeAnimPlanet3.value : sizeAnimPlanet4.value,
+        height: (typeFade == 1)
+            ? sizeAnimPlanet1.value
+            : (typeFade == 2) ? sizeAnimPlanet2.value : (typeFade == 3) ? sizeAnimPlanet3.value : sizeAnimPlanet4.value,
+        margin: new EdgeInsets.all(15.0),
+        child: new Hero(
+          createRectTween: createRectTween,
+          tag: planet.name,
+          child: new RadialExpansion(
+            maxRadius: kMaxRadius,
+            child: new Photo(
+              photo: planet.imagePath,
+              onTap: () {
+                Navigator.of(context).push(new PageRouteBuilder(
+                  pageBuilder:
+                      (BuildContext context, Animation<double> animation, Animation<double> secondaryAnimation) {
+                    return new AnimatedBuilder(
+                        animation: animation,
+                        builder: (context, child) =>
+                            new HeroAnimation2(planet, animation, durationSlowMode));
+                  },
+                ));
+              },
+            ),
           ),
         ),
       ),
+      opacity: (typeFade == 1)
+          ? fadeAnimPlanet1.value
+          : (typeFade == 2) ? fadeAnimPlanet2.value : (typeFade == 3) ? fadeAnimPlanet3.value : fadeAnimPlanet4.value,
     );
   }
 
@@ -83,11 +100,11 @@ class HeroAnimationScreenState extends State<HeroAnimationScreen> with TickerPro
             child: new Icon(
               Icons.star,
               color: Colors.white,
-              size: sizeAnim.value + extraSize,
+              size: sizeAnimStar.value + extraSize,
             ),
             opacity: (typeFade == 1)
-                ? fadeAnim1.value
-                : (typeFade == 2) ? fadeAnim2.value : (typeFade == 3) ? fadeAnim3.value : fadeAnim4.value,
+                ? fadeAnimStar1.value
+                : (typeFade == 2) ? fadeAnimStar2.value : (typeFade == 3) ? fadeAnimStar3.value : fadeAnimStar4.value,
           ),
           angle: angle,
         ),
@@ -139,26 +156,6 @@ class HeroAnimationScreenState extends State<HeroAnimationScreen> with TickerPro
         list[27],
         list[28],
         list[29],
-        list[30],
-        list[31],
-        list[32],
-        list[33],
-        list[34],
-        list[35],
-        list[36],
-        list[37],
-        list[38],
-        list[39],
-        list[40],
-        list[41],
-        list[42],
-        list[43],
-        list[44],
-        list[45],
-        list[46],
-        list[47],
-        list[48],
-        list[49],
       ],
     );
   }
@@ -169,45 +166,45 @@ class HeroAnimationScreenState extends State<HeroAnimationScreen> with TickerPro
 
     screenSize = widget.screenSize;
     listStar = new List();
-    numStars = 50;
+    numStars = 30;
 
-    animControl = new AnimationController(vsync: this, duration: new Duration(milliseconds: 2000));
-    fadeAnim1 = new Tween(begin: 0.0, end: 1.0)
-        .animate(new CurvedAnimation(parent: animControl, curve: new Interval(0.0, 0.5)));
-    fadeAnim1.addListener(() {
+    animControlStar = new AnimationController(vsync: this, duration: new Duration(milliseconds: 2000));
+    fadeAnimStar1 = new Tween(begin: 0.0, end: 1.0)
+        .animate(new CurvedAnimation(parent: animControlStar, curve: new Interval(0.0, 0.5)));
+    fadeAnimStar1.addListener(() {
       setState(() {});
     });
-    fadeAnim2 = new Tween(begin: 0.0, end: 1.0)
-        .animate(new CurvedAnimation(parent: animControl, curve: new Interval(0.5, 1.0)));
-    fadeAnim2.addListener(() {
+    fadeAnimStar2 = new Tween(begin: 0.0, end: 1.0)
+        .animate(new CurvedAnimation(parent: animControlStar, curve: new Interval(0.5, 1.0)));
+    fadeAnimStar2.addListener(() {
       setState(() {});
     });
-    fadeAnim3 = new Tween(begin: 1.0, end: 0.0)
-        .animate(new CurvedAnimation(parent: animControl, curve: new Interval(0.0, 0.5)));
-    fadeAnim3.addListener(() {
+    fadeAnimStar3 = new Tween(begin: 1.0, end: 0.0)
+        .animate(new CurvedAnimation(parent: animControlStar, curve: new Interval(0.0, 0.5)));
+    fadeAnimStar3.addListener(() {
       setState(() {});
     });
-    fadeAnim4 = new Tween(begin: 1.0, end: 0.0)
-        .animate(new CurvedAnimation(parent: animControl, curve: new Interval(0.5, 1.0)));
-    fadeAnim4.addListener(() {
+    fadeAnimStar4 = new Tween(begin: 1.0, end: 0.0)
+        .animate(new CurvedAnimation(parent: animControlStar, curve: new Interval(0.5, 1.0)));
+    fadeAnimStar4.addListener(() {
       setState(() {});
     });
-    sizeAnim = new Tween(begin: 0.0, end: 5.0)
-        .animate(new CurvedAnimation(parent: animControl, curve: new Interval(0.0, 0.5)));
-    sizeAnim.addListener(() {
+    sizeAnimStar = new Tween(begin: 0.0, end: 5.0)
+        .animate(new CurvedAnimation(parent: animControlStar, curve: new Interval(0.0, 0.5)));
+    sizeAnimStar.addListener(() {
       setState(() {});
     });
-    rotateAnim = new Tween(begin: 0.0, end: 1.0)
-        .animate(new CurvedAnimation(parent: animControl, curve: new Interval(0.0, 0.5)));
-    rotateAnim.addListener(() {
+    rotateAnimStar = new Tween(begin: 0.0, end: 1.0)
+        .animate(new CurvedAnimation(parent: animControlStar, curve: new Interval(0.0, 0.5)));
+    rotateAnimStar.addListener(() {
       setState(() {});
     });
 
-    animControl.addStatusListener((status) {
+    animControlStar.addStatusListener((status) {
       if (status == AnimationStatus.completed) {
-        animControl.reverse();
+        animControlStar.reverse();
       } else if (status == AnimationStatus.dismissed) {
-        animControl.forward();
+        animControlStar.forward();
       }
     });
 
@@ -220,12 +217,56 @@ class HeroAnimationScreenState extends State<HeroAnimationScreen> with TickerPro
           typeFade: Random().nextInt(4)));
     }
 
-    new Timer(new Duration(milliseconds: 1000), () => animControl.forward());
+    animControlPlanet = new AnimationController(vsync: this, duration: new Duration(milliseconds: 2000));
+    fadeAnimPlanet1 = new Tween(begin: 0.0, end: 1.0)
+        .animate(new CurvedAnimation(parent: animControlPlanet, curve: new Interval(0.0, 0.5)));
+    fadeAnimPlanet1.addListener(() {
+      setState(() {});
+    });
+    fadeAnimPlanet2 = new Tween(begin: 0.0, end: 1.0)
+        .animate(new CurvedAnimation(parent: animControlPlanet, curve: new Interval(0.2, 0.7)));
+    fadeAnimPlanet2.addListener(() {
+      setState(() {});
+    });
+    fadeAnimPlanet3 = new Tween(begin: 0.0, end: 1.0)
+        .animate(new CurvedAnimation(parent: animControlPlanet, curve: new Interval(0.4, 0.9)));
+    fadeAnimPlanet3.addListener(() {
+      setState(() {});
+    });
+    fadeAnimPlanet4 = new Tween(begin: 0.0, end: 1.0)
+        .animate(new CurvedAnimation(parent: animControlPlanet, curve: new Interval(0.6, 1.0)));
+    fadeAnimPlanet4.addListener(() {
+      setState(() {});
+    });
+    sizeAnimPlanet1 = new Tween(begin: 0.0, end: 100.0)
+        .animate(new CurvedAnimation(parent: animControlPlanet, curve: new Interval(0.0, 0.5)));
+    sizeAnimPlanet1.addListener(() {
+      setState(() {});
+    });
+    sizeAnimPlanet2 = new Tween(begin: 0.0, end: 100.0)
+        .animate(new CurvedAnimation(parent: animControlPlanet, curve: new Interval(0.2, 0.7)));
+    sizeAnimPlanet2.addListener(() {
+      setState(() {});
+    });
+    sizeAnimPlanet3 = new Tween(begin: 0.0, end: 100.0)
+        .animate(new CurvedAnimation(parent: animControlPlanet, curve: new Interval(0.4, 0.9)));
+    sizeAnimPlanet3.addListener(() {
+      setState(() {});
+    });
+    sizeAnimPlanet4 = new Tween(begin: 0.0, end: 100.0)
+        .animate(new CurvedAnimation(parent: animControlPlanet, curve: new Interval(0.6, 1.0)));
+    sizeAnimPlanet4.addListener(() {
+      setState(() {});
+    });
+
+    animControlStar.forward();
+    animControlPlanet.forward();
   }
 
   @override
   void dispose() {
-    animControl.dispose();
+    animControlStar.dispose();
+    animControlPlanet.dispose();
     super.dispose();
   }
 
@@ -235,21 +276,28 @@ class HeroAnimationScreenState extends State<HeroAnimationScreen> with TickerPro
 
     return new Stack(
       children: <Widget>[
-        new Container(width: double.infinity, height: double.infinity, color: Colors.black, child: buildGroupStar()),
+        new Container(
+            width: double.infinity,
+            height: double.infinity,
+            decoration: new BoxDecoration(
+                gradient: new LinearGradient(
+                    colors: [gradientStart, gradientEnd],
+                    begin: new FractionalOffset(0.0, 0.5),
+                    end: new FractionalOffset(0.5, 1.0),
+                    tileMode: TileMode.clamp)),
+            child: buildGroupStar()),
         new SingleChildScrollView(
           child: new Container(
             child: new Column(
               children: <Widget>[
-                buildHeroIcon(context, 'images/ic_sun.png', 'Sun'),
-                buildHeroIcon(context, 'images/ic_mercury.png', 'Mercury'),
-                buildHeroIcon(context, 'images/ic_venus.png', 'Venus'),
-                buildHeroIcon(context, 'images/ic_earth.png', 'Earth'),
-                buildHeroIcon(context, 'images/ic_mars.png', 'Mars'),
-                buildHeroIcon(context, 'images/ic_jupiter.png', 'Jupiter'),
-                buildHeroIcon(context, 'images/ic_saturn.png', 'Saturn'),
-                buildHeroIcon(context, 'images/ic_uranus.png', 'Uranus'),
-                buildHeroIcon(context, 'images/ic_neptune.png', 'Neptune'),
-                buildHeroIcon(context, 'images/ic_moon.png', 'Moon'),
+                buildHeroIcon(context, listPlanet.planets[0], 1),
+                buildHeroIcon(context, listPlanet.planets[1], 2),
+                buildHeroIcon(context, listPlanet.planets[2], 3),
+                buildHeroIcon(context, listPlanet.planets[3], 4),
+                buildHeroIcon(context, listPlanet.planets[4], 4),
+                buildHeroIcon(context, listPlanet.planets[5], 4),
+                buildHeroIcon(context, listPlanet.planets[6], 4),
+                buildHeroIcon(context, listPlanet.planets[7], 4),
               ],
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             ),

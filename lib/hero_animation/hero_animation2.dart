@@ -1,14 +1,14 @@
 import 'dart:async';
 
+import 'package:demo_flutter/hero_animation/planet.dart';
 import 'package:flutter/material.dart';
 import 'dart:math' as math;
 import 'package:flutter/scheduler.dart' show timeDilation;
 
 class HeroAnimation2 extends StatelessWidget {
-  HeroAnimation2(this.imageName, this.description, this.opacityTransitionAnim, this.durationSlowMode);
+  HeroAnimation2(this.planet, this.opacityTransitionAnim, this.durationSlowMode);
 
-  final String imageName;
-  final String description;
+  final Planet planet;
   final Animation opacityTransitionAnim;
   final double durationSlowMode;
 
@@ -24,8 +24,7 @@ class HeroAnimation2 extends StatelessWidget {
       ),
       body: new HeroAnimation2Screen(
           screenSize: MediaQuery.of(context).size,
-          imageName: imageName,
-          description: description,
+          planet: planet,
           opacityTransitionAnim: opacityTransitionAnim,
           durationSlowMode: durationSlowMode),
     );
@@ -34,16 +33,14 @@ class HeroAnimation2 extends StatelessWidget {
 
 class HeroAnimation2Screen extends StatefulWidget {
   final Size screenSize;
-  final String imageName;
-  final String description;
+  final Planet planet;
   final Animation opacityTransitionAnim;
   final double durationSlowMode;
 
   HeroAnimation2Screen(
       {Key key,
       @required this.screenSize,
-      @required this.imageName,
-      @required this.description,
+      @required this.planet,
       @required this.opacityTransitionAnim,
       @required this.durationSlowMode})
       : super(key: key);
@@ -58,55 +55,73 @@ class HeroAnimation2ScreenState extends State<HeroAnimation2Screen> with TickerP
   static const double kMaxRadius = 128.0;
 
   Size screenSize;
-  String imageName;
-  String description;
+  Planet planet;
   Animation opacityTransitionAnim;
   double durationSlowMode;
 
   AnimationController animControl;
   Animation rotateAnim;
 
+  Color gradientStart = Colors.deepPurple;
+  Color gradientEnd = Colors.purple;
+
   RectTween createRectTween(Rect begin, Rect end) {
     return new MaterialRectArcTween(begin: begin, end: end);
   }
 
-  Widget buildPlanetPage(BuildContext context, String imageName, String description) {
+  Widget buildPlanetPage(BuildContext context, Planet planet) {
     return new Container(
-      color: Theme.of(context).canvasColor,
+      decoration: new BoxDecoration(
+          gradient: new LinearGradient(
+              colors: [gradientEnd, gradientStart],
+              begin: new FractionalOffset(0.0, 0.5),
+              end: new FractionalOffset(0.5, 1.0),
+              tileMode: TileMode.clamp)),
       child: new Center(
-        child: new Card(
-          elevation: 8.0,
-          child: new Column(
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              new SizedBox(
-                width: kMaxRadius * 2.0,
-                height: kMaxRadius * 2.0,
-                child: new RotationTransition(
-                  child: new Hero(
-                    createRectTween: createRectTween,
-                    tag: imageName,
-                    child: new RadialExpansion(
-                      maxRadius: kMaxRadius,
-                      child: new Photo(
-                        photo: imageName,
-                        onTap: () {
-                          Navigator.of(context).pop();
-                        },
-                      ),
+        child: new Column(
+          children: [
+            new SizedBox(
+              width: kMaxRadius * 2.0,
+              height: kMaxRadius * 2.0,
+              child: new RotationTransition(
+                child: new Hero(
+                  createRectTween: createRectTween,
+                  tag: planet.name,
+                  child: new RadialExpansion(
+                    maxRadius: kMaxRadius,
+                    child: new Photo(
+                      photo: planet.imagePath,
+                      onTap: () {
+                        Navigator.of(context).pop();
+                      },
                     ),
                   ),
-                  turns: rotateAnim,
                 ),
+                turns: rotateAnim,
               ),
-              new Text(
-                description,
-                style: new TextStyle(fontWeight: FontWeight.bold),
-                textScaleFactor: 3.0,
+            ),
+            new Text(
+              planet.name.toUpperCase(),
+              style: new TextStyle(fontWeight: FontWeight.bold, color: Colors.white, fontSize: 10.0),
+              textScaleFactor: 3.0,
+            ),
+            new Expanded(
+              child: new Card(
+                child: new Container(
+                  child: new SingleChildScrollView(
+                    child: new Text(
+                      planet.description,
+                      style: new TextStyle(color: Colors.white70),
+                    ),
+                  ),
+                  margin: new EdgeInsets.all(20.0),
+                  height: 100.0,
+                ),
+                color: Colors.transparent,
+                margin: new EdgeInsets.all(20.0),
               ),
-              const SizedBox(height: 16.0),
-            ],
-          ),
+            )
+          ],
         ),
       ),
     );
@@ -116,12 +131,11 @@ class HeroAnimation2ScreenState extends State<HeroAnimation2Screen> with TickerP
   void initState() {
     super.initState();
     screenSize = widget.screenSize;
-    imageName = widget.imageName;
-    description = widget.description;
+    planet = widget.planet;
     opacityTransitionAnim = widget.opacityTransitionAnim;
     durationSlowMode = widget.durationSlowMode;
 
-    animControl = new AnimationController(vsync: this, duration: new Duration(milliseconds: 10000));
+    animControl = new AnimationController(vsync: this, duration: new Duration(milliseconds: 60000));
     rotateAnim = new Tween(begin: 0.0, end: 1.0)
         .animate(new CurvedAnimation(parent: animControl, curve: new Interval(0.0, 1.0)));
     rotateAnim.addListener(() {
@@ -148,8 +162,9 @@ class HeroAnimation2ScreenState extends State<HeroAnimation2Screen> with TickerP
     timeDilation = durationSlowMode;
 
     return new Opacity(
-      opacity: opacityCurve.transform(opacityTransitionAnim.value),
-      child: buildPlanetPage(context, imageName, description),
+//      opacity: opacityCurve.transform(opacityTransitionAnim.value),
+      opacity: 1.0,
+      child: buildPlanetPage(context, planet),
     );
   }
 }
@@ -188,12 +203,15 @@ class Photo extends StatelessWidget {
   Widget build(BuildContext context) {
     return new Material(
       color: Colors.transparent,
-      child: new InkWell(
-        onTap: onTap,
+      child: new FlatButton(
+        onPressed: onTap,
         child: new Image.asset(
           photo,
           fit: BoxFit.contain,
         ),
+        padding: new EdgeInsets.all(0.0),
+        splashColor: Colors.transparent,
+        highlightColor: Colors.transparent,
       ),
     );
   }
