@@ -1,3 +1,4 @@
+import 'dart:async';
 import 'dart:math';
 
 import 'package:demo_flutter/hero_animation/hero_animation2.dart';
@@ -35,7 +36,7 @@ class HeroAnimationScreen extends StatefulWidget {
 class HeroAnimationScreenState extends State<HeroAnimationScreen> with TickerProviderStateMixin {
   static const double kMinRadius = 32.0;
   static const double kMaxRadius = 128.0;
-  static const double slowMode = 1.0;
+  static const double durationSlowMode = 1.0;
 
   AnimationController animControl;
   Animation fadeAnim1, fadeAnim2, fadeAnim3, fadeAnim4, sizeAnim, rotateAnim;
@@ -51,7 +52,7 @@ class HeroAnimationScreenState extends State<HeroAnimationScreen> with TickerPro
     return new Container(
       width: 100.0,
       height: 100.0,
-      margin: new EdgeInsets.all(10.0),
+      margin: new EdgeInsets.all(15.0),
       child: new Hero(
         createRectTween: createRectTween,
         tag: imageName,
@@ -64,7 +65,7 @@ class HeroAnimationScreenState extends State<HeroAnimationScreen> with TickerPro
                 pageBuilder: (BuildContext context, Animation<double> animation, Animation<double> secondaryAnimation) {
                   return new AnimatedBuilder(
                       animation: animation,
-                      builder: (context, child) => new HeroAnimation2(imageName, description, animation, slowMode));
+                      builder: (context, child) => new HeroAnimation2(imageName, description, animation, durationSlowMode));
                 },
               ));
             },
@@ -138,6 +139,26 @@ class HeroAnimationScreenState extends State<HeroAnimationScreen> with TickerPro
         list[27],
         list[28],
         list[29],
+        list[30],
+        list[31],
+        list[32],
+        list[33],
+        list[34],
+        list[35],
+        list[36],
+        list[37],
+        list[38],
+        list[39],
+        list[40],
+        list[41],
+        list[42],
+        list[43],
+        list[44],
+        list[45],
+        list[46],
+        list[47],
+        list[48],
+        list[49],
       ],
     );
   }
@@ -148,7 +169,7 @@ class HeroAnimationScreenState extends State<HeroAnimationScreen> with TickerPro
 
     screenSize = widget.screenSize;
     listStar = new List();
-    numStars = 30;
+    numStars = 50;
 
     animControl = new AnimationController(vsync: this, duration: new Duration(milliseconds: 2000));
     fadeAnim1 = new Tween(begin: 0.0, end: 1.0)
@@ -194,12 +215,12 @@ class HeroAnimationScreenState extends State<HeroAnimationScreen> with TickerPro
       listStar.add(new Star(
           left: new Random().nextDouble() * screenSize.width,
           top: Random().nextDouble() * screenSize.height,
-          extraSize: Random().nextDouble() * 3,
+          extraSize: Random().nextDouble() * 2,
           angle: Random().nextDouble(),
           typeFade: Random().nextInt(4)));
     }
 
-    animControl.forward();
+    new Timer(new Duration(milliseconds: 1000), () => animControl.forward());
   }
 
   @override
@@ -210,7 +231,7 @@ class HeroAnimationScreenState extends State<HeroAnimationScreen> with TickerPro
 
   @override
   Widget build(BuildContext context) {
-    timeDilation = slowMode;
+    timeDilation = durationSlowMode;
 
     return new Stack(
       children: <Widget>[
@@ -232,7 +253,7 @@ class HeroAnimationScreenState extends State<HeroAnimationScreen> with TickerPro
               ],
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             ),
-            padding: new EdgeInsets.all(10.0),
+            padding: new EdgeInsets.all(20.0),
             alignment: FractionalOffset.center,
           ),
         ),

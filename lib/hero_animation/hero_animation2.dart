@@ -5,12 +5,12 @@ import 'dart:math' as math;
 import 'package:flutter/scheduler.dart' show timeDilation;
 
 class HeroAnimation2 extends StatelessWidget {
-  HeroAnimation2(this.imageName, this.description, this.opacityTransitionAnim, this.slowMode);
+  HeroAnimation2(this.imageName, this.description, this.opacityTransitionAnim, this.durationSlowMode);
 
   final String imageName;
   final String description;
   final Animation opacityTransitionAnim;
-  final double slowMode;
+  final double durationSlowMode;
 
   @override
   Widget build(BuildContext context) {
@@ -27,7 +27,7 @@ class HeroAnimation2 extends StatelessWidget {
           imageName: imageName,
           description: description,
           opacityTransitionAnim: opacityTransitionAnim,
-          slowMode: slowMode),
+          durationSlowMode: durationSlowMode),
     );
   }
 }
@@ -37,7 +37,7 @@ class HeroAnimation2Screen extends StatefulWidget {
   final String imageName;
   final String description;
   final Animation opacityTransitionAnim;
-  final double slowMode;
+  final double durationSlowMode;
 
   HeroAnimation2Screen(
       {Key key,
@@ -45,7 +45,7 @@ class HeroAnimation2Screen extends StatefulWidget {
       @required this.imageName,
       @required this.description,
       @required this.opacityTransitionAnim,
-      @required this.slowMode})
+      @required this.durationSlowMode})
       : super(key: key);
 
   @override
@@ -61,7 +61,7 @@ class HeroAnimation2ScreenState extends State<HeroAnimation2Screen> with TickerP
   String imageName;
   String description;
   Animation opacityTransitionAnim;
-  double slowMode;
+  double durationSlowMode;
 
   AnimationController animControl;
   Animation rotateAnim;
@@ -119,9 +119,9 @@ class HeroAnimation2ScreenState extends State<HeroAnimation2Screen> with TickerP
     imageName = widget.imageName;
     description = widget.description;
     opacityTransitionAnim = widget.opacityTransitionAnim;
-    slowMode = widget.slowMode;
+    durationSlowMode = widget.durationSlowMode;
 
-    animControl = new AnimationController(vsync: this, duration: new Duration(milliseconds: 5000));
+    animControl = new AnimationController(vsync: this, duration: new Duration(milliseconds: 10000));
     rotateAnim = new Tween(begin: 0.0, end: 1.0)
         .animate(new CurvedAnimation(parent: animControl, curve: new Interval(0.0, 1.0)));
     rotateAnim.addListener(() {
@@ -145,7 +145,7 @@ class HeroAnimation2ScreenState extends State<HeroAnimation2Screen> with TickerP
   @override
   Widget build(BuildContext context) {
     // this value have to the same with previous screen
-    timeDilation = slowMode;
+    timeDilation = durationSlowMode;
 
     return new Opacity(
       opacity: opacityCurve.transform(opacityTransitionAnim.value),
