@@ -1,9 +1,9 @@
 import 'package:demo_flutter/edit_profile.dart';
 import 'package:demo_flutter/fetch_api.dart';
-import 'package:demo_flutter/hero_animation.dart';
+import 'package:demo_flutter/hero_animation/hero_animation.dart';
 import 'package:demo_flutter/medium_clap.dart';
 import 'package:demo_flutter/music_player/music_player.dart';
-import 'package:demo_flutter/restaurant_animation.dart';
+import 'package:demo_flutter/restaurant_animation/restaurant_animation.dart';
 import 'package:flutter/material.dart';
 import 'detail_info.dart';
 import 'english_word_list.dart';

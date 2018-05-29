@@ -1,6 +1,6 @@
 import 'dart:async';
 
-import 'package:demo_flutter/restaurant_animation.dart';
+import 'package:demo_flutter/restaurant_animation/restaurant_animation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/animation.dart';
 import 'package:meta/meta.dart';

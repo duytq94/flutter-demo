@@ -1,5 +1,6 @@
 import 'dart:math';
 
+import 'package:demo_flutter/hero_animation/hero_animation2.dart';
 import 'package:flutter/material.dart';
 import 'dart:math' as math;
 import 'package:flutter/scheduler.dart' show timeDilation;
@@ -34,7 +35,7 @@ class HeroAnimationScreen extends StatefulWidget {
 class HeroAnimationScreenState extends State<HeroAnimationScreen> with TickerProviderStateMixin {
   static const double kMinRadius = 32.0;
   static const double kMaxRadius = 128.0;
-  static const opacityCurve = const Interval(0.0, 0.75, curve: Curves.fastOutSlowIn);
+  static const double slowMode = 1.0;
 
   AnimationController animControl;
   Animation fadeAnim1, fadeAnim2, fadeAnim3, fadeAnim4, sizeAnim, rotateAnim;
@@ -44,45 +45,6 @@ class HeroAnimationScreenState extends State<HeroAnimationScreen> with TickerPro
 
   RectTween createRectTween(Rect begin, Rect end) {
     return new MaterialRectArcTween(begin: begin, end: end);
-  }
-
-  Widget buildPlanetPage(BuildContext context, String imageName, String description) {
-    return new Container(
-      color: Theme.of(context).canvasColor,
-      child: new Center(
-        child: new Card(
-          elevation: 8.0,
-          child: new Column(
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              new SizedBox(
-                width: kMaxRadius * 2.0,
-                height: kMaxRadius * 2.0,
-                child: new Hero(
-                  createRectTween: createRectTween,
-                  tag: imageName,
-                  child: new RadialExpansion(
-                    maxRadius: kMaxRadius,
-                    child: new Photo(
-                      photo: imageName,
-                      onTap: () {
-                        Navigator.of(context).pop();
-                      },
-                    ),
-                  ),
-                ),
-              ),
-              new Text(
-                description,
-                style: new TextStyle(fontWeight: FontWeight.bold),
-                textScaleFactor: 3.0,
-              ),
-              const SizedBox(height: 16.0),
-            ],
-          ),
-        ),
-      ),
-    );
   }
 
   Widget buildHeroIcon(BuildContext context, String imageName, String description) {
@@ -98,26 +60,13 @@ class HeroAnimationScreenState extends State<HeroAnimationScreen> with TickerPro
           child: new Photo(
             photo: imageName,
             onTap: () {
-              Navigator.of(context).push(new PageRouteBuilder<Null>(pageBuilder:
-                  (BuildContext context, Animation<double> animation, Animation<double> secondaryAnimation) {
-                return new AnimatedBuilder(
-                    animation: animation,
-                    builder: (BuildContext context, Widget child) {
-                      return new Scaffold(
-                        appBar: new AppBar(
-                          title: new Text(
-                            'PLANET',
-                            style: new TextStyle(fontSize: 18.0, fontWeight: FontWeight.bold),
-                          ),
-                          centerTitle: true,
-                        ),
-                        body: new Opacity(
-                          opacity: opacityCurve.transform(animation.value),
-                          child: buildPlanetPage(context, imageName, description),
-                        ),
-                      );
-                    });
-              }));
+              Navigator.of(context).push(new PageRouteBuilder(
+                pageBuilder: (BuildContext context, Animation<double> animation, Animation<double> secondaryAnimation) {
+                  return new AnimatedBuilder(
+                      animation: animation,
+                      builder: (context, child) => new HeroAnimation2(imageName, description, animation, slowMode));
+                },
+              ));
             },
           ),
         ),
@@ -151,38 +100,44 @@ class HeroAnimationScreenState extends State<HeroAnimationScreen> with TickerPro
   }
 
   Widget buildGroupStar() {
+    List<Widget> list = new List();
+    for (int i = 0; i < numStars; i++) {
+      list.add(
+          buildStar(listStar[i].left, listStar[i].top, listStar[i].extraSize, listStar[i].angle, listStar[i].typeFade));
+    }
+
     return new Stack(
       children: <Widget>[
-        buildStar(listStar[0].left, listStar[0].top, listStar[0].extraSize, listStar[0].angle, listStar[0].typeFade),
-        buildStar(listStar[1].left, listStar[1].top, listStar[1].extraSize, listStar[1].angle, listStar[1].typeFade),
-        buildStar(listStar[2].left, listStar[2].top, listStar[2].extraSize, listStar[2].angle, listStar[2].typeFade),
-        buildStar(listStar[3].left, listStar[3].top, listStar[3].extraSize, listStar[3].angle, listStar[3].typeFade),
-        buildStar(listStar[4].left, listStar[4].top, listStar[4].extraSize, listStar[4].angle, listStar[4].typeFade),
-        buildStar(listStar[5].left, listStar[5].top, listStar[5].extraSize, listStar[5].angle, listStar[5].typeFade),
-        buildStar(listStar[6].left, listStar[6].top, listStar[6].extraSize, listStar[6].angle, listStar[6].typeFade),
-        buildStar(listStar[7].left, listStar[7].top, listStar[7].extraSize, listStar[7].angle, listStar[7].typeFade),
-        buildStar(listStar[8].left, listStar[8].top, listStar[8].extraSize, listStar[8].angle, listStar[8].typeFade),
-        buildStar(listStar[9].left, listStar[9].top, listStar[9].extraSize, listStar[9].angle, listStar[9].typeFade),
-        buildStar(
-            listStar[10].left, listStar[10].top, listStar[10].extraSize, listStar[10].angle, listStar[10].typeFade),
-        buildStar(
-            listStar[11].left, listStar[11].top, listStar[11].extraSize, listStar[11].angle, listStar[11].typeFade),
-        buildStar(
-            listStar[12].left, listStar[12].top, listStar[12].extraSize, listStar[12].angle, listStar[12].typeFade),
-        buildStar(
-            listStar[13].left, listStar[13].top, listStar[13].extraSize, listStar[13].angle, listStar[13].typeFade),
-        buildStar(
-            listStar[14].left, listStar[14].top, listStar[14].extraSize, listStar[14].angle, listStar[14].typeFade),
-        buildStar(
-            listStar[15].left, listStar[15].top, listStar[15].extraSize, listStar[15].angle, listStar[15].typeFade),
-        buildStar(
-            listStar[16].left, listStar[16].top, listStar[16].extraSize, listStar[16].angle, listStar[16].typeFade),
-        buildStar(
-            listStar[17].left, listStar[17].top, listStar[17].extraSize, listStar[17].angle, listStar[17].typeFade),
-        buildStar(
-            listStar[18].left, listStar[18].top, listStar[18].extraSize, listStar[18].angle, listStar[18].typeFade),
-        buildStar(
-            listStar[19].left, listStar[19].top, listStar[19].extraSize, listStar[19].angle, listStar[19].typeFade),
+        list[0],
+        list[1],
+        list[2],
+        list[3],
+        list[4],
+        list[5],
+        list[6],
+        list[7],
+        list[8],
+        list[9],
+        list[10],
+        list[11],
+        list[12],
+        list[13],
+        list[14],
+        list[15],
+        list[16],
+        list[17],
+        list[18],
+        list[19],
+        list[20],
+        list[21],
+        list[22],
+        list[23],
+        list[24],
+        list[25],
+        list[26],
+        list[27],
+        list[28],
+        list[29],
       ],
     );
   }
@@ -193,7 +148,7 @@ class HeroAnimationScreenState extends State<HeroAnimationScreen> with TickerPro
 
     screenSize = widget.screenSize;
     listStar = new List();
-    numStars = 20;
+    numStars = 30;
 
     animControl = new AnimationController(vsync: this, duration: new Duration(milliseconds: 2000));
     fadeAnim1 = new Tween(begin: 0.0, end: 1.0)
@@ -255,7 +210,7 @@ class HeroAnimationScreenState extends State<HeroAnimationScreen> with TickerPro
 
   @override
   Widget build(BuildContext context) {
-    timeDilation = 1.0;
+    timeDilation = slowMode;
 
     return new Stack(
       children: <Widget>[

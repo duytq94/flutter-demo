@@ -1,4 +1,4 @@
-import 'package:demo_flutter/restaurant_animation2.dart';
+import 'package:demo_flutter/restaurant_animation/restaurant_animation2.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/animation.dart';
 
