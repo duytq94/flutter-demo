@@ -4,6 +4,7 @@ import 'package:demo_flutter/music_player/bottom_controls.dart';
 import 'package:demo_flutter/music_player/songs.dart';
 import 'package:demo_flutter/music_player/theme.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/scheduler.dart';
 import 'package:meta/meta.dart';
 import 'package:fluttery/gestures.dart';
 import 'package:fluttery_audio/fluttery_audio.dart';
@@ -32,6 +33,7 @@ class MusicPlayerScreen extends StatefulWidget {
 class MusicPlayerScreenState extends State<MusicPlayerScreen> {
   @override
   Widget build(BuildContext context) {
+    timeDilation = 1.0;
     return new AudioPlaylist(
       playlist: demoPlaylist.songs.map((DemoSong song) {
         return song.audioUrl;

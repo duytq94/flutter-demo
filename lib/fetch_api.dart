@@ -1,5 +1,6 @@
 import 'dart:async';
 import 'dart:convert';
+import 'package:flutter/scheduler.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
@@ -51,6 +52,7 @@ class FetchApiScreenState extends State<FetchApiScreen> {
 
   @override
   Widget build(BuildContext context) {
+    timeDilation = 1.0;
     if (data != null) {
       return new RefreshIndicator(
         child: new ListView.builder(

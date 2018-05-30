@@ -2,6 +2,7 @@ import 'dart:async';
 import 'dart:io';
 
 import 'package:flutter/material.dart';
+import 'package:flutter/scheduler.dart';
 import 'package:image_picker/image_picker.dart';
 
 class EditProfile extends StatelessWidget {
@@ -42,6 +43,7 @@ class EditProfileScreenState extends State<EditProfileScreen> {
 
   @override
   Widget build(BuildContext context) {
+    timeDilation = 1.0;
     return new SingleChildScrollView(
       child: new Column(
         children: <Widget>[

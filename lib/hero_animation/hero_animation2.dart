@@ -144,6 +144,8 @@ class HeroAnimation2ScreenState extends State<HeroAnimation2Screen> with TickerP
   @override
   void dispose() {
     animControlPlanet.dispose();
+    animControlIndicator.dispose();
+    animControlSatellite.dispose();
     super.dispose();
   }
 

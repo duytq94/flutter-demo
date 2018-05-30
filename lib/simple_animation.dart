@@ -1,7 +1,8 @@
 import 'package:flutter/animation.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/scheduler.dart';
 
-class SimpleAnimationScreen extends StatelessWidget {
+class SimpleAnimation extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return new Scaffold(
@@ -11,16 +12,16 @@ class SimpleAnimationScreen extends StatelessWidget {
             style: new TextStyle(fontSize: 18.0, fontWeight: FontWeight.bold),
           ),
           centerTitle: true),
-      body: new LogoApp(),
+      body: new SimpleAnimationScreen(),
     );
   }
 }
 
-class LogoApp extends StatefulWidget {
-  _LogoAppState createState() => new _LogoAppState();
+class SimpleAnimationScreen extends StatefulWidget {
+  SimpleAnimationScreenState createState() => new SimpleAnimationScreenState();
 }
 
-class _LogoAppState extends State<LogoApp> with SingleTickerProviderStateMixin {
+class SimpleAnimationScreenState extends State<SimpleAnimationScreen> with SingleTickerProviderStateMixin {
   Animation<double> sizeAnim;
   Animation<double> fadeAnim;
   Animation<double> goUpDownAnim;
@@ -76,6 +77,7 @@ class _LogoAppState extends State<LogoApp> with SingleTickerProviderStateMixin {
   }
 
   Widget build(BuildContext context) {
+    timeDilation = 1.0;
     return new Scaffold(
       body: new Column(
         children: <Widget>[

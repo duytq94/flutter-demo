@@ -1,6 +1,7 @@
 import 'package:demo_flutter/restaurant_animation/restaurant_animation2.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/animation.dart';
+import 'package:flutter/scheduler.dart';
 
 class RestaurantAnimation extends StatelessWidget {
   @override
@@ -590,6 +591,7 @@ class RestaurantAnimationScreenState extends State<RestaurantAnimationScreen> wi
 
   @override
   Widget build(BuildContext context) {
+    timeDilation = 1.0;
     return new Container(
       width: double.infinity,
       height: double.infinity,

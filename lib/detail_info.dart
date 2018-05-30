@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/scheduler.dart';
 
 class DetailInfo extends StatelessWidget {
   @override
@@ -17,18 +18,19 @@ class DetailInfo extends StatelessWidget {
 
 class Info extends StatefulWidget {
   @override
-  createState() => new _InfoState();
+  createState() => new InfoState();
 }
 
-class _InfoState extends State<Info> {
+class InfoState extends State<Info> {
   @override
   Widget build(BuildContext context) {
+    timeDilation = 1.0;
     return new Scaffold(
-      body: _content(),
+      body: content(),
     );
   }
 
-  Widget _content() {
+  Widget content() {
     Column buildButtonColumn(IconData icon, String label) {
       Color color = Theme.of(context).primaryColor;
 
@@ -116,10 +118,10 @@ class _InfoState extends State<Info> {
 
 class FavoriteWidget extends StatefulWidget {
   @override
-  createState() => new _FavoriteWidgetState();
+  createState() => new FavoriteWidgetState();
 }
 
-class _FavoriteWidgetState extends State<FavoriteWidget> {
+class FavoriteWidgetState extends State<FavoriteWidget> {
   bool _isFavorite = true;
   int _favoriteCount = 41;
 

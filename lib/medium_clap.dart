@@ -2,6 +2,7 @@ import 'dart:async';
 import 'dart:math';
 
 import 'package:flutter/material.dart';
+import 'package:flutter/scheduler.dart';
 
 class MediumClap extends StatelessWidget {
   @override
@@ -36,6 +37,7 @@ class MediumClapScreenState extends State<MediumClapScreen> with TickerProviderS
 
   @override
   Widget build(BuildContext context) {
+    timeDilation = 1.0;
     return new Scaffold(
       appBar: new AppBar(
         title: new Text(

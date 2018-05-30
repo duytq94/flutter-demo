@@ -4,7 +4,6 @@ import 'dart:math';
 import 'package:demo_flutter/hero_animation/hero_animation2.dart';
 import 'package:demo_flutter/hero_animation/planet.dart';
 import 'package:flutter/material.dart';
-import 'dart:math' as math;
 import 'package:flutter/scheduler.dart' show timeDilation;
 
 class HeroAnimation extends StatelessWidget {
@@ -287,6 +286,7 @@ class HeroAnimationScreenState extends State<HeroAnimationScreen> with TickerPro
   void dispose() {
     animControlStar.dispose();
     animControlPlanet.dispose();
+    animControlBg.dispose();
     super.dispose();
   }
 
@@ -335,7 +335,7 @@ class RadialExpansion extends StatelessWidget {
     Key key,
     this.maxRadius,
     this.child,
-  })  : clipRectSize = 2.0 * (maxRadius / math.sqrt2),
+  })  : clipRectSize = 2.0 * (maxRadius / sqrt2),
         super(key: key);
 
   final double maxRadius;

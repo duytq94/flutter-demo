@@ -5,9 +5,8 @@ import 'package:demo_flutter/medium_clap.dart';
 import 'package:demo_flutter/music_player/music_player.dart';
 import 'package:demo_flutter/restaurant_animation/restaurant_animation.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/scheduler.dart';
 import 'detail_info.dart';
-import 'english_word_list.dart';
-import 'chat.dart';
 import 'simple_animation.dart';
 
 void main() => runApp(new MainApp());
@@ -34,20 +33,19 @@ class MainApp extends StatelessWidget {
 class MainScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
+    timeDilation = 1.0;
     return new SingleChildScrollView(
       child: new Center(
         child: new Column(
           children: <Widget>[
-            _buildButton(context, 'Restaurant animation screen', new RestaurantAnimation()),
-            _buildButton(context, 'Hero animation screen', new HeroAnimation()),
-            _buildButton(context, 'Simple animation screen', new SimpleAnimationScreen()),
-            _buildButton(context, 'Edit profile screen', new EditProfile()),
-            _buildButton(context, 'Music player screen', new MusicPlayer()),
-            _buildButton(context, 'Medium clap screen', new MediumClap()),
-            _buildButton(context, 'Fetch api screen', new FetchApi()),
-            _buildButton(context, 'Detail info screen', new DetailInfo()),
-            _buildButton(context, 'English word list screen', new EnglishWordList()),
-            _buildButton(context, 'Chat screen', new Chat()),
+            buildButton(context, 'Restaurant animation screen', new RestaurantAnimation()),
+            buildButton(context, 'Hero animation screen', new HeroAnimation()),
+            buildButton(context, 'Simple animation screen', new SimpleAnimation()),
+            buildButton(context, 'Edit profile screen', new EditProfile()),
+            buildButton(context, 'Music player screen', new MusicPlayer()),
+            buildButton(context, 'Medium clap screen', new MediumClap()),
+            buildButton(context, 'Fetch api screen', new FetchApi()),
+            buildButton(context, 'Detail info screen', new DetailInfo()),
           ],
         ),
       ),
@@ -55,7 +53,7 @@ class MainScreen extends StatelessWidget {
     );
   }
 
-  Widget _buildButton(BuildContext context, String name, StatelessWidget screenTo) {
+  Widget buildButton(BuildContext context, String name, StatelessWidget screenTo) {
     return new Container(
       child: new FlatButton(
         onPressed: () => Navigator.push(context, new MaterialPageRoute(builder: (context) => screenTo)),
