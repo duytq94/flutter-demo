@@ -9,5 +9,3 @@ build/
 ios/.generated/
 packages
 .flutter-plugins
-android/key.properties
-android_private_key.keystore

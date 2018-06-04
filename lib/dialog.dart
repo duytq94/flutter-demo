@@ -26,22 +26,15 @@ class DuyDialogScreen extends StatefulWidget {
   State createState() => new DuyDialogScreenState();
 }
 
-enum Answer { YES, NO, MAYBE }
+enum Answer { STANDBY, POWER_OFF, RESTART }
 
 class DuyDialogScreenState extends State<DuyDialogScreen> {
-  String userAnswer = '';
-
-  void setAnswer(String value) {
-    setState(() {
-      userAnswer = value;
-    });
-  }
-
   Future<Null> _askedToLead() async {
     switch (await showDialog(
         context: context,
         builder: (BuildContext context) {
           return new SimpleDialog(
+            contentPadding: new EdgeInsets.only(left: 0.0, right: 0.0, top: 0.0, bottom: 10.0),
             children: <Widget>[
               new Container(
                 color: Colors.deepOrange,
@@ -70,60 +63,60 @@ class DuyDialogScreenState extends State<DuyDialogScreen> {
               ),
               new SimpleDialogOption(
                 onPressed: () {
-                  Navigator.pop(context, Answer.YES);
+                  Navigator.pop(context, Answer.STANDBY);
                 },
                 child: new Row(
                   children: <Widget>[
                     new Container(
                       child: new Icon(
-                        Icons.file_download,
-                        color: Colors.grey,
+                        Icons.pause,
+                        color: Colors.yellow[700],
                       ),
                       margin: new EdgeInsets.only(right: 20.0),
                     ),
                     new Text(
-                      'Suspend to disk',
-                      style: new TextStyle(color: Colors.grey, fontWeight: FontWeight.bold),
+                      'Standby',
+                      style: new TextStyle(color: Colors.yellow[700], fontWeight: FontWeight.bold),
                     )
                   ],
                 ),
               ),
               new SimpleDialogOption(
                 onPressed: () {
-                  Navigator.pop(context, Answer.YES);
+                  Navigator.pop(context, Answer.POWER_OFF);
                 },
                 child: new Row(
                   children: <Widget>[
                     new Container(
                       child: new Icon(
                         Icons.power_settings_new,
-                        color: Colors.grey,
+                        color: Colors.red,
                       ),
                       margin: new EdgeInsets.only(right: 20.0),
                     ),
                     new Text(
                       'Power off',
-                      style: new TextStyle(color: Colors.grey, fontWeight: FontWeight.bold),
+                      style: new TextStyle(color: Colors.red, fontWeight: FontWeight.bold),
                     )
                   ],
                 ),
               ),
               new SimpleDialogOption(
                 onPressed: () {
-                  Navigator.pop(context, Answer.YES);
+                  Navigator.pop(context, Answer.RESTART);
                 },
                 child: new Row(
                   children: <Widget>[
                     new Container(
                       child: new Icon(
                         Icons.refresh,
-                        color: Colors.grey,
+                        color: Colors.green,
                       ),
                       margin: new EdgeInsets.only(right: 20.0),
                     ),
                     new Text(
                       'Restart',
-                      style: new TextStyle(color: Colors.grey, fontWeight: FontWeight.bold),
+                      style: new TextStyle(color: Colors.green, fontWeight: FontWeight.bold),
                     )
                   ],
                 ),
@@ -131,14 +124,11 @@ class DuyDialogScreenState extends State<DuyDialogScreen> {
             ],
           );
         })) {
-      case Answer.YES:
-        setAnswer('yes');
+      case Answer.STANDBY:
         break;
-      case Answer.NO:
-        setAnswer('no');
+      case Answer.POWER_OFF:
         break;
-      case Answer.MAYBE:
-        setAnswer('maybe');
+      case Answer.RESTART:
         break;
     }
   }
