@@ -1081,9 +1081,9 @@ class RestaurantAnimationScreenState2 extends State<RestaurantAnimationScreen2> 
           new Opacity(
             child: new Container(
               child: new RawMaterialButton(
-                onPressed: () {},
+                onPressed: onCancelPressed,
                 child: new Image.asset(
-                  'images/ic_cook.png',
+                  'images/ic_cancel.png',
                   width: 40.0,
                   height: 40.0,
                 ),
@@ -1140,7 +1140,7 @@ class RestaurantAnimationScreenState2 extends State<RestaurantAnimationScreen2> 
           ),
           new Expanded(
             child: new Text(
-              'Fish',
+              'Cancel',
               style: new TextStyle(color: new Color(0xFF575869), fontSize: 11.0, fontWeight: FontWeight.bold),
               textAlign: TextAlign.center,
             ),
@@ -1162,6 +1162,14 @@ class RestaurantAnimationScreenState2 extends State<RestaurantAnimationScreen2> 
     quantity++;
     isCircleAddPressed = true;
     animControlPhrase3.forward();
+  }
+
+  void onCancelPressed() {
+    quantity = 0;
+    isCircleAddPressed = false;
+    whichPlatePressed = 0;
+    isBtnPlatePressed = false;
+    animControlPhrase2.reverse();
   }
 
   double processSizeBtnTable(double value) {

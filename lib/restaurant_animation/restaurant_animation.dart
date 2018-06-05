@@ -199,6 +199,12 @@ class RestaurantAnimationScreenState extends State<RestaurantAnimationScreen> wi
     animControlPhrase3.forward();
   }
 
+  void onCancelPressed() {
+    isBtnTablePressed = false;
+    whichBtnTablePressed = 0;
+    animControlPhrase2.reverse();
+  }
+
   void navigateNextScreen() {
     Navigator.pop(context);
     Navigator.push(context, new MaterialPageRoute(builder: (context) => new RestaurantAnimation2()));
@@ -318,7 +324,7 @@ class RestaurantAnimationScreenState extends State<RestaurantAnimationScreen> wi
           ),
           new Container(
             child: new RawMaterialButton(
-              onPressed: () => onBtnBottomMenuPressed(4),
+              onPressed: onCancelPressed,
               child: new Image.asset(
                 'images/ic_cancel.png',
                 width: whichBtnMenuPressed == 4 ? 40.0 - extraSizeBtnBottomMenu : 40.0,
