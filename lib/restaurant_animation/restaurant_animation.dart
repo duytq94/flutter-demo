@@ -44,8 +44,6 @@ class RestaurantAnimationScreenState extends State<RestaurantAnimationScreen> wi
       thresholdMarginTop2 = 60.0,
       thresholdSizeBtnBigTable1 = 10.0,
       thresholdSizeBtnBigTable2 = 30.0,
-      thresholdSizeBtnSmallTable1 = 10.0,
-      thresholdSizeBtnSmallTable2 = 20.0,
       thresholdBtnBottomMenu1 = 40.0,
       thresholdBtnBottomMenu2 = 60.0;
 
@@ -161,17 +159,6 @@ class RestaurantAnimationScreenState extends State<RestaurantAnimationScreen> wi
 
   // Process size button, zoom out -> zoom in -> zoom out
   double processSizeBtnBigTable(double value) {
-    if (value < 10.0) {
-      return value;
-    } else if (value < thresholdSizeBtnBigTable2) {
-      return value = thresholdSizeBtnBigTable2 - thresholdSizeBtnBigTable1 - value;
-    } else {
-      return value = value - (thresholdSizeBtnBigTable2 + thresholdSizeBtnBigTable1);
-    }
-  }
-
-  // Process size button, zoom out -> zoom in -> zoom out
-  double processSizeBtnSmallTable(double value) {
     if (value < 10.0) {
       return value;
     } else if (value < thresholdSizeBtnBigTable2) {
