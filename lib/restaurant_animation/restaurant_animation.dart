@@ -403,6 +403,7 @@ class RestaurantAnimationScreenState extends State<RestaurantAnimationScreen> wi
         child: new Column(
           crossAxisAlignment: CrossAxisAlignment.center,
           children: <Widget>[
+            // Chairs top
             new Container(
               child: new Row(
                 children: <Widget>[
@@ -413,6 +414,8 @@ class RestaurantAnimationScreenState extends State<RestaurantAnimationScreen> wi
               ),
               width: 90.0 - value,
             ),
+
+            // Table
             new Stack(
               children: <Widget>[
                 new Image.asset(
@@ -451,6 +454,8 @@ class RestaurantAnimationScreenState extends State<RestaurantAnimationScreen> wi
                 )
               ],
             ),
+
+            // Chair bottom
             new Container(
               child: new Row(
                 children: <Widget>[
