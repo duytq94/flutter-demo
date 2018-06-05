@@ -10,6 +10,7 @@
 * Medium Clap Screen - Clap animation like Medium.
 * Fetch Api Screen - Load list data from StackOverflow.
 * Detail Info Screen - An simple UI with image, icon, text...
+* Tool widget Screen - Some widgets use for input like dialog, checkbox, radio button...
 * And more screen will be update in future...
 
 ## Screenshots:
@@ -22,3 +23,4 @@
 <img src="https://raw.githubusercontent.com/duytq94/demo-flutter/master/ScreenShots/MediumClap.gif" height="30%" width="30%">
 <img src="https://raw.githubusercontent.com/duytq94/demo-flutter/master/ScreenShots/FetchApi.jpg" height="30%" width="30%">
 <img src="https://raw.githubusercontent.com/duytq94/demo-flutter/master/ScreenShots/DetailInfo.jpg" height="30%" width="30%">
+<img src="https://raw.githubusercontent.com/duytq94/demo-flutter/master/ScreenShots/ToolWidget.jpg" height="30%" width="30%">
