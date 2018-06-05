@@ -42,12 +42,15 @@ class RestaurantAnimationScreenState extends State<RestaurantAnimationScreen> wi
 
   double thresholdMarginTop1 = 40.0,
       thresholdMarginTop2 = 60.0,
-      thresholdSizeBtnTable1 = 10.0,
-      thresholdSizeBtnTable2 = 30.0,
+      thresholdSizeBtnBigTable1 = 10.0,
+      thresholdSizeBtnBigTable2 = 30.0,
+      thresholdSizeBtnSmallTable1 = 10.0,
+      thresholdSizeBtnSmallTable2 = 20.0,
       thresholdBtnBottomMenu1 = 40.0,
       thresholdBtnBottomMenu2 = 60.0;
 
   bool isBtnTablePressed = false;
+  int whichBtnTablePressed = 0;
   bool isBtnBottomMenuPressed = false;
 
   @override
@@ -157,13 +160,24 @@ class RestaurantAnimationScreenState extends State<RestaurantAnimationScreen> wi
   }
 
   // Process size button, zoom out -> zoom in -> zoom out
-  double processSizeBtnTable(double value) {
+  double processSizeBtnBigTable(double value) {
     if (value < 10.0) {
       return value;
-    } else if (value < thresholdSizeBtnTable2) {
-      return value = thresholdSizeBtnTable2 - thresholdSizeBtnTable1 - value;
+    } else if (value < thresholdSizeBtnBigTable2) {
+      return value = thresholdSizeBtnBigTable2 - thresholdSizeBtnBigTable1 - value;
     } else {
-      return value = value - (thresholdSizeBtnTable2 + thresholdSizeBtnTable1);
+      return value = value - (thresholdSizeBtnBigTable2 + thresholdSizeBtnBigTable1);
+    }
+  }
+
+  // Process size button, zoom out -> zoom in -> zoom out
+  double processSizeBtnSmallTable(double value) {
+    if (value < 10.0) {
+      return value;
+    } else if (value < thresholdSizeBtnBigTable2) {
+      return value = thresholdSizeBtnBigTable2 - thresholdSizeBtnBigTable1 - value;
+    } else {
+      return value = value - (thresholdSizeBtnBigTable2 + thresholdSizeBtnBigTable1);
     }
   }
 
@@ -185,9 +199,10 @@ class RestaurantAnimationScreenState extends State<RestaurantAnimationScreen> wi
     super.dispose();
   }
 
-  void onBtnTablePressed() {
-    animControlPhrase2.forward();
+  void onBtnTablePressed(int whichTable) {
     isBtnTablePressed = true;
+    whichBtnTablePressed = whichTable;
+    animControlPhrase2.forward();
   }
 
   void onBtnBottomMenuPressed() {
@@ -376,90 +391,11 @@ class RestaurantAnimationScreenState extends State<RestaurantAnimationScreen> wi
     );
   }
 
-  Widget renderBigTable(String colorTable) {
-    return new FlatButton(
-      onPressed: () {},
-      child: new Container(
-        width: 120.0,
-        height: 100.0,
-        child: new Column(
-          crossAxisAlignment: CrossAxisAlignment.center,
-          children: <Widget>[
-            new Container(
-              child: new Row(
-                children: <Widget>[
-                  new Image.asset(
-                    'images/chair_top.png',
-                    width: 40.0,
-                    height: 20.0,
-                  ),
-                  new Container(
-                    width: 10.0,
-                  ),
-                  new Image.asset(
-                    'images/chair_top.png',
-                    width: 40.0,
-                    height: 20.0,
-                  ),
-                ],
-              ),
-              width: 90.0,
-            ),
-            new Stack(
-              children: <Widget>[
-                new Image.asset(
-                  colorTable == 'green' ? 'images/table_big_green.png' : 'images/table_big_pink.png',
-                  width: 120.0,
-                  height: 60.0,
-                  fit: BoxFit.contain,
-                ),
-                new Container(
-                  child: new Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: <Widget>[
-                      new Text('01', style: new TextStyle(color: new Color(0xFF575869), fontSize: 14.0)),
-                      new Container(
-                        height: 15.0,
-                      ),
-                      new Text('Available', style: new TextStyle(color: new Color(0xFF575869), fontSize: 10.0))
-                    ],
-                  ),
-                  margin: new EdgeInsets.only(left: 20.0, top: 5.0, bottom: 5.0, right: 10.0),
-                )
-              ],
-            ),
-            new Container(
-              child: new Row(
-                children: <Widget>[
-                  new Image.asset(
-                    'images/chair_bottom.png',
-                    width: 40.0,
-                    height: 20.0,
-                  ),
-                  new Container(
-                    width: 10.0,
-                  ),
-                  new Image.asset(
-                    'images/chair_bottom.png',
-                    width: 40.0,
-                    height: 20.0,
-                  ),
-                ],
-              ),
-              width: 90.0,
-            ),
-          ],
-        ),
-      ),
-      padding: new EdgeInsets.all(0.0),
-    );
-  }
-
   // With press animation for demo
-  Widget renderBigTable2(String colorTable, Function onPressed) {
+  Widget renderBigTable(String colorTable, int whichTable, Function onPressed) {
     double value = 0.0;
-    if (isBtnTablePressed) {
-      value = processSizeBtnTable(zoomBtnTableAnim.value);
+    if (isBtnTablePressed && whichBtnTablePressed == whichTable) {
+      value = processSizeBtnBigTable(zoomBtnTableAnim.value);
     }
 
     return new FlatButton(
@@ -489,21 +425,31 @@ class RestaurantAnimationScreenState extends State<RestaurantAnimationScreen> wi
                   width: 120.0 - value,
                   height: 60.0 - value / 2.0,
                   fit: BoxFit.contain,
-                  color: isBtnTablePressed ? new Color(0xff7DD5AF) : null,
+                  color: (isBtnTablePressed && whichBtnTablePressed == whichTable)
+                      ? colorTable == 'green' ? new Color(0xff7DD5AF) : new Color(0xFFF8859B)
+                      : null,
                 ),
                 new Container(
                   child: new Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: <Widget>[
-                      new Text('01',
-                          style: new TextStyle(
-                              color: isBtnTablePressed ? Colors.white : new Color(0xFF575869),
-                              fontSize: 14.0 - value / 4.0)),
+                      new Text(
+                        '01',
+                        style: new TextStyle(
+                            color: (isBtnTablePressed && whichBtnTablePressed == whichTable)
+                                ? Colors.white
+                                : new Color(0xFF575869),
+                            fontSize: 14.0 - value / 4.0),
+                      ),
                       new Container(height: 15.0 - value / 4.0),
-                      new Text('Available',
-                          style: new TextStyle(
-                              color: isBtnTablePressed ? Colors.white : new Color(0xFF575869),
-                              fontSize: 10.0 - value / 4.0))
+                      new Text(
+                        'Available',
+                        style: new TextStyle(
+                            color: (isBtnTablePressed && whichBtnTablePressed == whichTable)
+                                ? Colors.white
+                                : new Color(0xFF575869),
+                            fontSize: 10.0 - value / 4.0),
+                      )
                     ],
                   ),
                   margin: new EdgeInsets.only(left: 20.0, top: 5.0, bottom: 5.0, right: 10.0),
@@ -527,60 +473,69 @@ class RestaurantAnimationScreenState extends State<RestaurantAnimationScreen> wi
     );
   }
 
-  Widget renderSmallTable(String colorTable) {
+  Widget renderSmallTable(String colorTable, int whichTable, Function onPressed) {
+    double value = 0.0;
+    if (isBtnTablePressed && whichBtnTablePressed == whichTable) {
+      value = processSizeBtnBigTable(zoomBtnTableAnim.value);
+    }
+
     return new FlatButton(
-      onPressed: () {},
+      highlightColor: Colors.transparent,
+      splashColor: Colors.transparent,
+      onPressed: onPressed,
       child: new Container(
-        width: 60.0,
+        width: 60.0 - value,
+        height: 100.0 - value,
         child: new Column(
           crossAxisAlignment: CrossAxisAlignment.center,
           children: <Widget>[
-            new Container(
-              child: new Row(
-                children: <Widget>[
-                  new Image.asset(
-                    'images/chair_top.png',
-                    width: 40.0,
-                    height: 20.0,
-                  ),
-                ],
-              ),
-              width: 40.0,
+            new Image.asset(
+              'images/chair_top.png',
+              width: 40.0 - value / 2.0,
+              height: 20.0 - value / 4.0,
             ),
             new Stack(
               children: <Widget>[
                 new Image.asset(
                   colorTable == 'green' ? 'images/table_small_green.png' : 'images/table_small_yellow.png',
-                  width: 60.0,
-                  height: 50.0,
+                  width: 70.0 - value / 2.0,
+                  height: 50.0 - value / 2.0,
                   fit: BoxFit.contain,
+                  color: (isBtnTablePressed && whichBtnTablePressed == whichTable)
+                      ? colorTable == 'green' ? new Color(0xff7DD5AF) : new Color(0xFFFBDB75)
+                      : null,
                 ),
                 new Container(
                   child: new Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: <Widget>[
-                      new Text('01', style: new TextStyle(color: new Color(0xFF575869), fontSize: 14.0)),
+                      new Text('01',
+                          style: new TextStyle(
+                              color: (isBtnTablePressed && whichBtnTablePressed == whichTable)
+                                  ? Colors.white
+                                  : new Color(0xFF575869),
+                              fontSize: 14.0 - value / 4.0)),
                       new Container(
                         height: 15.0,
                       ),
-                      new Text('Taken', style: new TextStyle(color: new Color(0xFF575869), fontSize: 10.0))
+                      new Text(
+                        'Taken',
+                        style: new TextStyle(
+                            color: (isBtnTablePressed && whichBtnTablePressed == whichTable)
+                                ? Colors.white
+                                : new Color(0xFF575869),
+                            fontSize: 10.0 - value / 4.0),
+                      )
                     ],
                   ),
                   margin: new EdgeInsets.only(left: 10.0, top: 5.0, bottom: 5.0, right: 10.0),
                 )
               ],
             ),
-            new Container(
-              child: new Row(
-                children: <Widget>[
-                  new Image.asset(
-                    'images/chair_bottom.png',
-                    width: 40.0,
-                    height: 20.0,
-                  ),
-                ],
-              ),
-              width: 40.0,
+            new Image.asset(
+              'images/chair_bottom.png',
+              width: 40.0 - value / 2.0,
+              height: 20.0 - value / 4.0,
             ),
           ],
         ),
@@ -610,7 +565,7 @@ class RestaurantAnimationScreenState extends State<RestaurantAnimationScreen> wi
               opacity: fadeInViewAnim.value,
               child: new Column(
                 children: <Widget>[
-                  // Text entrance
+                  // Text "entrance"
                   new Center(
                     child: new Opacity(
                       child: new Padding(
@@ -630,51 +585,78 @@ class RestaurantAnimationScreenState extends State<RestaurantAnimationScreen> wi
                   // Group tables
                   new Column(
                     children: <Widget>[
-                      // Big table
+                      // Group table on row 1
                       new Container(
                         child: new Row(
                           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                           children: <Widget>[
-                            new Container(
-                              child: renderBigTable2('green', onBtnTablePressed),
-                              height: 120.0,
-                              width: 120.0,
+                            new Opacity(
+                              child: new Container(
+                                child: renderBigTable('green', 1, () => onBtnTablePressed(1)),
+                                height: 120.0,
+                                width: 120.0,
+                              ),
+                              opacity: whichBtnTablePressed != 1 ? fadeOutViewAnim.value : 1.0,
                             ),
-                            new Opacity(child: renderBigTable('pink'), opacity: fadeOutViewAnim.value),
+                            new Opacity(
+                              child: new Container(
+                                child: renderBigTable('pink', 2, () => onBtnTablePressed(2)),
+                                height: 120.0,
+                                width: 120.0,
+                              ),
+                              opacity: whichBtnTablePressed != 2 ? fadeOutViewAnim.value : 1.0,
+                            ),
                           ],
                         ),
                         margin: new EdgeInsets.only(left: 10.0, right: 10.0),
                         height: 120.0,
                       ),
 
-                      // Small table
+                      // Group table on row 2
                       new Container(
-                        child: new Opacity(
-                          child: new Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                            children: <Widget>[
-                              renderSmallTable('green'),
-                              renderSmallTable('yellow'),
-                              renderSmallTable('green'),
-                            ],
-                          ),
-                          opacity: fadeOutViewAnim.value,
+                        child: new Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                          children: <Widget>[
+                            new Opacity(
+                              child: renderSmallTable('yellow', 3, () => onBtnTablePressed(3)),
+                              opacity: whichBtnTablePressed != 3 ? fadeOutViewAnim.value : 1.0,
+                            ),
+                            new Opacity(
+                              child: renderSmallTable('green', 4, () => onBtnTablePressed(4)),
+                              opacity: whichBtnTablePressed != 4 ? fadeOutViewAnim.value : 1.0,
+                            ),
+                            new Opacity(
+                              child: renderSmallTable('green', 5, () => onBtnTablePressed(5)),
+                              opacity: whichBtnTablePressed != 5 ? fadeOutViewAnim.value : 1.0,
+                            ),
+                          ],
                         ),
-                        margin: new EdgeInsets.only(left: 20.0, right: 20.0),
-                        height: 100.0,
+                        margin: new EdgeInsets.only(left: 10.0, right: 10.0),
+                        height: 120.0,
                       ),
 
-                      // Big table
+                      // Group table on row 3
                       new Container(
-                        child: new Opacity(
-                          child: new Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                            children: <Widget>[
-                              renderBigTable('pink'),
-                              renderBigTable('green'),
-                            ],
-                          ),
-                          opacity: fadeOutViewAnim.value,
+                        child: new Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                          children: <Widget>[
+                            new Opacity(
+                              child: new Container(
+                                child: renderBigTable('pink', 6, () => onBtnTablePressed(6)),
+                                height: 120.0,
+                                width: 120.0,
+                              ),
+                              opacity: whichBtnTablePressed != 6 ? fadeOutViewAnim.value : 1.0,
+                            ),
+                            new Opacity(
+                              child: new Container(
+                                child: renderBigTable('green', 7, () => onBtnTablePressed(7)),
+                                height: 120.0,
+                                width: 120.0,
+                              ),
+                              opacity: whichBtnTablePressed != 7 ? fadeOutViewAnim.value : 1.0,
+                            ),
+                          ],
                         ),
                         margin: new EdgeInsets.only(left: 10.0, right: 10.0),
                         height: 120.0,
