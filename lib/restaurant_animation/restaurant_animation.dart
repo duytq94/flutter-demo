@@ -49,6 +49,7 @@ class RestaurantAnimationScreenState extends State<RestaurantAnimationScreen> wi
 
   bool isBtnTablePressed = false;
   int whichBtnTablePressed = 0;
+  int whichBtnMenuPressed = 0;
   bool isBtnBottomMenuPressed = false;
 
   @override
@@ -192,8 +193,9 @@ class RestaurantAnimationScreenState extends State<RestaurantAnimationScreen> wi
     animControlPhrase2.forward();
   }
 
-  void onBtnBottomMenuPressed() {
+  void onBtnBottomMenuPressed(int whichBtn) {
     isBtnBottomMenuPressed = true;
+    whichBtnMenuPressed = whichBtn;
     animControlPhrase3.forward();
   }
 
@@ -268,11 +270,11 @@ class RestaurantAnimationScreenState extends State<RestaurantAnimationScreen> wi
         children: <Widget>[
           new Container(
             child: new RawMaterialButton(
-              onPressed: () {},
+              onPressed: () => onBtnBottomMenuPressed(1),
               child: new Image.asset(
                 'images/ic_book.png',
-                width: 40.0,
-                height: 40.0,
+                width: whichBtnMenuPressed == 1 ? 40.0 - extraSizeBtnBottomMenu : 40.0,
+                height: whichBtnMenuPressed == 1 ? 40.0 - extraSizeBtnBottomMenu : 40.0,
               ),
               constraints: new BoxConstraints(),
               highlightColor: Colors.transparent,
@@ -284,11 +286,11 @@ class RestaurantAnimationScreenState extends State<RestaurantAnimationScreen> wi
           ),
           new Container(
             child: new RawMaterialButton(
-              onPressed: () {},
+              onPressed: () => onBtnBottomMenuPressed(2),
               child: new Image.asset(
                 'images/ic_add.png',
-                width: 40.0,
-                height: 40.0,
+                width: whichBtnMenuPressed == 2 ? 40.0 - extraSizeBtnBottomMenu : 40.0,
+                height: whichBtnMenuPressed == 2 ? 40.0 - extraSizeBtnBottomMenu : 40.0,
               ),
               constraints: new BoxConstraints(),
               highlightColor: Colors.transparent,
@@ -300,11 +302,11 @@ class RestaurantAnimationScreenState extends State<RestaurantAnimationScreen> wi
           ),
           new Container(
             child: new RawMaterialButton(
-              onPressed: onBtnBottomMenuPressed,
+              onPressed: () => onBtnBottomMenuPressed(3),
               child: new Image.asset(
                 'images/ic_clock.png',
-                width: 40.0 - extraSizeBtnBottomMenu,
-                height: 40.0 - extraSizeBtnBottomMenu,
+                width: whichBtnMenuPressed == 3 ? 40.0 - extraSizeBtnBottomMenu : 40.0,
+                height: whichBtnMenuPressed == 3 ? 40.0 - extraSizeBtnBottomMenu : 40.0,
               ),
               constraints: new BoxConstraints(),
               highlightColor: Colors.transparent,
@@ -316,11 +318,11 @@ class RestaurantAnimationScreenState extends State<RestaurantAnimationScreen> wi
           ),
           new Container(
             child: new RawMaterialButton(
-              onPressed: () {},
+              onPressed: () => onBtnBottomMenuPressed(4),
               child: new Image.asset(
                 'images/ic_cancel.png',
-                width: 40.0,
-                height: 40.0,
+                width: whichBtnMenuPressed == 4 ? 40.0 - extraSizeBtnBottomMenu : 40.0,
+                height: whichBtnMenuPressed == 4 ? 40.0 - extraSizeBtnBottomMenu : 40.0,
               ),
               constraints: new BoxConstraints(),
               highlightColor: Colors.transparent,
