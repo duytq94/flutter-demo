@@ -55,7 +55,7 @@ class RestaurantAnimationScreenState extends State<RestaurantAnimationScreen> wi
     super.initState();
 
     // Animation phrase 1 (drop down view with bounce)
-    animControlPhrase1 = new AnimationController(vsync: this, duration: new Duration(milliseconds: 1800));
+    animControlPhrase1 = new AnimationController(vsync: this, duration: new Duration(milliseconds: 1200));
     dropDownAnim = new Tween(begin: 0.0, end: 70.0)
         .animate(new CurvedAnimation(parent: animControlPhrase1, curve: new Interval(0.3, 1.0, curve: Curves.easeOut)));
     dropDownAnim.addListener(() {
@@ -70,7 +70,7 @@ class RestaurantAnimationScreenState extends State<RestaurantAnimationScreen> wi
     animControlPhrase1.forward();
 
     // Animation phrase 2 (zoom button when be pressed and show up bottom menu)
-    animControlPhrase2 = new AnimationController(vsync: this, duration: new Duration(milliseconds: 1800));
+    animControlPhrase2 = new AnimationController(vsync: this, duration: new Duration(milliseconds: 1000));
 
     zoomBtnTableAnim = new Tween(begin: 0.0, end: 40.0)
         .animate(new CurvedAnimation(parent: animControlPhrase2, curve: Curves.easeOut));
@@ -133,7 +133,7 @@ class RestaurantAnimationScreenState extends State<RestaurantAnimationScreen> wi
     });
 
     // Animation phrase 3 (zoom button bottom menu)
-    animControlPhrase3 = new AnimationController(vsync: this, duration: new Duration(milliseconds: 500));
+    animControlPhrase3 = new AnimationController(vsync: this, duration: new Duration(milliseconds: 300));
     animControlPhrase3.addStatusListener((status) {
       if (status == AnimationStatus.completed) {
         navigateNextScreen();
