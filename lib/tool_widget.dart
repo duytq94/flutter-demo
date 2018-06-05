@@ -5,31 +5,36 @@ import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
 import 'package:image_picker/image_picker.dart';
 
-class DuyDialog extends StatelessWidget {
+class ToolWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return new Scaffold(
       appBar: new AppBar(
         title: new Text(
-          "DIALOG",
+          "TOOL WIDGET",
           style: new TextStyle(fontSize: 18.0, fontWeight: FontWeight.bold),
         ),
         centerTitle: true,
       ),
-      body: new DuyDialogScreen(),
+      body: new ToolWidgetScreen(),
     );
   }
 }
 
-class DuyDialogScreen extends StatefulWidget {
+class ToolWidgetScreen extends StatefulWidget {
   @override
-  State createState() => new DuyDialogScreenState();
+  State createState() => new ToolWidgetScreenState();
 }
 
 enum Answer { STANDBY, POWER_OFF, RESTART }
 
-class DuyDialogScreenState extends State<DuyDialogScreen> {
-  Future<Null> _askedToLead() async {
+class ToolWidgetScreenState extends State<ToolWidgetScreen> {
+  int selected = 0;
+  bool isCheck = true;
+  bool isSwitch = true;
+  DateTime currentDate = new DateTime.now();
+
+  Future<Null> openDialog() async {
     switch (await showDialog(
         context: context,
         builder: (BuildContext context) {
@@ -133,11 +138,119 @@ class DuyDialogScreenState extends State<DuyDialogScreen> {
     }
   }
 
+  Future<Null> openDatePicker(BuildContext context) async {
+    DateTime picked = await showDatePicker(
+      context: context,
+      initialDate: currentDate,
+      firstDate: DateTime(2017),
+      lastDate: DateTime(2020),
+    );
+    if (picked != null && picked != currentDate) {
+      setState(() {
+        currentDate = picked;
+      });
+    }
+  }
+
+  List<Widget> groupRadio() {
+    List<Widget> listRadio = new List();
+    for (int i = 0; i < 3; i++) {
+      listRadio.add(new Row(
+        children: <Widget>[
+          new Text(
+            'Option $i',
+            style: new TextStyle(fontWeight: FontWeight.bold),
+          ),
+          new Radio(
+            value: i,
+            groupValue: selected,
+            onChanged: (value) {
+              onRadioChange(value);
+            },
+            activeColor: Colors.purple,
+          )
+        ],
+        mainAxisAlignment: MainAxisAlignment.center,
+      ));
+    }
+    return listRadio;
+  }
+
+  void onRadioChange(int value) {
+    setState(() {
+      selected = value;
+    });
+  }
+
+  void onCheck(bool value) {
+    setState(() {
+      isCheck = value;
+    });
+  }
+
+  void onSwitch(bool value) {
+    setState(() {
+      isSwitch = value;
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     timeDilation = 1.0;
-    return new Container(
-      child: new FlatButton(onPressed: _askedToLead, child: new Text('OPEN')),
+    return new Column(
+      children: <Widget>[
+        new Container(
+          child: new FlatButton(
+            onPressed: openDialog,
+            child: new Text(
+              'OPEN DIALOG',
+              style: new TextStyle(color: Colors.white),
+            ),
+            color: Colors.purple,
+            highlightColor: Colors.purple[200],
+          ),
+          margin: new EdgeInsets.all(20.0),
+        ),
+        new Container(
+          child: new Column(
+            children: <Widget>[
+              new FlatButton(
+                onPressed: () {
+                  openDatePicker(context);
+                },
+                child: new Text(
+                  'DATE PICKER',
+                  style: new TextStyle(color: Colors.white),
+                ),
+                color: Colors.purple,
+                highlightColor: Colors.purple[200],
+              ),
+              new Text(
+                'To day is ${currentDate.day}th',
+              ),
+            ],
+          ),
+          margin: new EdgeInsets.all(20.0),
+        ),
+        new Column(
+          children: groupRadio(),
+        ),
+        new Checkbox(
+          value: isCheck,
+          onChanged: (value) {
+            onCheck(value);
+          },
+          activeColor: Colors.purple,
+        ),
+        new Switch(
+          value: isSwitch,
+          onChanged: (value) {
+            onSwitch(value);
+          },
+          activeColor: Colors.purple,
+        ),
+      ],
+      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
     );
   }
 }

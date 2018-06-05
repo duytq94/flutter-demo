@@ -1,4 +1,4 @@
-import 'package:demo_flutter/dialog.dart';
+import 'package:demo_flutter/tool_widget.dart';
 import 'package:demo_flutter/edit_profile.dart';
 import 'package:demo_flutter/fetch_api.dart';
 import 'package:demo_flutter/hero_animation/hero_animation.dart';
@@ -47,8 +47,7 @@ class MainScreen extends StatelessWidget {
             buildButton(context, 'Medium clap screen', new MediumClap()),
             buildButton(context, 'Fetch api screen', new FetchApi()),
             buildButton(context, 'Detail info screen', new DetailInfo()),
-            // I named it DuyDialog cause Dialog is system name class
-            buildButton(context, 'Dialog screen', new DuyDialog()),
+            buildButton(context, 'Tool widget screen', new ToolWidget()),
           ],
         ),
       ),
