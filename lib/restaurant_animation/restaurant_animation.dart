@@ -42,8 +42,6 @@ class RestaurantAnimationScreenState extends State<RestaurantAnimationScreen> wi
 
   double thresholdMarginTop1 = 40.0,
       thresholdMarginTop2 = 60.0,
-      thresholdSizeBtnBigTable1 = 10.0,
-      thresholdSizeBtnBigTable2 = 30.0,
       thresholdBtnBottomMenu1 = 40.0,
       thresholdBtnBottomMenu2 = 60.0;
 
@@ -75,7 +73,7 @@ class RestaurantAnimationScreenState extends State<RestaurantAnimationScreen> wi
     animControlPhrase2 = new AnimationController(vsync: this, duration: new Duration(milliseconds: 1000));
 
     zoomBtnTableAnim =
-        new Tween(begin: 0.0, end: 1.2).animate(new CurvedAnimation(parent: animControlPhrase2, curve: Curves.easeOut));
+        new Tween(begin: 0.0, end: 0.8).animate(new CurvedAnimation(parent: animControlPhrase2, curve: Curves.easeOut));
     zoomBtnTableAnim.addListener(() {
       setState(() {});
     });
@@ -141,7 +139,7 @@ class RestaurantAnimationScreenState extends State<RestaurantAnimationScreen> wi
         navigateNextScreen();
       }
     });
-    zoomBtnBottomMenuAnim = new Tween(begin: 0.0, end: 8.0).animate(animControlPhrase3);
+    zoomBtnBottomMenuAnim = new Tween(begin: 1.0, end: 0.5).animate(animControlPhrase3);
     zoomBtnBottomMenuAnim.addListener(() {
       setState(() {});
     });
@@ -160,12 +158,12 @@ class RestaurantAnimationScreenState extends State<RestaurantAnimationScreen> wi
 
   // Process size button, zoom out -> zoom in -> zoom out
   double processSizeBtnBigTable(double value) {
-    if (value <= 0.3) {
+    if (value <= 0.2) {
       return 1.0 - value;
-    } else if (value <= 0.9) {
-      return 0.7 + (value - 0.3);
+    } else if (value <= 0.6) {
+      return 0.9 + (value - 0.3);
     } else {
-      return 2.2 - value;
+      return 1.8 - value;
     }
   }
 
@@ -266,73 +264,85 @@ class RestaurantAnimationScreenState extends State<RestaurantAnimationScreen> wi
       value4 = processMarginBottomMenu(comeUpBtnBottomMenuAnim4.value);
     }
 
-    double extraSizeBtnBottomMenu = 0.0;
+    double scaleSizeBtnBottomMenu = 1.0;
     if (isBtnBottomMenuPressed) {
-      extraSizeBtnBottomMenu = extraSizeBtnBottomMenu + zoomBtnBottomMenuAnim.value;
+      scaleSizeBtnBottomMenu = zoomBtnBottomMenuAnim.value;
     }
 
     return new Container(
       child: new Row(
         children: <Widget>[
           new Container(
-            child: new RawMaterialButton(
-              onPressed: () => onBtnBottomMenuPressed(1),
-              child: new Image.asset(
-                'images/ic_book.png',
-                width: whichBtnMenuPressed == 1 ? 40.0 - extraSizeBtnBottomMenu : 40.0,
-                height: whichBtnMenuPressed == 1 ? 40.0 - extraSizeBtnBottomMenu : 40.0,
+            child: new Transform.scale(
+              child: new RawMaterialButton(
+                onPressed: () => onBtnBottomMenuPressed(1),
+                child: new Image.asset(
+                  'images/ic_book.png',
+                  width: 40.0,
+                  height: 40.0,
+                ),
+                constraints: new BoxConstraints(),
+                highlightColor: Colors.transparent,
+                splashColor: Colors.transparent,
               ),
-              constraints: new BoxConstraints(),
-              highlightColor: Colors.transparent,
-              splashColor: Colors.transparent,
+              scale: whichBtnMenuPressed == 1 ? scaleSizeBtnBottomMenu : 1.0,
             ),
             margin: new EdgeInsets.only(bottom: value1),
             width: 40.0,
             height: 40.0,
           ),
           new Container(
-            child: new RawMaterialButton(
-              onPressed: () => onBtnBottomMenuPressed(2),
-              child: new Image.asset(
-                'images/ic_add.png',
-                width: whichBtnMenuPressed == 2 ? 40.0 - extraSizeBtnBottomMenu : 40.0,
-                height: whichBtnMenuPressed == 2 ? 40.0 - extraSizeBtnBottomMenu : 40.0,
+            child: new Transform.scale(
+              child: new RawMaterialButton(
+                onPressed: () => onBtnBottomMenuPressed(2),
+                child: new Image.asset(
+                  'images/ic_add.png',
+                  width: 40.0,
+                  height: 40.0,
+                ),
+                constraints: new BoxConstraints(),
+                highlightColor: Colors.transparent,
+                splashColor: Colors.transparent,
               ),
-              constraints: new BoxConstraints(),
-              highlightColor: Colors.transparent,
-              splashColor: Colors.transparent,
+              scale: whichBtnMenuPressed == 2 ? scaleSizeBtnBottomMenu : 1.0,
             ),
             margin: new EdgeInsets.only(bottom: value2),
             width: 40.0,
             height: 40.0,
           ),
           new Container(
-            child: new RawMaterialButton(
-              onPressed: () => onBtnBottomMenuPressed(3),
-              child: new Image.asset(
-                'images/ic_clock.png',
-                width: whichBtnMenuPressed == 3 ? 40.0 - extraSizeBtnBottomMenu : 40.0,
-                height: whichBtnMenuPressed == 3 ? 40.0 - extraSizeBtnBottomMenu : 40.0,
+            child: new Transform.scale(
+              child: new RawMaterialButton(
+                onPressed: () => onBtnBottomMenuPressed(3),
+                child: new Image.asset(
+                  'images/ic_clock.png',
+                  width: 40.0,
+                  height: 40.0,
+                ),
+                constraints: new BoxConstraints(),
+                highlightColor: Colors.transparent,
+                splashColor: Colors.transparent,
               ),
-              constraints: new BoxConstraints(),
-              highlightColor: Colors.transparent,
-              splashColor: Colors.transparent,
+              scale: whichBtnMenuPressed == 3 ? scaleSizeBtnBottomMenu : 1.0,
             ),
             margin: new EdgeInsets.only(bottom: value3),
             width: 40.0,
             height: 40.0,
           ),
           new Container(
-            child: new RawMaterialButton(
-              onPressed: onCancelPressed,
-              child: new Image.asset(
-                'images/ic_cancel.png',
-                width: whichBtnMenuPressed == 4 ? 40.0 - extraSizeBtnBottomMenu : 40.0,
-                height: whichBtnMenuPressed == 4 ? 40.0 - extraSizeBtnBottomMenu : 40.0,
+            child: new Transform.scale(
+              child: new RawMaterialButton(
+                onPressed: onCancelPressed,
+                child: new Image.asset(
+                  'images/ic_cancel.png',
+                  width: 40.0,
+                  height: 40.0,
+                ),
+                constraints: new BoxConstraints(),
+                highlightColor: Colors.transparent,
+                splashColor: Colors.transparent,
               ),
-              constraints: new BoxConstraints(),
-              highlightColor: Colors.transparent,
-              splashColor: Colors.transparent,
+              scale: whichBtnMenuPressed == 4 ? scaleSizeBtnBottomMenu : 1.0,
             ),
             margin: new EdgeInsets.only(bottom: value4),
             width: 40.0,
@@ -478,74 +488,77 @@ class RestaurantAnimationScreenState extends State<RestaurantAnimationScreen> wi
   }
 
   Widget renderSmallTable(String colorTable, int whichTable, Function onPressed) {
-    double value = 0.0;
+    double value = 1.0;
     if (isBtnTablePressed && whichBtnTablePressed == whichTable) {
       value = processSizeBtnBigTable(zoomBtnTableAnim.value);
     }
 
-    return new FlatButton(
-      highlightColor: Colors.transparent,
-      splashColor: Colors.transparent,
-      onPressed: onPressed,
-      child: new Container(
-        width: 60.0 - value,
-        height: 100.0 - value,
-        child: new Column(
-          crossAxisAlignment: CrossAxisAlignment.center,
-          children: <Widget>[
-            new Image.asset(
-              'images/chair_top.png',
-              width: 40.0 - value / 2.0,
-              height: 20.0 - value / 4.0,
-            ),
-            new Stack(
-              children: <Widget>[
-                new Image.asset(
-                  colorTable == 'green' ? 'images/table_small_green.png' : 'images/table_small_yellow.png',
-                  width: 70.0 - value / 2.0,
-                  height: 50.0 - value / 2.0,
-                  fit: BoxFit.contain,
-                  color: (isBtnTablePressed && whichBtnTablePressed == whichTable)
-                      ? colorTable == 'green' ? new Color(0xff7DD5AF) : new Color(0xFFFBDB75)
-                      : null,
-                ),
-                new Container(
-                  child: new Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: <Widget>[
-                      new Text('0$whichTable',
+    return new Transform.scale(
+      child: new FlatButton(
+        highlightColor: Colors.transparent,
+        splashColor: Colors.transparent,
+        onPressed: onPressed,
+        child: new Container(
+          width: 60.0,
+          height: 100.0,
+          child: new Column(
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: <Widget>[
+              new Image.asset(
+                'images/chair_top.png',
+                width: 40.0,
+                height: 20.0,
+              ),
+              new Stack(
+                children: <Widget>[
+                  new Image.asset(
+                    colorTable == 'green' ? 'images/table_small_green.png' : 'images/table_small_yellow.png',
+                    width: 70.0,
+                    height: 50.0,
+                    fit: BoxFit.contain,
+                    color: (isBtnTablePressed && whichBtnTablePressed == whichTable)
+                        ? colorTable == 'green' ? new Color(0xff7DD5AF) : new Color(0xFFFBDB75)
+                        : null,
+                  ),
+                  new Container(
+                    child: new Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: <Widget>[
+                        new Text('0$whichTable',
+                            style: new TextStyle(
+                                color: (isBtnTablePressed && whichBtnTablePressed == whichTable)
+                                    ? Colors.white
+                                    : new Color(0xFF575869),
+                                fontSize: 14.0)),
+                        new Container(
+                          height: 15.0,
+                        ),
+                        new Text(
+                          'TAKEN',
                           style: new TextStyle(
                               color: (isBtnTablePressed && whichBtnTablePressed == whichTable)
                                   ? Colors.white
                                   : new Color(0xFF575869),
-                              fontSize: 14.0 - value / 4.0)),
-                      new Container(
-                        height: 15.0,
-                      ),
-                      new Text(
-                        'TAKEN',
-                        style: new TextStyle(
-                            color: (isBtnTablePressed && whichBtnTablePressed == whichTable)
-                                ? Colors.white
-                                : new Color(0xFF575869),
-                            fontSize: 10.0 - value / 4.0,
-                            fontWeight: FontWeight.bold),
-                      )
-                    ],
-                  ),
-                  margin: new EdgeInsets.only(left: 10.0, top: 5.0, bottom: 5.0, right: 10.0),
-                )
-              ],
-            ),
-            new Image.asset(
-              'images/chair_bottom.png',
-              width: 40.0 - value / 2.0,
-              height: 20.0 - value / 4.0,
-            ),
-          ],
+                              fontSize: 10.0,
+                              fontWeight: FontWeight.bold),
+                        )
+                      ],
+                    ),
+                    margin: new EdgeInsets.only(left: 10.0, top: 5.0, bottom: 5.0, right: 10.0),
+                  )
+                ],
+              ),
+              new Image.asset(
+                'images/chair_bottom.png',
+                width: 40.0,
+                height: 20.0,
+              ),
+            ],
+          ),
         ),
+        padding: new EdgeInsets.all(0.0),
       ),
-      padding: new EdgeInsets.all(0.0),
+      scale: value,
     );
   }
 

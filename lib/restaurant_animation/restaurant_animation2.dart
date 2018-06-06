@@ -198,7 +198,7 @@ class RestaurantAnimationScreenState2 extends State<RestaurantAnimationScreen2> 
     fadeOutPlateAnim.addListener(() {
       setState(() {});
     });
-    zoomPlateAnim1 = new Tween(begin: 0.0, end: 40.0)
+    zoomPlateAnim1 = new Tween(begin: 0.0, end: 0.4)
         .animate(new CurvedAnimation(parent: animControlPhrase2, curve: new Interval(0.0, 1.0)));
     zoomPlateAnim1.addListener(() {
       setState(() {});
@@ -206,7 +206,7 @@ class RestaurantAnimationScreenState2 extends State<RestaurantAnimationScreen2> 
 
     // Animation phrase 3
     animControlPhrase3 = new AnimationController(vsync: this, duration: new Duration(milliseconds: 600));
-    zoomPlateAnim2 = new Tween(begin: 0.0, end: 40.0)
+    zoomPlateAnim2 = new Tween(begin: 0.0, end: 0.4)
         .animate(new CurvedAnimation(parent: animControlPhrase3, curve: new Interval(0.0, 1.0)));
     zoomPlateAnim2.addListener(() {
       setState(() {});
@@ -342,12 +342,11 @@ class RestaurantAnimationScreenState2 extends State<RestaurantAnimationScreen2> 
   }
 
   Widget renderPlateLine1() {
-    double value = 0.0;
+    double value = 1.0;
     if (isBtnPlatePressed) {
       value = processSizeBtnTable(zoomPlateAnim1.value);
     }
 
-    double value2 = 0.0;
     if (isCircleAddPressed) {
       value = processSizeBtnTable(zoomPlateAnim2.value);
     }
@@ -361,118 +360,108 @@ class RestaurantAnimationScreenState2 extends State<RestaurantAnimationScreen2> 
             child: new Container(
               child: new Column(
                 children: <Widget>[
-                  new Container(
-                    child: new Stack(
-                      children: <Widget>[
-                        new Container(
-                          child: new FlatButton(
-                            onPressed: !isBtnPlatePressed ? () => onBtnPlatePressed(1) : null,
-                            highlightColor: Colors.transparent,
-                            splashColor: Colors.transparent,
-                            padding: new EdgeInsets.all(0.0),
+                  new Transform.scale(
+                    child: new Container(
+                      child: new Stack(
+                        children: <Widget>[
+                          new Container(
+                            child: new FlatButton(
+                              onPressed: !isBtnPlatePressed ? () => onBtnPlatePressed(1) : null,
+                              highlightColor: Colors.transparent,
+                              splashColor: Colors.transparent,
+                              padding: new EdgeInsets.all(0.0),
+                              child: new Stack(
+                                children: <Widget>[
+                                  // Photo food
+                                  new Center(
+                                    child: new Image.asset(
+                                      'images/flan.png',
+                                      width: 130.0,
+                                      height: 130.0,
+                                    ),
+                                  ),
+
+                                  // Photo white circle cover
+                                  new Opacity(
+                                    child: new Stack(
+                                      children: <Widget>[
+                                        new Center(
+                                          child: new Image.asset(
+                                            'images/ic_white_circle.png',
+                                            width: 130.0,
+                                            height: 130.0,
+                                          ),
+                                        ),
+                                        new Center(
+                                          child: new Container(
+                                            child: new Row(
+                                              children: <Widget>[
+                                                new GestureDetector(
+                                                  child: new Image.asset(
+                                                    'images/ic_remove_circle.png',
+                                                    width: 20.0,
+                                                    height: 20.0,
+                                                  ),
+                                                  onTapDown: (tapDownDetail) {},
+                                                ),
+                                                new Text(
+                                                  quantity.toString(),
+                                                  style:
+                                                      new TextStyle(fontWeight: FontWeight.bold, color: Colors.black),
+                                                ),
+                                                new GestureDetector(
+                                                  child: new Image.asset(
+                                                    'images/ic_add_circle.png',
+                                                    width: 20.0,
+                                                    height: 20.0,
+                                                  ),
+                                                  onTapDown: onCircleAddPressed,
+                                                )
+                                              ],
+                                              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                                            ),
+                                            height: 130.0,
+                                          ),
+                                        )
+                                      ],
+                                    ),
+                                    opacity: whichPlatePressed == 1 ? fadeOutPlateAnim.value : 0.0,
+                                  )
+                                ],
+                              ),
+                            ),
+                            width: 140.0,
+                            height: 140.0,
+                          ),
+
+                          // Icon price
+                          new Positioned(
                             child: new Stack(
                               children: <Widget>[
-                                // Photo food
-                                new Center(
-                                  child: new Image.asset(
-                                    'images/flan.png',
-                                    width: whichPlatePressed == 1 ? 130.0 - value : 130.0,
-                                    height: whichPlatePressed == 1 ? 130.0 - value : 130.0,
-                                  ),
+                                new Image.asset(
+                                  'images/ic_red_circle.png',
+                                  width: 40.0,
+                                  height: 40.0,
                                 ),
-
-                                // Photo white circle cover
-                                new Opacity(
-                                  child: new Stack(
-                                    children: <Widget>[
-                                      new Center(
-                                        child: new Image.asset(
-                                          'images/ic_white_circle.png',
-                                          width: (whichPlatePressed == 1)
-                                              ? (isBtnPlatePressed ? 130.0 - value : 130.0 - value2)
-                                              : 130.0,
-                                          height: (whichPlatePressed == 1)
-                                              ? (isBtnPlatePressed ? 130.0 - value : 130.0 - value2)
-                                              : 130.0,
-                                        ),
-                                      ),
-                                      new Center(
-                                        child: new Container(
-                                          child: new Row(
-                                            children: <Widget>[
-                                              new GestureDetector(
-                                                child: new Image.asset(
-                                                  'images/ic_remove_circle.png',
-                                                  width: 20.0,
-                                                  height: 20.0,
-                                                ),
-                                                onTapDown: (tapDownDetail) {},
-                                              ),
-                                              new Text(
-                                                quantity.toString(),
-                                                style: new TextStyle(fontWeight: FontWeight.bold, color: Colors.black),
-                                              ),
-                                              new GestureDetector(
-                                                child: new Image.asset(
-                                                  'images/ic_add_circle.png',
-                                                  width: 20.0,
-                                                  height: 20.0,
-                                                ),
-                                                onTapDown: onCircleAddPressed,
-                                              )
-                                            ],
-                                            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                                          ),
-                                          height: 130.0,
-                                        ),
-                                      )
-                                    ],
+                                new Positioned(
+                                  child: new Text(
+                                    '\$16',
+                                    style:
+                                        new TextStyle(fontWeight: FontWeight.bold, fontSize: 10.0, color: Colors.white),
                                   ),
-                                  opacity: whichPlatePressed == 1 ? fadeOutPlateAnim.value : 0.0,
+                                  right: 10.0,
+                                  top: 10.0,
                                 )
                               ],
                             ),
-                          ),
-                          width: 140.0,
-                          height: 140.0,
-                        ),
-
-                        // Icon price
-                        new Positioned(
-                          child: new Stack(
-                            children: <Widget>[
-                              new Image.asset(
-                                'images/ic_red_circle.png',
-                                width: whichPlatePressed == 1
-                                    ? (isBtnPlatePressed ? 40.0 - value / 2 : 40.0 - value2 / 2)
-                                    : 40.0,
-                                height: whichPlatePressed == 1
-                                    ? (isBtnPlatePressed ? 40.0 - value / 2 : 40.0 - value2 / 2)
-                                    : 40.0,
-                              ),
-                              new Positioned(
-                                child: new Text(
-                                  '\$16',
-                                  style: new TextStyle(
-                                      fontWeight: FontWeight.bold,
-                                      fontSize: whichPlatePressed == 1
-                                          ? (isBtnPlatePressed ? 10.0 - value / 4 : 10.0 - value2 / 4)
-                                          : 10.0,
-                                      color: Colors.white),
-                                ),
-                                right: 10.0,
-                                top: 10.0,
-                              )
-                            ],
-                          ),
-                          right: whichPlatePressed == 1
-                              ? (isBtnPlatePressed ? 10.0 + value / 2 : 10.0 + value2 / 2)
-                              : 10.0,
-                          top: whichPlatePressed == 1 ? (isBtnPlatePressed ? value / 2 : value2 / 2) : 0.0,
-                        )
-                      ],
+                            right: 10.0,
+                            top: 0.0,
+                          )
+                        ],
+                      ),
+                      margin: new EdgeInsets.only(bottom: 5.0),
                     ),
-                    margin: new EdgeInsets.only(bottom: 5.0),
+                    scale: whichPlatePressed == 1 ? value : 1.0,
                   ),
                   new Text('Flan',
                       style: new TextStyle(
@@ -493,118 +482,108 @@ class RestaurantAnimationScreenState2 extends State<RestaurantAnimationScreen2> 
             child: new Container(
               child: new Column(
                 children: <Widget>[
-                  new Container(
-                    child: new Stack(
-                      children: <Widget>[
-                        new Container(
-                          child: new FlatButton(
-                            onPressed: !isBtnPlatePressed ? () => onBtnPlatePressed(2) : null,
-                            highlightColor: Colors.transparent,
-                            splashColor: Colors.transparent,
-                            padding: new EdgeInsets.all(0.0),
+                  new Transform.scale(
+                    child: new Container(
+                      child: new Stack(
+                        children: <Widget>[
+                          new Container(
+                            child: new FlatButton(
+                              onPressed: !isBtnPlatePressed ? () => onBtnPlatePressed(2) : null,
+                              highlightColor: Colors.transparent,
+                              splashColor: Colors.transparent,
+                              padding: new EdgeInsets.all(0.0),
+                              child: new Stack(
+                                children: <Widget>[
+                                  // Photo food
+                                  new Center(
+                                    child: new Image.asset(
+                                      'images/curry.png',
+                                      width: 130.0,
+                                      height: 130.0,
+                                    ),
+                                  ),
+
+                                  // Photo white circle cover
+                                  new Opacity(
+                                    child: new Stack(
+                                      children: <Widget>[
+                                        new Center(
+                                          child: new Image.asset(
+                                            'images/ic_white_circle.png',
+                                            width: 130.0,
+                                            height: 130.0,
+                                          ),
+                                        ),
+                                        new Center(
+                                          child: new Container(
+                                            child: new Row(
+                                              children: <Widget>[
+                                                new GestureDetector(
+                                                  child: new Image.asset(
+                                                    'images/ic_remove_circle.png',
+                                                    width: 20.0,
+                                                    height: 20.0,
+                                                  ),
+                                                  onTapDown: (tapDownDetail) {},
+                                                ),
+                                                new Text(
+                                                  quantity.toString(),
+                                                  style:
+                                                      new TextStyle(fontWeight: FontWeight.bold, color: Colors.black),
+                                                ),
+                                                new GestureDetector(
+                                                  child: new Image.asset(
+                                                    'images/ic_add_circle.png',
+                                                    width: 20.0,
+                                                    height: 20.0,
+                                                  ),
+                                                  onTapDown: onCircleAddPressed,
+                                                )
+                                              ],
+                                              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                                            ),
+                                            height: 130.0,
+                                          ),
+                                        )
+                                      ],
+                                    ),
+                                    opacity: whichPlatePressed == 2 ? fadeOutPlateAnim.value : 0.0,
+                                  )
+                                ],
+                              ),
+                            ),
+                            width: 140.0,
+                            height: 140.0,
+                          ),
+
+                          // Icon price
+                          new Positioned(
                             child: new Stack(
                               children: <Widget>[
-                                // Photo food
-                                new Center(
-                                  child: new Image.asset(
-                                    'images/curry.png',
-                                    width: whichPlatePressed == 2 ? 130.0 - value : 130.0,
-                                    height: whichPlatePressed == 2 ? 130.0 - value : 130.0,
-                                  ),
+                                new Image.asset(
+                                  'images/ic_red_circle.png',
+                                  width: 40.0,
+                                  height: 40.0,
                                 ),
-
-                                // Photo white circle cover
-                                new Opacity(
-                                  child: new Stack(
-                                    children: <Widget>[
-                                      new Center(
-                                        child: new Image.asset(
-                                          'images/ic_white_circle.png',
-                                          width: (whichPlatePressed == 2)
-                                              ? (isBtnPlatePressed ? 130.0 - value : 130.0 - value2)
-                                              : 130.0,
-                                          height: (whichPlatePressed == 2)
-                                              ? (isBtnPlatePressed ? 130.0 - value : 130.0 - value2)
-                                              : 130.0,
-                                        ),
-                                      ),
-                                      new Center(
-                                        child: new Container(
-                                          child: new Row(
-                                            children: <Widget>[
-                                              new GestureDetector(
-                                                child: new Image.asset(
-                                                  'images/ic_remove_circle.png',
-                                                  width: 20.0,
-                                                  height: 20.0,
-                                                ),
-                                                onTapDown: (tapDownDetail) {},
-                                              ),
-                                              new Text(
-                                                quantity.toString(),
-                                                style: new TextStyle(fontWeight: FontWeight.bold, color: Colors.black),
-                                              ),
-                                              new GestureDetector(
-                                                child: new Image.asset(
-                                                  'images/ic_add_circle.png',
-                                                  width: 20.0,
-                                                  height: 20.0,
-                                                ),
-                                                onTapDown: onCircleAddPressed,
-                                              )
-                                            ],
-                                            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                                          ),
-                                          height: 130.0,
-                                        ),
-                                      )
-                                    ],
+                                new Positioned(
+                                  child: new Text(
+                                    '\$16',
+                                    style:
+                                        new TextStyle(fontWeight: FontWeight.bold, fontSize: 10.0, color: Colors.white),
                                   ),
-                                  opacity: whichPlatePressed == 2 ? fadeOutPlateAnim.value : 0.0,
+                                  right: 10.0,
+                                  top: 10.0,
                                 )
                               ],
                             ),
-                          ),
-                          width: 140.0,
-                          height: 140.0,
-                        ),
-
-                        // Icon price
-                        new Positioned(
-                          child: new Stack(
-                            children: <Widget>[
-                              new Image.asset(
-                                'images/ic_red_circle.png',
-                                width: whichPlatePressed == 2
-                                    ? (isBtnPlatePressed ? 40.0 - value / 2 : 40.0 - value2 / 2)
-                                    : 40.0,
-                                height: whichPlatePressed == 2
-                                    ? (isBtnPlatePressed ? 40.0 - value / 2 : 40.0 - value2 / 2)
-                                    : 40.0,
-                              ),
-                              new Positioned(
-                                child: new Text(
-                                  '\$16',
-                                  style: new TextStyle(
-                                      fontWeight: FontWeight.bold,
-                                      fontSize: whichPlatePressed == 2
-                                          ? (isBtnPlatePressed ? 10.0 - value / 4 : 10.0 - value2 / 4)
-                                          : 10.0,
-                                      color: Colors.white),
-                                ),
-                                right: 10.0,
-                                top: 10.0,
-                              )
-                            ],
-                          ),
-                          right: whichPlatePressed == 2
-                              ? (isBtnPlatePressed ? 10.0 + value / 2 : 10.0 + value2 / 2)
-                              : 10.0,
-                          top: whichPlatePressed == 2 ? (isBtnPlatePressed ? value / 2 : value2 / 2) : 0.0,
-                        )
-                      ],
+                            right: 10.0,
+                            top: 0.0,
+                          )
+                        ],
+                      ),
+                      margin: new EdgeInsets.only(bottom: 5.0),
                     ),
-                    margin: new EdgeInsets.only(bottom: 5.0),
+                    scale: whichPlatePressed == 2 ? value : 1.0,
                   ),
                   new Text('Curry',
                       style: new TextStyle(
@@ -631,7 +610,6 @@ class RestaurantAnimationScreenState2 extends State<RestaurantAnimationScreen2> 
       value = processSizeBtnTable(zoomPlateAnim1.value);
     }
 
-    double value2 = 0.0;
     if (isCircleAddPressed) {
       value = processSizeBtnTable(zoomPlateAnim2.value);
     }
@@ -645,118 +623,108 @@ class RestaurantAnimationScreenState2 extends State<RestaurantAnimationScreen2> 
             child: new Container(
               child: new Column(
                 children: <Widget>[
-                  new Container(
-                    child: new Stack(
-                      children: <Widget>[
-                        new Container(
-                          child: new FlatButton(
-                            onPressed: !isBtnPlatePressed ? () => onBtnPlatePressed(3) : null,
-                            highlightColor: Colors.transparent,
-                            splashColor: Colors.transparent,
-                            padding: new EdgeInsets.all(0.0),
+                  new Transform.scale(
+                    child: new Container(
+                      child: new Stack(
+                        children: <Widget>[
+                          new Container(
+                            child: new FlatButton(
+                              onPressed: !isBtnPlatePressed ? () => onBtnPlatePressed(3) : null,
+                              highlightColor: Colors.transparent,
+                              splashColor: Colors.transparent,
+                              padding: new EdgeInsets.all(0.0),
+                              child: new Stack(
+                                children: <Widget>[
+                                  // Photo food
+                                  new Center(
+                                    child: new Image.asset(
+                                      'images/salad.png',
+                                      width: 130.0,
+                                      height: 130.0,
+                                    ),
+                                  ),
+
+                                  // Photo white circle cover
+                                  new Opacity(
+                                    child: new Stack(
+                                      children: <Widget>[
+                                        new Center(
+                                          child: new Image.asset(
+                                            'images/ic_white_circle.png',
+                                            width: 130.0,
+                                            height: 130.0,
+                                          ),
+                                        ),
+                                        new Center(
+                                          child: new Container(
+                                            child: new Row(
+                                              children: <Widget>[
+                                                new GestureDetector(
+                                                  child: new Image.asset(
+                                                    'images/ic_remove_circle.png',
+                                                    width: 20.0,
+                                                    height: 20.0,
+                                                  ),
+                                                  onTapDown: (tapDownDetail) {},
+                                                ),
+                                                new Text(
+                                                  quantity.toString(),
+                                                  style:
+                                                      new TextStyle(fontWeight: FontWeight.bold, color: Colors.black),
+                                                ),
+                                                new GestureDetector(
+                                                  child: new Image.asset(
+                                                    'images/ic_add_circle.png',
+                                                    width: 20.0,
+                                                    height: 20.0,
+                                                  ),
+                                                  onTapDown: onCircleAddPressed,
+                                                )
+                                              ],
+                                              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                                            ),
+                                            height: 130.0,
+                                          ),
+                                        )
+                                      ],
+                                    ),
+                                    opacity: whichPlatePressed == 3 ? fadeOutPlateAnim.value : 0.0,
+                                  )
+                                ],
+                              ),
+                            ),
+                            width: 140.0,
+                            height: 140.0,
+                          ),
+
+                          // Icon price
+                          new Positioned(
                             child: new Stack(
                               children: <Widget>[
-                                // Photo food
-                                new Center(
-                                  child: new Image.asset(
-                                    'images/salad.png',
-                                    width: whichPlatePressed == 3 ? 130.0 - value : 130.0,
-                                    height: whichPlatePressed == 3 ? 130.0 - value : 130.0,
-                                  ),
+                                new Image.asset(
+                                  'images/ic_red_circle.png',
+                                  width: 40.0,
+                                  height: 40.0,
                                 ),
-
-                                // Photo white circle cover
-                                new Opacity(
-                                  child: new Stack(
-                                    children: <Widget>[
-                                      new Center(
-                                        child: new Image.asset(
-                                          'images/ic_white_circle.png',
-                                          width: (whichPlatePressed == 3)
-                                              ? (isBtnPlatePressed ? 130.0 - value : 130.0 - value2)
-                                              : 130.0,
-                                          height: (whichPlatePressed == 3)
-                                              ? (isBtnPlatePressed ? 130.0 - value : 130.0 - value2)
-                                              : 130.0,
-                                        ),
-                                      ),
-                                      new Center(
-                                        child: new Container(
-                                          child: new Row(
-                                            children: <Widget>[
-                                              new GestureDetector(
-                                                child: new Image.asset(
-                                                  'images/ic_remove_circle.png',
-                                                  width: 20.0,
-                                                  height: 20.0,
-                                                ),
-                                                onTapDown: (tapDownDetail) {},
-                                              ),
-                                              new Text(
-                                                quantity.toString(),
-                                                style: new TextStyle(fontWeight: FontWeight.bold, color: Colors.black),
-                                              ),
-                                              new GestureDetector(
-                                                child: new Image.asset(
-                                                  'images/ic_add_circle.png',
-                                                  width: 20.0,
-                                                  height: 20.0,
-                                                ),
-                                                onTapDown: onCircleAddPressed,
-                                              )
-                                            ],
-                                            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                                          ),
-                                          height: 130.0,
-                                        ),
-                                      )
-                                    ],
+                                new Positioned(
+                                  child: new Text(
+                                    '\$13',
+                                    style:
+                                        new TextStyle(fontWeight: FontWeight.bold, fontSize: 10.0, color: Colors.white),
                                   ),
-                                  opacity: whichPlatePressed == 3 ? fadeOutPlateAnim.value : 0.0,
+                                  right: 10.0,
+                                  top: 10.0,
                                 )
                               ],
                             ),
-                          ),
-                          width: 140.0,
-                          height: 140.0,
-                        ),
-
-                        // Icon price
-                        new Positioned(
-                          child: new Stack(
-                            children: <Widget>[
-                              new Image.asset(
-                                'images/ic_red_circle.png',
-                                width: whichPlatePressed == 3
-                                    ? (isBtnPlatePressed ? 40.0 - value / 2 : 40.0 - value2 / 2)
-                                    : 40.0,
-                                height: whichPlatePressed == 3
-                                    ? (isBtnPlatePressed ? 40.0 - value / 2 : 40.0 - value2 / 2)
-                                    : 40.0,
-                              ),
-                              new Positioned(
-                                child: new Text(
-                                  '\$13',
-                                  style: new TextStyle(
-                                      fontWeight: FontWeight.bold,
-                                      fontSize: whichPlatePressed == 3
-                                          ? (isBtnPlatePressed ? 10.0 - value / 4 : 10.0 - value2 / 4)
-                                          : 10.0,
-                                      color: Colors.white),
-                                ),
-                                right: 10.0,
-                                top: 10.0,
-                              )
-                            ],
-                          ),
-                          right: whichPlatePressed == 3
-                              ? (isBtnPlatePressed ? 10.0 + value / 2 : 10.0 + value2 / 2)
-                              : 10.0,
-                          top: whichPlatePressed == 3 ? (isBtnPlatePressed ? value / 2 : value2 / 2) : 0.0,
-                        )
-                      ],
+                            right: 10.0,
+                            top: 0.0,
+                          )
+                        ],
+                      ),
+                      margin: new EdgeInsets.only(bottom: 5.0),
                     ),
-                    margin: new EdgeInsets.only(bottom: 5.0),
+                    scale: whichPlatePressed == 3 ? value : 1.0,
                   ),
                   new Text('Salmon Salad',
                       style: new TextStyle(
@@ -777,120 +745,110 @@ class RestaurantAnimationScreenState2 extends State<RestaurantAnimationScreen2> 
             child: new Container(
               child: new Column(
                 children: <Widget>[
-                  new Container(
-                    child: new Stack(
-                      children: <Widget>[
-                        new Container(
-                          child: new FlatButton(
-                            onPressed: !isBtnPlatePressed ? () => onBtnPlatePressed(4) : null,
-                            highlightColor: Colors.transparent,
-                            splashColor: Colors.transparent,
-                            padding: new EdgeInsets.all(0.0),
+                  new Transform.scale(
+                    child: new Container(
+                      child: new Stack(
+                        children: <Widget>[
+                          new Container(
+                            child: new FlatButton(
+                              onPressed: !isBtnPlatePressed ? () => onBtnPlatePressed(4) : null,
+                              highlightColor: Colors.transparent,
+                              splashColor: Colors.transparent,
+                              padding: new EdgeInsets.all(0.0),
+                              child: new Stack(
+                                children: <Widget>[
+                                  // Photo food
+                                  new Center(
+                                    child: new Image.asset(
+                                      'images/pizza.png',
+                                      width: 130.0,
+                                      height: 130.0,
+                                    ),
+                                  ),
+
+                                  // Photo white circle cover
+                                  new Opacity(
+                                    child: new Stack(
+                                      children: <Widget>[
+                                        new Center(
+                                          child: new Image.asset(
+                                            'images/ic_white_circle.png',
+                                            width: 130.0,
+                                            height: 130.0,
+                                          ),
+                                        ),
+                                        new Center(
+                                          child: new Container(
+                                            child: new Row(
+                                              children: <Widget>[
+                                                new GestureDetector(
+                                                  child: new Image.asset(
+                                                    'images/ic_remove_circle.png',
+                                                    width: 20.0,
+                                                    height: 20.0,
+                                                  ),
+                                                  onTapDown: (tapDownDetail) {},
+                                                ),
+                                                new Text(
+                                                  quantity.toString(),
+                                                  style:
+                                                      new TextStyle(fontWeight: FontWeight.bold, color: Colors.black),
+                                                ),
+                                                new GestureDetector(
+                                                  child: new Image.asset(
+                                                    'images/ic_add_circle.png',
+                                                    width: 20.0,
+                                                    height: 20.0,
+                                                  ),
+                                                  onTapDown: onCircleAddPressed,
+                                                )
+                                              ],
+                                              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                                            ),
+                                            height: 130.0,
+                                          ),
+                                        )
+                                      ],
+                                    ),
+                                    opacity: whichPlatePressed == 4 ? fadeOutPlateAnim.value : 0.0,
+                                  )
+                                ],
+                              ),
+                            ),
+                            width: 140.0,
+                            height: 140.0,
+                          ),
+
+                          // Icon price
+                          new Positioned(
                             child: new Stack(
                               children: <Widget>[
-                                // Photo food
-                                new Center(
-                                  child: new Image.asset(
-                                    'images/pizza.png',
-                                    width: whichPlatePressed == 4 ? 130.0 - value : 130.0,
-                                    height: whichPlatePressed == 4 ? 130.0 - value : 130.0,
-                                  ),
+                                new Image.asset(
+                                  'images/ic_red_circle.png',
+                                  width: 40.0,
+                                  height: 40.0,
                                 ),
-
-                                // Photo white circle cover
-                                new Opacity(
-                                  child: new Stack(
-                                    children: <Widget>[
-                                      new Center(
-                                        child: new Image.asset(
-                                          'images/ic_white_circle.png',
-                                          width: (whichPlatePressed == 4)
-                                              ? (isBtnPlatePressed ? 130.0 - value : 130.0 - value2)
-                                              : 130.0,
-                                          height: (whichPlatePressed == 4)
-                                              ? (isBtnPlatePressed ? 130.0 - value : 130.0 - value2)
-                                              : 130.0,
-                                        ),
-                                      ),
-                                      new Center(
-                                        child: new Container(
-                                          child: new Row(
-                                            children: <Widget>[
-                                              new GestureDetector(
-                                                child: new Image.asset(
-                                                  'images/ic_remove_circle.png',
-                                                  width: 20.0,
-                                                  height: 20.0,
-                                                ),
-                                                onTapDown: (tapDownDetail) {},
-                                              ),
-                                              new Text(
-                                                quantity.toString(),
-                                                style: new TextStyle(fontWeight: FontWeight.bold, color: Colors.black),
-                                              ),
-                                              new GestureDetector(
-                                                child: new Image.asset(
-                                                  'images/ic_add_circle.png',
-                                                  width: 20.0,
-                                                  height: 20.0,
-                                                ),
-                                                onTapDown: onCircleAddPressed,
-                                              )
-                                            ],
-                                            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                                          ),
-                                          height: 130.0,
-                                        ),
-                                      )
-                                    ],
+                                new Positioned(
+                                  child: new Text(
+                                    '\$13',
+                                    style:
+                                        new TextStyle(fontWeight: FontWeight.bold, fontSize: 10.0, color: Colors.white),
                                   ),
-                                  opacity: whichPlatePressed == 4 ? fadeOutPlateAnim.value : 0.0,
+                                  right: 10.0,
+                                  top: 10.0,
                                 )
                               ],
                             ),
-                          ),
-                          width: 140.0,
-                          height: 140.0,
-                        ),
-
-                        // Icon price
-                        new Positioned(
-                          child: new Stack(
-                            children: <Widget>[
-                              new Image.asset(
-                                'images/ic_red_circle.png',
-                                width: whichPlatePressed == 4
-                                    ? (isBtnPlatePressed ? 40.0 - value / 2 : 40.0 - value2 / 2)
-                                    : 40.0,
-                                height: whichPlatePressed == 4
-                                    ? (isBtnPlatePressed ? 40.0 - value / 2 : 40.0 - value2 / 2)
-                                    : 40.0,
-                              ),
-                              new Positioned(
-                                child: new Text(
-                                  '\$25',
-                                  style: new TextStyle(
-                                      fontWeight: FontWeight.bold,
-                                      fontSize: whichPlatePressed == 4
-                                          ? (isBtnPlatePressed ? 10.0 - value / 4 : 10.0 - value2 / 4)
-                                          : 10.0,
-                                      color: Colors.white),
-                                ),
-                                right: 10.0,
-                                top: 10.0,
-                              )
-                            ],
-                          ),
-                          right: whichPlatePressed == 4
-                              ? (isBtnPlatePressed ? 10.0 + value / 2 : 10.0 + value2 / 2)
-                              : 10.0,
-                          top: whichPlatePressed == 4 ? (isBtnPlatePressed ? value / 2 : value2 / 2) : 0.0,
-                        )
-                      ],
+                            right: 10.0,
+                            top: 0.0,
+                          )
+                        ],
+                      ),
+                      margin: new EdgeInsets.only(bottom: 5.0),
                     ),
-                    margin: new EdgeInsets.only(bottom: 5.0),
+                    scale: whichPlatePressed == 4 ? value : 1.0,
                   ),
-                  new Text('Pizza',
+                  new Text('Salmon Salad',
                       style: new TextStyle(
                         color: new Color(0xFF575869),
                         fontSize: 14.0,
@@ -1185,12 +1143,12 @@ class RestaurantAnimationScreenState2 extends State<RestaurantAnimationScreen2> 
   }
 
   double processSizeBtnTable(double value) {
-    if (value < 10.0) {
-      return value;
-    } else if (value < thresholdSizeBtnPlate2) {
-      return value = thresholdSizeBtnPlate2 - thresholdSizeBtnPlate1 - value;
+    if (value <= 0.1) {
+      return 1.0 - value;
+    } else if (value <= 0.3) {
+      return 0.8 + value;
     } else {
-      return value = value - (thresholdSizeBtnPlate2 + thresholdSizeBtnPlate1);
+      return 1.4 - value;
     }
   }
 
