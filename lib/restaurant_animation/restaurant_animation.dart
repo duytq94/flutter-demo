@@ -220,7 +220,7 @@ class RestaurantAnimationScreenState extends State<RestaurantAnimationScreen> wi
               children: <Widget>[
                 new Image.asset('images/ic_home.png', width: 15.0, height: 15.0),
                 new Container(width: 10.0),
-                new Text('Dashboard', style: new TextStyle(color: Colors.white))
+                new Text('Dashboard', style: new TextStyle(color: Colors.white.withOpacity(0.8)))
               ],
             ),
             onPressed: () {},
@@ -232,7 +232,7 @@ class RestaurantAnimationScreenState extends State<RestaurantAnimationScreen> wi
               children: <Widget>[
                 new Image.asset('images/ic_menu.png', width: 15.0, height: 15.0),
                 new Container(width: 10.0),
-                new Text('Menus', style: new TextStyle(color: Colors.white))
+                new Text('Menus', style: new TextStyle(color: Colors.white.withOpacity(0.8)))
               ],
             ),
             onPressed: () {},
@@ -244,7 +244,7 @@ class RestaurantAnimationScreenState extends State<RestaurantAnimationScreen> wi
               children: <Widget>[
                 new Image.asset('images/ic_seat.png', width: 15.0, height: 15.0),
                 new Container(width: 10.0),
-                new Text('Seats', style: new TextStyle(color: Colors.white))
+                new Text('Seats', style: new TextStyle(color: Colors.white.withOpacity(0.8)))
               ],
             ),
             onPressed: () {},
@@ -441,12 +441,13 @@ class RestaurantAnimationScreenState extends State<RestaurantAnimationScreen> wi
                       ),
                       new Container(height: 15.0 - value / 4.0),
                       new Text(
-                        'Available',
+                        'AVAILABLE',
                         style: new TextStyle(
                             color: (isBtnTablePressed && whichBtnTablePressed == whichTable)
                                 ? Colors.white
                                 : new Color(0xFF575869),
-                            fontSize: 10.0 - value / 4.0),
+                            fontSize: 10.0 - value / 4.0,
+                            fontWeight: FontWeight.bold),
                       )
                     ],
                   ),
@@ -519,12 +520,13 @@ class RestaurantAnimationScreenState extends State<RestaurantAnimationScreen> wi
                         height: 15.0,
                       ),
                       new Text(
-                        'Taken',
+                        'TAKEN',
                         style: new TextStyle(
                             color: (isBtnTablePressed && whichBtnTablePressed == whichTable)
                                 ? Colors.white
                                 : new Color(0xFF575869),
-                            fontSize: 10.0 - value / 4.0),
+                            fontSize: 10.0 - value / 4.0,
+                            fontWeight: FontWeight.bold),
                       )
                     ],
                   ),

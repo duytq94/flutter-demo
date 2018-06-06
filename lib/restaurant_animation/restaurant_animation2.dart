@@ -259,7 +259,11 @@ class RestaurantAnimationScreenState2 extends State<RestaurantAnimationScreen2> 
                     new Image.asset('images/ic_home.png', width: sizeIconTopMenu, height: sizeIconTopMenu),
                     new Container(width: 10.0),
                     new Text('Dashboard',
-                        style: new TextStyle(color: Colors.white70, fontWeight: FontWeight.bold, fontSize: 12.0))
+                        style: new TextStyle(
+                          color: Colors.white.withOpacity(0.8),
+                          fontWeight: FontWeight.bold,
+                          fontSize: 12.0,
+                        ))
                   ],
                 ),
                 width: sizeItemTopMenu,
@@ -279,7 +283,11 @@ class RestaurantAnimationScreenState2 extends State<RestaurantAnimationScreen2> 
                     ),
                     new Container(width: 10.0),
                     new Text('Menus',
-                        style: new TextStyle(color: Colors.white70, fontWeight: FontWeight.bold, fontSize: 12.0))
+                        style: new TextStyle(
+                          color: Colors.white.withOpacity(0.8),
+                          fontWeight: FontWeight.bold,
+                          fontSize: 12.0,
+                        ))
                   ],
                 ),
                 width: sizeItemTopMenu,
@@ -297,7 +305,11 @@ class RestaurantAnimationScreenState2 extends State<RestaurantAnimationScreen2> 
                             : Colors.white),
                     new Container(width: 10.0),
                     new Text('Seats Plan',
-                        style: new TextStyle(color: Colors.white70, fontWeight: FontWeight.bold, fontSize: 12.0))
+                        style: new TextStyle(
+                          color: Colors.white.withOpacity(0.8),
+                          fontWeight: FontWeight.bold,
+                          fontSize: 12.0,
+                        ))
                   ],
                 ),
                 width: sizeItemTopMenu,
