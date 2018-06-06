@@ -432,7 +432,7 @@ class RestaurantAnimationScreenState extends State<RestaurantAnimationScreen> wi
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: <Widget>[
                       new Text(
-                        '01',
+                        '0$whichTable',
                         style: new TextStyle(
                             color: (isBtnTablePressed && whichBtnTablePressed == whichTable)
                                 ? Colors.white
@@ -510,7 +510,7 @@ class RestaurantAnimationScreenState extends State<RestaurantAnimationScreen> wi
                   child: new Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: <Widget>[
-                      new Text('01',
+                      new Text('0$whichTable',
                           style: new TextStyle(
                               color: (isBtnTablePressed && whichBtnTablePressed == whichTable)
                                   ? Colors.white
@@ -628,7 +628,7 @@ class RestaurantAnimationScreenState extends State<RestaurantAnimationScreen> wi
                               opacity: whichBtnTablePressed != 4 ? fadeOutViewAnim.value : 1.0,
                             ),
                             new Opacity(
-                              child: renderSmallTable('green', 5, () => onBtnTablePressed(5)),
+                              child: renderSmallTable('yellow', 5, () => onBtnTablePressed(5)),
                               opacity: whichBtnTablePressed != 5 ? fadeOutViewAnim.value : 1.0,
                             ),
                           ],
