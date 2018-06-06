@@ -1,8 +1,8 @@
 import 'dart:async';
 
 import 'package:demo_flutter/restaurant_animation/restaurant_animation.dart';
-import 'package:flutter/material.dart';
 import 'package:flutter/animation.dart';
+import 'package:flutter/material.dart';
 import 'package:meta/meta.dart';
 
 class RestaurantAnimation2 extends StatelessWidget {
@@ -59,10 +59,7 @@ class RestaurantAnimationScreenState2 extends State<RestaurantAnimationScreen2> 
       fadeInTextBottomMenuAnim;
   Animation zoomPlateAnim1, zoomPlateAnim2, fadeOutPlateAnim;
 
-  double thresholdBtnBottomMenu1 = 40.0,
-      thresholdBtnBottomMenu2 = 50.0,
-      thresholdSizeBtnPlate1 = 10.0,
-      thresholdSizeBtnPlate2 = 30.0;
+  double thresholdBtnBottomMenu1 = 40.0, thresholdBtnBottomMenu2 = 50.0;
   bool isBtnPlatePressed = false, isCircleAddPressed = false;
 
   int quantity = 1;
