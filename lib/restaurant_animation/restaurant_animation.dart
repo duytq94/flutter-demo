@@ -74,8 +74,8 @@ class RestaurantAnimationScreenState extends State<RestaurantAnimationScreen> wi
     // Animation phrase 2 (zoom button when be pressed and show up bottom menu)
     animControlPhrase2 = new AnimationController(vsync: this, duration: new Duration(milliseconds: 1000));
 
-    zoomBtnTableAnim = new Tween(begin: 0.0, end: 40.0)
-        .animate(new CurvedAnimation(parent: animControlPhrase2, curve: Curves.easeOut));
+    zoomBtnTableAnim =
+        new Tween(begin: 0.0, end: 1.2).animate(new CurvedAnimation(parent: animControlPhrase2, curve: Curves.easeOut));
     zoomBtnTableAnim.addListener(() {
       setState(() {});
     });
@@ -160,12 +160,12 @@ class RestaurantAnimationScreenState extends State<RestaurantAnimationScreen> wi
 
   // Process size button, zoom out -> zoom in -> zoom out
   double processSizeBtnBigTable(double value) {
-    if (value < 10.0) {
-      return value;
-    } else if (value < thresholdSizeBtnBigTable2) {
-      return value = thresholdSizeBtnBigTable2 - thresholdSizeBtnBigTable1 - value;
+    if (value <= 0.3) {
+      return 1.0 - value;
+    } else if (value <= 0.9) {
+      return 0.7 + (value - 0.3);
     } else {
-      return value = value - (thresholdSizeBtnBigTable2 + thresholdSizeBtnBigTable1);
+      return 2.2 - value;
     }
   }
 
@@ -388,89 +388,92 @@ class RestaurantAnimationScreenState extends State<RestaurantAnimationScreen> wi
 
   // With press animation for demo
   Widget renderBigTable(String colorTable, int whichTable, Function onPressed) {
-    double value = 0.0;
+    double value = 1.0;
     if (isBtnTablePressed && whichBtnTablePressed == whichTable) {
       value = processSizeBtnBigTable(zoomBtnTableAnim.value);
     }
 
-    return new FlatButton(
-      highlightColor: Colors.transparent,
-      splashColor: Colors.transparent,
-      onPressed: onPressed,
-      child: new Container(
-        width: 120.0 - value,
-        height: 100.0 - value,
-        child: new Column(
-          crossAxisAlignment: CrossAxisAlignment.center,
-          children: <Widget>[
-            // Chairs top
-            new Container(
-              child: new Row(
-                children: <Widget>[
-                  new Image.asset('images/chair_top.png', width: 40.0 - value / 2.0, height: 20.0 - value / 4.0),
-                  new Expanded(child: new Container()),
-                  new Image.asset('images/chair_top.png', width: 40.0 - value / 2.0, height: 20.0 - value / 4.0),
-                ],
-              ),
-              width: 90.0 - value,
-            ),
-
-            // Table
-            new Stack(
-              children: <Widget>[
-                new Image.asset(
-                  colorTable == 'green' ? 'images/table_big_green.png' : 'images/table_big_pink.png',
-                  width: 120.0 - value,
-                  height: 60.0 - value / 2.0,
-                  fit: BoxFit.contain,
-                  color: (isBtnTablePressed && whichBtnTablePressed == whichTable)
-                      ? colorTable == 'green' ? new Color(0xff7DD5AF) : new Color(0xFFF8859B)
-                      : null,
+    return new Transform.scale(
+      child: new FlatButton(
+        highlightColor: Colors.transparent,
+        splashColor: Colors.transparent,
+        onPressed: onPressed,
+        child: new Container(
+          width: 120.0,
+          height: 100.0,
+          child: new Column(
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: <Widget>[
+              // Chairs top
+              new Container(
+                child: new Row(
+                  children: <Widget>[
+                    new Image.asset('images/chair_top.png', width: 40.0, height: 20.0),
+                    new Expanded(child: new Container()),
+                    new Image.asset('images/chair_top.png', width: 40.0, height: 20.0),
+                  ],
                 ),
-                new Container(
-                  child: new Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: <Widget>[
-                      new Text(
-                        '0$whichTable',
-                        style: new TextStyle(
-                            color: (isBtnTablePressed && whichBtnTablePressed == whichTable)
-                                ? Colors.white
-                                : new Color(0xFF575869),
-                            fontSize: 14.0 - value / 4.0),
-                      ),
-                      new Container(height: 15.0 - value / 4.0),
-                      new Text(
-                        'AVAILABLE',
-                        style: new TextStyle(
-                            color: (isBtnTablePressed && whichBtnTablePressed == whichTable)
-                                ? Colors.white
-                                : new Color(0xFF575869),
-                            fontSize: 10.0 - value / 4.0,
-                            fontWeight: FontWeight.bold),
-                      )
-                    ],
-                  ),
-                  margin: new EdgeInsets.only(left: 20.0, top: 5.0, bottom: 5.0, right: 10.0),
-                )
-              ],
-            ),
+                width: 90.0,
+              ),
 
-            // Chair bottom
-            new Container(
-              child: new Row(
+              // Table
+              new Stack(
                 children: <Widget>[
-                  new Image.asset('images/chair_bottom.png', width: 40.0 - value / 2.0, height: 20.0 - value / 4.0),
-                  new Expanded(child: new Container()),
-                  new Image.asset('images/chair_bottom.png', width: 40.0 - value / 2.0, height: 20.0 - value / 4.0),
+                  new Image.asset(
+                    colorTable == 'green' ? 'images/table_big_green.png' : 'images/table_big_pink.png',
+                    width: 120.0,
+                    height: 60.0,
+                    fit: BoxFit.contain,
+                    color: (isBtnTablePressed && whichBtnTablePressed == whichTable)
+                        ? colorTable == 'green' ? new Color(0xff7DD5AF) : new Color(0xFFF8859B)
+                        : null,
+                  ),
+                  new Container(
+                    child: new Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: <Widget>[
+                        new Text(
+                          '0$whichTable',
+                          style: new TextStyle(
+                              color: (isBtnTablePressed && whichBtnTablePressed == whichTable)
+                                  ? Colors.white
+                                  : new Color(0xFF575869),
+                              fontSize: 14.0),
+                        ),
+                        new Container(height: 15.0),
+                        new Text(
+                          'AVAILABLE',
+                          style: new TextStyle(
+                              color: (isBtnTablePressed && whichBtnTablePressed == whichTable)
+                                  ? Colors.white
+                                  : new Color(0xFF575869),
+                              fontSize: 10.0,
+                              fontWeight: FontWeight.bold),
+                        )
+                      ],
+                    ),
+                    margin: new EdgeInsets.only(left: 20.0, top: 5.0, bottom: 5.0, right: 10.0),
+                  )
                 ],
               ),
-              width: 90.0 - value,
-            ),
-          ],
+
+              // Chair bottom
+              new Container(
+                child: new Row(
+                  children: <Widget>[
+                    new Image.asset('images/chair_bottom.png', width: 40.0, height: 20.0),
+                    new Expanded(child: new Container()),
+                    new Image.asset('images/chair_bottom.png', width: 40.0, height: 20.0),
+                  ],
+                ),
+                width: 90.0,
+              ),
+            ],
+          ),
         ),
+        padding: new EdgeInsets.all(0.0),
       ),
-      padding: new EdgeInsets.all(0.0),
+      scale: value,
     );
   }
 
