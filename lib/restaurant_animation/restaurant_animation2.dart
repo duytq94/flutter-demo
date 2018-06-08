@@ -845,7 +845,7 @@ class RestaurantAnimationScreenState2 extends State<RestaurantAnimationScreen2> 
                     ),
                     scale: whichPlatePressed == 4 ? value : 1.0,
                   ),
-                  new Text('Salmon Salad',
+                  new Text('Pizza',
                       style: new TextStyle(
                         color: new Color(0xFF575869),
                         fontSize: 14.0,
@@ -920,7 +920,7 @@ class RestaurantAnimationScreenState2 extends State<RestaurantAnimationScreen2> 
                     onPressed: () {},
                     padding: new EdgeInsets.all(0.0),
                     child: new Image.asset(
-                      'images/salad.png',
+                      'images/duck.png',
                       width: 130.0,
                       height: 130.0,
                     ),
@@ -1163,7 +1163,7 @@ class RestaurantAnimationScreenState2 extends State<RestaurantAnimationScreen2> 
               // Body content
               renderBodyContent(),
 
-              // Cover color
+              // Cover white bottom
               new Positioned(
                 child: new Image.asset(
                   'images/shadow_white.png',
