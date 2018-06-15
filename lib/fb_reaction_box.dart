@@ -22,13 +22,17 @@ class FbReaction extends StatefulWidget {
 }
 
 class FbReactionState extends State<FbReaction> with TickerProviderStateMixin {
-  AnimationController animControlBtn;
+  AnimationController animControlBtn, animControlBox;
   Animation zoomIconLikeAnim, tiltIconLike, zoomTextLikeAnim;
+  Animation pushBoxUp, fadeInBox;
+  Animation pushIconLikeUp, pushIconLoveUp, pushIconHahaUp, pushIconWowUp, pushIconSadUp, pushIconAngryUp;
+  Animation fadeInIconLike, fadeInIconLove, fadeInIconHaha, fadeInIconWow, fadeInIconSad, fadeInIconAngry;
 
   @override
   void initState() {
     super.initState();
 
+    // Button
     animControlBtn = new AnimationController(vsync: this, duration: new Duration(milliseconds: 150));
     zoomIconLikeAnim = new Tween(begin: 1.0, end: 0.85).animate(animControlBtn);
     tiltIconLike = new Tween(begin: 0.0, end: 0.03).animate(animControlBtn);
@@ -43,6 +47,33 @@ class FbReactionState extends State<FbReaction> with TickerProviderStateMixin {
     zoomTextLikeAnim.addListener(() {
       setState(() {});
     });
+
+    // Box and Icons
+    animControlBox = new AnimationController(vsync: this, duration: new Duration(milliseconds: 1000));
+
+    // Box
+    pushBoxUp = new Tween(begin: 50.0, end: 0.0).animate(
+      new CurvedAnimation(parent: animControlBox, curve: new Interval(0.0, 1.0)),
+    );
+    fadeInBox = new Tween(begin: 0.0, end: 1.0).animate(
+      new CurvedAnimation(parent: animControlBox, curve: new Interval(0.0, 1.0)),
+    );
+
+    pushBoxUp.addListener(() {
+      setState(() {});
+    });
+    fadeInBox.addListener(() {
+      setState(() {});
+    });
+
+    // Icons
+    pushIconLikeUp = new Tween(begin: 50.0, end: 10.0).animate(
+      new CurvedAnimation(parent: animControlBox, curve: new Interval(0.0, 1.0)),
+    );
+    pushIconLikeUp.addListener(() {
+      setState(() {});
+    });
+
   }
 
   @override
@@ -55,27 +86,37 @@ class FbReactionState extends State<FbReaction> with TickerProviderStateMixin {
   Widget build(BuildContext context) {
     timeDilation = 1.0;
     return new Container(
-      child: new Column(
+      child: new Stack(
         children: <Widget>[
-          // Box icon
+          // Box and icons
           new Stack(
             children: <Widget>[
-              new Container(
-                decoration: new BoxDecoration(
-                  color: Colors.grey,
-                  borderRadius: new BorderRadius.circular(30.0),
+              // Box
+              new Opacity(
+                child: new Container(
+                  decoration: new BoxDecoration(
+                    color: Colors.grey,
+                    borderRadius: new BorderRadius.circular(30.0),
+                  ),
+                  width: 300.0,
+                  height: 50.0,
+                  margin: new EdgeInsets.only(top: this.pushBoxUp.value),
                 ),
-                width: 300.0,
-                height: 50.0,
+                opacity: this.fadeInBox.value,
               ),
+
+              // Icons
               new Container(
                 child: new Row(
                   children: <Widget>[
-                    new Image.asset(
-                      'images/like.gif',
-                      width: 40.0,
-                      height: 40.0,
-                      fit: BoxFit.contain,
+                    new Container(
+                      child: new Image.asset(
+                        'images/like.gif',
+                        width: 40.0,
+                        height: 40.0,
+                        fit: BoxFit.contain,
+                      ),
+                      margin: new EdgeInsets.only(top: 0.0),
                     ),
                     new Image.asset(
                       'images/love.gif',
@@ -111,11 +152,13 @@ class FbReactionState extends State<FbReaction> with TickerProviderStateMixin {
                   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 ),
                 width: 300.0,
+                height: 100.0,
+                color: Colors.amber,
               )
             ],
           ),
 
-          // Button
+          // Button like
           new Container(
             child: new GestureDetector(
               onTapDown: onTapDownBtn,
@@ -156,10 +199,9 @@ class FbReactionState extends State<FbReaction> with TickerProviderStateMixin {
               borderRadius: new BorderRadius.circular(4.0),
               color: new Color(0xff3b5998),
             ),
-            margin: new EdgeInsets.only(top: 20.0),
+            margin: new EdgeInsets.only(top: 70.0),
           ),
         ],
-        crossAxisAlignment: CrossAxisAlignment.start,
       ),
       margin: new EdgeInsets.only(top: 200.0, left: 20.0, right: 20.0),
     );
@@ -167,13 +209,16 @@ class FbReactionState extends State<FbReaction> with TickerProviderStateMixin {
 
   void onTapDownBtn(TapDownDetails tapDownDetail) {
     animControlBtn.forward();
+    animControlBox.forward();
   }
 
   void onTapUpBtn(TapUpDetails tapUpDetail) {
     animControlBtn.reverse();
+    animControlBox.reverse();
   }
 
   void onTapCancelBtn() {
     animControlBtn.reverse();
+    animControlBox.reverse();
   }
 }
