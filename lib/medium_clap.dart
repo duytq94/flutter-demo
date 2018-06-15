@@ -157,6 +157,17 @@ class MediumClapScreenState extends State<MediumClapScreen> with TickerProviderS
     holdTimer.cancel();
   }
 
+  void onTapCancel() {
+    // after duration, animation hide circle will start
+    releaseBtnClapTimer = new Timer(duration, () {
+      scoreOutAnimationController.forward(from: 0.0);
+      circleScoreStatus = CIRCLE_SCORE_STATUS.BECOMING_INVISIBLE;
+    });
+
+    // cancel when user release button
+    holdTimer.cancel();
+  }
+
   // Circle popup
   Widget getScoreButton() {
     double scorePosition = 0.0;
@@ -235,6 +246,7 @@ class MediumClapScreenState extends State<MediumClapScreen> with TickerProviderS
     return new GestureDetector(
         onTapDown: onTapDown,
         onTapUp: onTapUp,
+        onTapCancel: onTapCancel,
         child: new Container(
             height: 60.0 + extraSize,
             width: 60.0 + extraSize,

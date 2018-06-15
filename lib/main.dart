@@ -1,12 +1,14 @@
-import 'package:demo_flutter/tool_widget.dart';
 import 'package:demo_flutter/edit_profile.dart';
+import 'package:demo_flutter/fb_reaction_box.dart';
 import 'package:demo_flutter/fetch_api.dart';
 import 'package:demo_flutter/hero_animation/hero_animation.dart';
 import 'package:demo_flutter/medium_clap.dart';
 import 'package:demo_flutter/music_player/music_player.dart';
 import 'package:demo_flutter/restaurant_animation/restaurant_animation.dart';
+import 'package:demo_flutter/tool_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
+
 import 'detail_info.dart';
 import 'simple_animation.dart';
 
@@ -41,6 +43,7 @@ class MainScreen extends StatelessWidget {
           children: <Widget>[
             buildButton(context, 'Restaurant animation screen', new RestaurantAnimation()),
             buildButton(context, 'Hero animation screen', new HeroAnimation()),
+            buildButton(context, 'FB reaction box screen', new FbReactionBox()),
             buildButton(context, 'Simple animation screen', new SimpleAnimation()),
             buildButton(context, 'Edit profile screen', new EditProfile()),
             buildButton(context, 'Music player screen', new MusicPlayer()),

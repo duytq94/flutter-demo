@@ -1,9 +1,10 @@
 import 'dart:async';
 import 'dart:convert';
-import 'package:flutter/scheduler.dart';
-import 'package:url_launcher/url_launcher.dart';
+
 import 'package:flutter/material.dart';
+import 'package:flutter/scheduler.dart';
 import 'package:http/http.dart' as http;
+import 'package:url_launcher/url_launcher.dart';
 
 class FetchApi extends StatelessWidget {
   @override
