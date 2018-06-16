@@ -26,7 +26,7 @@ class FbReaction extends StatefulWidget {
 class FbReactionState extends State<FbReaction> with TickerProviderStateMixin {
   int durationAnimationBox = 500;
   int durationAnimationBtnLongPress = 150;
-  int durationAnimationBtnShortPress = 300;
+  int durationAnimationBtnShortPress = 500;
 
   AnimationController animControlBtnLongPress, animControlBtnShortPress;
   AnimationController animControlBox;
@@ -35,7 +35,7 @@ class FbReactionState extends State<FbReaction> with TickerProviderStateMixin {
   Animation zoomInIconLikeInBtn, tiltIconLikeInBtn, zoomInTextLikeInBtn;
 
   // For short press btn
-  Animation zoomInIconLikeInBtn2, tiltIconLikeInBtn2, zoomInTextLikeInBtn2;
+  Animation zoomInIconLikeInBtn2, tiltIconLikeInBtn2;
 
   Animation fadeInBox;
   Animation moveRightGroupIcon;
@@ -56,7 +56,7 @@ class FbReactionState extends State<FbReaction> with TickerProviderStateMixin {
     animControlBtnLongPress =
         new AnimationController(vsync: this, duration: new Duration(milliseconds: durationAnimationBtnLongPress));
     zoomInIconLikeInBtn = new Tween(begin: 1.0, end: 0.85).animate(animControlBtnLongPress);
-    tiltIconLikeInBtn = new Tween(begin: 0.0, end: 0.03).animate(animControlBtnLongPress);
+    tiltIconLikeInBtn = new Tween(begin: 0.0, end: 0.2).animate(animControlBtnLongPress);
     zoomInTextLikeInBtn = new Tween(begin: 1.0, end: 0.85).animate(animControlBtnLongPress);
 
     zoomInIconLikeInBtn.addListener(() {
@@ -72,17 +72,13 @@ class FbReactionState extends State<FbReaction> with TickerProviderStateMixin {
     // short press
     animControlBtnShortPress =
         new AnimationController(vsync: this, duration: new Duration(milliseconds: durationAnimationBtnShortPress));
-    zoomInIconLikeInBtn2 = new Tween(begin: 1.0, end: 0.7).animate(animControlBtnShortPress);
-    tiltIconLikeInBtn2 = new Tween(begin: 0.0, end: 0.4).animate(animControlBtnShortPress);
-    zoomInTextLikeInBtn2 = new Tween(begin: 1.0, end: 0.7).animate(animControlBtnShortPress);
+    zoomInIconLikeInBtn2 = new Tween(begin: 1.0, end: 0.2).animate(animControlBtnShortPress);
+    tiltIconLikeInBtn2 = new Tween(begin: 0.0, end: 0.8).animate(animControlBtnShortPress);
 
     zoomInIconLikeInBtn2.addListener(() {
       setState(() {});
     });
     tiltIconLikeInBtn2.addListener(() {
-      setState(() {});
-    });
-    zoomInTextLikeInBtn2.addListener(() {
       setState(() {});
     });
 
@@ -358,7 +354,7 @@ class FbReactionState extends State<FbReaction> with TickerProviderStateMixin {
                         ),
                       ),
                       scale: !isLongPress
-                          ? handleOutputRangeZoomInTextLike(zoomInIconLikeInBtn2.value)
+                          ? handleOutputRangeZoomInIconLike(zoomInIconLikeInBtn2.value)
                           : zoomInTextLikeInBtn.value,
                     ),
                   ],
@@ -411,27 +407,22 @@ class FbReactionState extends State<FbReaction> with TickerProviderStateMixin {
   }
 
   double handleOutputRangeZoomInIconLike(double value) {
-    print(value);
-    if (value >= 0.85) {
+    if (value >= 0.8) {
       return value;
+    } else if (value >= 0.4) {
+      return 1.6 - value;
     } else {
-      return 0.7 + (1 - value);
+      return 0.8 + value;
     }
   }
 
   double handleOutputRangeTiltIconLike(double value) {
     if (value <= 0.2) {
       return value;
-    } else {
+    } else if (value <= 0.6) {
       return 0.4 - value;
-    }
-  }
-
-  double handleOutputRangeZoomInTextLike(double value) {
-    if (value >= 0.85) {
-      return value;
     } else {
-      return 0.7 + (1 - value);
+      return -(0.8 - value);
     }
   }
 
