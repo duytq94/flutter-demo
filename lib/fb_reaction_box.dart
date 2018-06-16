@@ -64,7 +64,6 @@ class FbReactionState extends State<FbReaction> with TickerProviderStateMixin {
     fadeInBox = new Tween(begin: 0.0, end: 1.0).animate(
       new CurvedAnimation(parent: animControlBox, curve: new Interval(0.7, 1.0)),
     );
-
     fadeInBox.addListener(() {
       setState(() {});
     });
@@ -118,6 +117,36 @@ class FbReactionState extends State<FbReaction> with TickerProviderStateMixin {
     zoomInIconLike.addListener(() {
       setState(() {});
     });
+    pushIconLoveUp.addListener(() {
+      setState(() {});
+    });
+    zoomInIconLove.addListener(() {
+      setState(() {});
+    });
+    pushIconHahaUp.addListener(() {
+      setState(() {});
+    });
+    zoomInIconHaha.addListener(() {
+      setState(() {});
+    });
+    pushIconWowUp.addListener(() {
+      setState(() {});
+    });
+    zoomInIconWow.addListener(() {
+      setState(() {});
+    });
+    pushIconSadUp.addListener(() {
+      setState(() {});
+    });
+    zoomInIconSad.addListener(() {
+      setState(() {});
+    });
+    pushIconAngryUp.addListener(() {
+      setState(() {});
+    });
+    zoomInIconAngry.addListener(() {
+      setState(() {});
+    });
   }
 
   @override
@@ -152,7 +181,7 @@ class FbReactionState extends State<FbReaction> with TickerProviderStateMixin {
                   ),
                   width: 300.0,
                   height: 50.0,
-                  margin: new EdgeInsets.only(top: 5.0, left: 10.0),
+                  margin: new EdgeInsets.only(top: 70.0, left: 10.0),
                 ),
                 opacity: this.fadeInBox.value,
               ),
@@ -235,12 +264,12 @@ class FbReactionState extends State<FbReaction> with TickerProviderStateMixin {
                     ),
                   ],
                   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                  crossAxisAlignment: CrossAxisAlignment.end,
+                  crossAxisAlignment: CrossAxisAlignment.center,
                 ),
                 width: 300.0,
-                height: 110.0,
+                height: 250.0,
                 margin: new EdgeInsets.only(left: this.moveRightGroupIcon.value),
-//                color: Colors.amber,
+                color: Colors.amber.withOpacity(0.5),
               )
             ],
           ),
@@ -286,7 +315,7 @@ class FbReactionState extends State<FbReaction> with TickerProviderStateMixin {
               borderRadius: new BorderRadius.circular(4.0),
               color: new Color(0xff3b5998),
             ),
-            margin: new EdgeInsets.only(top: 70.0),
+            margin: new EdgeInsets.only(top: 140.0),
           ),
         ],
       ),
@@ -296,16 +325,115 @@ class FbReactionState extends State<FbReaction> with TickerProviderStateMixin {
 
   void onTapDownBtn(TapDownDetails tapDownDetail) {
     animControlBtn.forward();
+
+    setForwardValue();
     animControlBox.forward();
   }
 
   void onTapUpBtn(TapUpDetails tapUpDetail) {
     animControlBtn.reverse();
+
+    setReverseValue();
     animControlBox.reverse();
   }
 
   void onTapCancelBtn() {
-    animControlBtn.reverse();
-    animControlBox.reverse();
+//    animControlBtn.reverse();
+//
+//    setReverseValue();
+//    animControlBox.reverse();
+  }
+
+  // We need to set the value for reverse because if not
+  // the angry-icon will be pulled down first, not the like-icon
+  void setReverseValue() {
+    // Icons
+    pushIconLikeUp = new Tween(begin: 30.0, end: 60.0).animate(
+      new CurvedAnimation(parent: animControlBox, curve: new Interval(0.5, 1.0)),
+    );
+    zoomInIconLike = new Tween(begin: 0.0, end: 1.0).animate(
+      new CurvedAnimation(parent: animControlBox, curve: new Interval(0.5, 1.0)),
+    );
+
+    pushIconLoveUp = new Tween(begin: 30.0, end: 60.0).animate(
+      new CurvedAnimation(parent: animControlBox, curve: new Interval(0.4, 0.9)),
+    );
+    zoomInIconLove = new Tween(begin: 0.0, end: 1.0).animate(
+      new CurvedAnimation(parent: animControlBox, curve: new Interval(0.4, 0.9)),
+    );
+
+    pushIconHahaUp = new Tween(begin: 30.0, end: 60.0).animate(
+      new CurvedAnimation(parent: animControlBox, curve: new Interval(0.3, 0.8)),
+    );
+    zoomInIconHaha = new Tween(begin: 0.0, end: 1.0).animate(
+      new CurvedAnimation(parent: animControlBox, curve: new Interval(0.3, 0.8)),
+    );
+
+    pushIconWowUp = new Tween(begin: 30.0, end: 60.0).animate(
+      new CurvedAnimation(parent: animControlBox, curve: new Interval(0.2, 0.7)),
+    );
+    zoomInIconWow = new Tween(begin: 0.0, end: 1.0).animate(
+      new CurvedAnimation(parent: animControlBox, curve: new Interval(0.2, 0.7)),
+    );
+
+    pushIconSadUp = new Tween(begin: 30.0, end: 60.0).animate(
+      new CurvedAnimation(parent: animControlBox, curve: new Interval(0.1, 0.6)),
+    );
+    zoomInIconSad = new Tween(begin: 0.0, end: 1.0).animate(
+      new CurvedAnimation(parent: animControlBox, curve: new Interval(0.1, 0.6)),
+    );
+
+    pushIconAngryUp = new Tween(begin: 30.0, end: 60.0).animate(
+      new CurvedAnimation(parent: animControlBox, curve: new Interval(0.0, 0.5)),
+    );
+    zoomInIconAngry = new Tween(begin: 0.0, end: 1.0).animate(
+      new CurvedAnimation(parent: animControlBox, curve: new Interval(0.0, 0.5)),
+    );
+  }
+
+  // When set the reverse value, we need set value to normal for the forward
+  void setForwardValue() {
+    // Icons
+    pushIconLikeUp = new Tween(begin: 30.0, end: 60.0).animate(
+      new CurvedAnimation(parent: animControlBox, curve: new Interval(0.0, 0.5)),
+    );
+    zoomInIconLike = new Tween(begin: 0.0, end: 1.0).animate(
+      new CurvedAnimation(parent: animControlBox, curve: new Interval(0.0, 0.5)),
+    );
+
+    pushIconLoveUp = new Tween(begin: 30.0, end: 60.0).animate(
+      new CurvedAnimation(parent: animControlBox, curve: new Interval(0.1, 0.6)),
+    );
+    zoomInIconLove = new Tween(begin: 0.0, end: 1.0).animate(
+      new CurvedAnimation(parent: animControlBox, curve: new Interval(0.1, 0.6)),
+    );
+
+    pushIconHahaUp = new Tween(begin: 30.0, end: 60.0).animate(
+      new CurvedAnimation(parent: animControlBox, curve: new Interval(0.2, 0.7)),
+    );
+    zoomInIconHaha = new Tween(begin: 0.0, end: 1.0).animate(
+      new CurvedAnimation(parent: animControlBox, curve: new Interval(0.2, 0.7)),
+    );
+
+    pushIconWowUp = new Tween(begin: 30.0, end: 60.0).animate(
+      new CurvedAnimation(parent: animControlBox, curve: new Interval(0.3, 0.8)),
+    );
+    zoomInIconWow = new Tween(begin: 0.0, end: 1.0).animate(
+      new CurvedAnimation(parent: animControlBox, curve: new Interval(0.3, 0.8)),
+    );
+
+    pushIconSadUp = new Tween(begin: 30.0, end: 60.0).animate(
+      new CurvedAnimation(parent: animControlBox, curve: new Interval(0.4, 0.9)),
+    );
+    zoomInIconSad = new Tween(begin: 0.0, end: 1.0).animate(
+      new CurvedAnimation(parent: animControlBox, curve: new Interval(0.4, 0.9)),
+    );
+
+    pushIconAngryUp = new Tween(begin: 30.0, end: 60.0).animate(
+      new CurvedAnimation(parent: animControlBox, curve: new Interval(0.5, 1.0)),
+    );
+    zoomInIconAngry = new Tween(begin: 0.0, end: 1.0).animate(
+      new CurvedAnimation(parent: animControlBox, curve: new Interval(0.5, 1.0)),
+    );
   }
 }
