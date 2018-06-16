@@ -83,6 +83,7 @@ flutter:
     - images/sad.gif
     - images/angry.gif
     - images/ic_like.png
+    - images/ic_like_fill.png
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.io/assets-and-images/#resolution-aware.

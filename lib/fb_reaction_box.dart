@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
 
@@ -22,22 +24,40 @@ class FbReaction extends StatefulWidget {
 }
 
 class FbReactionState extends State<FbReaction> with TickerProviderStateMixin {
-  AnimationController animControlBtn, animControlBox;
+  int durationAnimationBox = 500;
+  int durationAnimationBtnLongPress = 150;
+  int durationAnimationBtnShortPress = 300;
+
+  AnimationController animControlBtnLongPress, animControlBtnShortPress;
+  AnimationController animControlBox;
+
+  // For long press btn
   Animation zoomInIconLikeInBtn, tiltIconLikeInBtn, zoomInTextLikeInBtn;
+
+  // For short press btn
+  Animation zoomInIconLikeInBtn2, tiltIconLikeInBtn2, zoomInTextLikeInBtn2;
+
   Animation fadeInBox;
   Animation moveRightGroupIcon;
   Animation pushIconLikeUp, pushIconLoveUp, pushIconHahaUp, pushIconWowUp, pushIconSadUp, pushIconAngryUp;
   Animation zoomInIconLike, zoomInIconLove, zoomInIconHaha, zoomInIconWow, zoomInIconSad, zoomInIconAngry;
 
+  Duration durationLongPress = new Duration(milliseconds: 250);
+  Timer holdTimer;
+  bool isLongPress = false;
+  bool isLiked = false;
+
   @override
   void initState() {
     super.initState();
 
-    // Button
-    animControlBtn = new AnimationController(vsync: this, duration: new Duration(milliseconds: 150));
-    zoomInIconLikeInBtn = new Tween(begin: 1.0, end: 0.85).animate(animControlBtn);
-    tiltIconLikeInBtn = new Tween(begin: 0.0, end: 0.03).animate(animControlBtn);
-    zoomInTextLikeInBtn = new Tween(begin: 1.0, end: 0.85).animate(animControlBtn);
+    // ------------------------------- Button Like -------------------------------
+    // long press
+    animControlBtnLongPress =
+        new AnimationController(vsync: this, duration: new Duration(milliseconds: durationAnimationBtnLongPress));
+    zoomInIconLikeInBtn = new Tween(begin: 1.0, end: 0.85).animate(animControlBtnLongPress);
+    tiltIconLikeInBtn = new Tween(begin: 0.0, end: 0.03).animate(animControlBtnLongPress);
+    zoomInTextLikeInBtn = new Tween(begin: 1.0, end: 0.85).animate(animControlBtnLongPress);
 
     zoomInIconLikeInBtn.addListener(() {
       setState(() {});
@@ -49,8 +69,25 @@ class FbReactionState extends State<FbReaction> with TickerProviderStateMixin {
       setState(() {});
     });
 
-    // Box and Icons
-    animControlBox = new AnimationController(vsync: this, duration: new Duration(milliseconds: 500));
+    // short press
+    animControlBtnShortPress =
+        new AnimationController(vsync: this, duration: new Duration(milliseconds: durationAnimationBtnShortPress));
+    zoomInIconLikeInBtn2 = new Tween(begin: 1.0, end: 0.7).animate(animControlBtnShortPress);
+    tiltIconLikeInBtn2 = new Tween(begin: 0.0, end: -0.06).animate(animControlBtnShortPress);
+    zoomInTextLikeInBtn2 = new Tween(begin: 1.0, end: 0.7).animate(animControlBtnShortPress);
+
+    zoomInIconLikeInBtn2.addListener(() {
+      setState(() {});
+    });
+    tiltIconLikeInBtn2.addListener(() {
+      setState(() {});
+    });
+    zoomInTextLikeInBtn2.addListener(() {
+      setState(() {});
+    });
+
+    // ------------------------------- Box and Icons -------------------------------
+    animControlBox = new AnimationController(vsync: this, duration: new Duration(milliseconds: durationAnimationBox));
 
     // General
     moveRightGroupIcon = new Tween(begin: 0.0, end: 10.0).animate(
@@ -152,7 +189,9 @@ class FbReactionState extends State<FbReaction> with TickerProviderStateMixin {
   @override
   void dispose() {
     super.dispose();
-    animControlBtn.dispose();
+    animControlBtnLongPress.dispose();
+    animControlBtnShortPress.dispose();
+    animControlBox.dispose();
   }
 
   @override
@@ -187,89 +226,94 @@ class FbReactionState extends State<FbReaction> with TickerProviderStateMixin {
               ),
 
               // Icons
-              new Container(
-                child: new Row(
-                  children: <Widget>[
-                    new Transform.scale(
-                      child: new Container(
-                        child: new Image.asset(
-                          'images/like.gif',
-                          width: 40.0,
-                          height: 40.0,
-                          fit: BoxFit.contain,
+              new GestureDetector(
+                child: new Container(
+                  child: new Row(
+                    children: <Widget>[
+                      new Transform.scale(
+                        child: new Container(
+                          child: new Image.asset(
+                            'images/like.gif',
+                            width: 40.0,
+                            height: 40.0,
+                            fit: BoxFit.contain,
+                          ),
+                          margin: new EdgeInsets.only(bottom: pushIconLikeUp.value),
                         ),
-                        margin: new EdgeInsets.only(bottom: pushIconLikeUp.value),
+                        scale: this.zoomInIconLike.value,
                       ),
-                      scale: this.zoomInIconLike.value,
-                    ),
-                    new Transform.scale(
-                      child: new Container(
-                        child: new Image.asset(
-                          'images/love.gif',
-                          width: 40.0,
-                          height: 40.0,
-                          fit: BoxFit.contain,
+                      new Transform.scale(
+                        child: new Container(
+                          child: new Image.asset(
+                            'images/love.gif',
+                            width: 40.0,
+                            height: 40.0,
+                            fit: BoxFit.contain,
+                          ),
+                          margin: new EdgeInsets.only(bottom: pushIconLoveUp.value),
                         ),
-                        margin: new EdgeInsets.only(bottom: pushIconLoveUp.value),
+                        scale: this.zoomInIconLove.value,
                       ),
-                      scale: this.zoomInIconLove.value,
-                    ),
-                    new Transform.scale(
-                      child: new Container(
-                        child: new Image.asset(
-                          'images/haha.gif',
-                          width: 40.0,
-                          height: 40.0,
-                          fit: BoxFit.contain,
+                      new Transform.scale(
+                        child: new Container(
+                          child: new Image.asset(
+                            'images/haha.gif',
+                            width: 40.0,
+                            height: 40.0,
+                            fit: BoxFit.contain,
+                          ),
+                          margin: new EdgeInsets.only(bottom: pushIconHahaUp.value),
                         ),
-                        margin: new EdgeInsets.only(bottom: pushIconHahaUp.value),
+                        scale: this.zoomInIconHaha.value,
                       ),
-                      scale: this.zoomInIconHaha.value,
-                    ),
-                    new Transform.scale(
-                      child: new Container(
-                        child: new Image.asset(
-                          'images/wow.gif',
-                          width: 40.0,
-                          height: 40.0,
-                          fit: BoxFit.contain,
+                      new Transform.scale(
+                        child: new Container(
+                          child: new Image.asset(
+                            'images/wow.gif',
+                            width: 40.0,
+                            height: 40.0,
+                            fit: BoxFit.contain,
+                          ),
+                          margin: new EdgeInsets.only(bottom: pushIconWowUp.value),
                         ),
-                        margin: new EdgeInsets.only(bottom: pushIconWowUp.value),
+                        scale: this.zoomInIconWow.value,
                       ),
-                      scale: this.zoomInIconWow.value,
-                    ),
-                    new Transform.scale(
-                      child: new Container(
-                        child: new Image.asset(
-                          'images/sad.gif',
-                          width: 40.0,
-                          height: 40.0,
-                          fit: BoxFit.contain,
+                      new Transform.scale(
+                        child: new Container(
+                          child: new Image.asset(
+                            'images/sad.gif',
+                            width: 40.0,
+                            height: 40.0,
+                            fit: BoxFit.contain,
+                          ),
+                          margin: new EdgeInsets.only(bottom: pushIconSadUp.value),
                         ),
-                        margin: new EdgeInsets.only(bottom: pushIconSadUp.value),
+                        scale: this.zoomInIconSad.value,
                       ),
-                      scale: this.zoomInIconSad.value,
-                    ),
-                    new Transform.scale(
-                      child: new Container(
-                        child: new Image.asset(
-                          'images/angry.gif',
-                          width: 40.0,
-                          height: 40.0,
-                          fit: BoxFit.contain,
+                      new Transform.scale(
+                        child: new Container(
+                          child: new Image.asset(
+                            'images/angry.gif',
+                            width: 40.0,
+                            height: 40.0,
+                            fit: BoxFit.contain,
+                          ),
+                          margin: new EdgeInsets.only(bottom: pushIconAngryUp.value),
                         ),
-                        margin: new EdgeInsets.only(bottom: pushIconAngryUp.value),
+                        scale: this.zoomInIconAngry.value,
                       ),
-                      scale: this.zoomInIconAngry.value,
-                    ),
-                  ],
-                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                  crossAxisAlignment: CrossAxisAlignment.center,
+                    ],
+                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                  ),
+                  width: 300.0,
+                  height: 250.0,
+                  margin: new EdgeInsets.only(left: this.moveRightGroupIcon.value),
+                  color: Colors.amber.withOpacity(0.5),
                 ),
-                width: 300.0,
-                height: 250.0,
-                margin: new EdgeInsets.only(left: this.moveRightGroupIcon.value),
-                color: Colors.amber.withOpacity(0.5),
+                onTapDown: onTapDownBoxIcon,
+                onHorizontalDragStart: onHorizontalDragStartBoxIcon,
+                onHorizontalDragUpdate: onHorizontalDragUpdateBoxIcon,
               )
             ],
           ),
@@ -280,28 +324,40 @@ class FbReactionState extends State<FbReaction> with TickerProviderStateMixin {
               onTapDown: onTapDownBtn,
               onTapUp: onTapUpBtn,
               onTapCancel: onTapCancelBtn,
+              onTap: onTapBtn,
               child: new Container(
                 child: new Row(
                   children: <Widget>[
+                    // Icon like
                     new Transform.scale(
                       child: new RotationTransition(
                         child: new Image.asset(
-                          'images/ic_like.png',
+                          !isLongPress && isLiked ? 'images/ic_like_fill.png' : 'images/ic_like.png',
                           width: 25.0,
                           height: 25.0,
                           fit: BoxFit.contain,
-                          color: Colors.white,
+                          color: !isLongPress && isLiked ? new Color(0xff3b5998) : Colors.grey,
                         ),
-                        turns: tiltIconLikeInBtn,
+                        turns: !isLongPress && isLiked ? tiltIconLikeInBtn2 : tiltIconLikeInBtn,
                       ),
-                      scale: zoomInIconLikeInBtn.value,
+                      scale: !isLongPress && isLiked
+                          ? handleOutputRangeZoomInIconLike(zoomInIconLikeInBtn2.value)
+                          : zoomInIconLikeInBtn.value,
                     ),
+
+                    // Text like
                     new Transform.scale(
                       child: new Text(
                         'Like',
-                        style: new TextStyle(color: Colors.white, fontSize: 15.0),
+                        style: new TextStyle(
+                          color: !isLongPress && isLiked ? new Color(0xff3b5998) : Colors.grey,
+                          fontSize: 14.0,
+                          fontWeight: FontWeight.bold,
+                        ),
                       ),
-                      scale: zoomInTextLikeInBtn.value,
+                      scale: !isLongPress && isLiked
+                          ? handleOutputRangeZoomInTextLike(zoomInIconLikeInBtn2.value)
+                          : zoomInTextLikeInBtn.value,
                     ),
                   ],
                   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
@@ -313,7 +369,8 @@ class FbReactionState extends State<FbReaction> with TickerProviderStateMixin {
             width: 100.0,
             decoration: new BoxDecoration(
               borderRadius: new BorderRadius.circular(4.0),
-              color: new Color(0xff3b5998),
+              color: Colors.white,
+              border: new Border.all(color: Colors.grey[400]),
             ),
             margin: new EdgeInsets.only(top: 140.0),
           ),
@@ -323,25 +380,87 @@ class FbReactionState extends State<FbReaction> with TickerProviderStateMixin {
     );
   }
 
+  void onTapDownBoxIcon(TapDownDetails tapDownDetail) {
+//    print('aaaaaaaaaaa');
+  }
+
+  void onHorizontalDragStartBoxIcon(DragStartDetails dragStartDetail) {
+    print('aaaaaaaaaaa');
+  }
+
+  void onHorizontalDragUpdateBoxIcon(DragUpdateDetails dragUpdateDetail) {
+    print('bbbbbbbbbbb');
+  }
+
   void onTapDownBtn(TapDownDetails tapDownDetail) {
-    animControlBtn.forward();
+    holdTimer = new Timer.periodic(durationLongPress, showBox);
+  }
+
+  // when user short press
+  void onTapBtn() {
+    if (!isLongPress) {
+      isLiked = !isLiked;
+      if (isLiked) {
+        animControlBtnShortPress.forward();
+      } else {
+        animControlBtnShortPress.reverse();
+      }
+    }
+  }
+
+  double handleOutputRangeZoomInIconLike(double value) {
+    print(value);
+    if (value >= 0.85) {
+      return value;
+    } else {
+      return 0.7 + (1 - value);
+    }
+  }
+
+  double handleOutputRangeTiltIconLike(double value) {
+    if (value <= 0.03) {
+      return value;
+    } else {
+      return 0.06 - value;
+    }
+  }
+
+  double handleOutputRangeZoomInTextLike(double value) {
+    if (value >= 0.85) {
+      return value;
+    } else {
+      return 0.7 + (1 - value);
+    }
+  }
+
+  void showBox(Timer t) {
+    isLongPress = true;
+
+    animControlBtnLongPress.forward();
 
     setForwardValue();
     animControlBox.forward();
   }
 
   void onTapUpBtn(TapUpDetails tapUpDetail) {
-    animControlBtn.reverse();
+    new Timer(new Duration(milliseconds: durationAnimationBox), () {
+      isLongPress = false;
+    });
+
+    holdTimer.cancel();
+
+    animControlBtnLongPress.reverse();
 
     setReverseValue();
     animControlBox.reverse();
   }
 
   void onTapCancelBtn() {
-//    animControlBtn.reverse();
-//
-//    setReverseValue();
-//    animControlBox.reverse();
+    holdTimer.cancel();
+    animControlBtnLongPress.reverse();
+
+    setReverseValue();
+    animControlBox.reverse();
   }
 
   // We need to set the value for reverse because if not
