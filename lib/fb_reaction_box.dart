@@ -73,7 +73,7 @@ class FbReactionState extends State<FbReaction> with TickerProviderStateMixin {
     animControlBtnShortPress =
         new AnimationController(vsync: this, duration: new Duration(milliseconds: durationAnimationBtnShortPress));
     zoomInIconLikeInBtn2 = new Tween(begin: 1.0, end: 0.7).animate(animControlBtnShortPress);
-    tiltIconLikeInBtn2 = new Tween(begin: 0.0, end: -0.06).animate(animControlBtnShortPress);
+    tiltIconLikeInBtn2 = new Tween(begin: 0.0, end: 0.4).animate(animControlBtnShortPress);
     zoomInTextLikeInBtn2 = new Tween(begin: 1.0, end: 0.7).animate(animControlBtnShortPress);
 
     zoomInIconLikeInBtn2.addListener(() {
@@ -330,7 +330,7 @@ class FbReactionState extends State<FbReaction> with TickerProviderStateMixin {
                   children: <Widget>[
                     // Icon like
                     new Transform.scale(
-                      child: new RotationTransition(
+                      child: new Transform.rotate(
                         child: new Image.asset(
                           !isLongPress && isLiked ? 'images/ic_like_fill.png' : 'images/ic_like.png',
                           width: 25.0,
@@ -338,9 +338,11 @@ class FbReactionState extends State<FbReaction> with TickerProviderStateMixin {
                           fit: BoxFit.contain,
                           color: !isLongPress && isLiked ? new Color(0xff3b5998) : Colors.grey,
                         ),
-                        turns: !isLongPress && isLiked ? tiltIconLikeInBtn2 : tiltIconLikeInBtn,
+                        angle: !isLongPress
+                            ? handleOutputRangeTiltIconLike(tiltIconLikeInBtn2.value)
+                            : tiltIconLikeInBtn.value,
                       ),
-                      scale: !isLongPress && isLiked
+                      scale: !isLongPress
                           ? handleOutputRangeZoomInIconLike(zoomInIconLikeInBtn2.value)
                           : zoomInIconLikeInBtn.value,
                     ),
@@ -355,7 +357,7 @@ class FbReactionState extends State<FbReaction> with TickerProviderStateMixin {
                           fontWeight: FontWeight.bold,
                         ),
                       ),
-                      scale: !isLongPress && isLiked
+                      scale: !isLongPress
                           ? handleOutputRangeZoomInTextLike(zoomInIconLikeInBtn2.value)
                           : zoomInTextLikeInBtn.value,
                     ),
@@ -418,10 +420,10 @@ class FbReactionState extends State<FbReaction> with TickerProviderStateMixin {
   }
 
   double handleOutputRangeTiltIconLike(double value) {
-    if (value <= 0.03) {
+    if (value <= 0.2) {
       return value;
     } else {
-      return 0.06 - value;
+      return 0.4 - value;
     }
   }
 
