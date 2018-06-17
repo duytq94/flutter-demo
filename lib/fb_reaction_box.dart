@@ -360,7 +360,7 @@ class FbReactionState extends State<FbReaction> with TickerProviderStateMixin {
                   color: Colors.amber.withOpacity(0.5),
                 ),
                 onHorizontalDragDown: onHorizontalDragDownBoxIcon,
-                onHorizontalDragCancel: onHorizontalDragCancelBoxIcon,
+                onHorizontalDragEnd: onHorizontalDragEndBoxIcon,
                 onHorizontalDragUpdate: onHorizontalDragUpdateBoxIcon,
               )
             ],
@@ -434,8 +434,12 @@ class FbReactionState extends State<FbReaction> with TickerProviderStateMixin {
     isDragging = true;
   }
 
-  void onHorizontalDragCancelBoxIcon() {
+  void onHorizontalDragEndBoxIcon(a) {
     isDragging = false;
+    onTapUpBtn(null);
+//    animControlIconWhenDrag.reverse();
+//    animControlBtnLongPress.reverse();
+//    animControlBox.reverse();
   }
 
   void onHorizontalDragUpdateBoxIcon(DragUpdateDetails dragUpdateDetail) {
