@@ -279,7 +279,7 @@ class FbReactionState extends State<FbReaction> with TickerProviderStateMixin {
                             ? (currentIconFocus == 2
                                 ? this.zoomIconChosen.value
                                 : (previousIconFocus == 2 ? this.zoomIconNotChosen.value : 0.8))
-                            : this.zoomIconLike.value,
+                            : this.zoomIconLove.value,
                       ),
                       new Transform.scale(
                         child: new Container(
@@ -295,7 +295,7 @@ class FbReactionState extends State<FbReaction> with TickerProviderStateMixin {
                             ? (currentIconFocus == 3
                                 ? this.zoomIconChosen.value
                                 : (previousIconFocus == 3 ? this.zoomIconNotChosen.value : 0.8))
-                            : this.zoomIconLike.value,
+                            : this.zoomIconHaha.value,
                       ),
                       new Transform.scale(
                         child: new Container(
@@ -311,7 +311,7 @@ class FbReactionState extends State<FbReaction> with TickerProviderStateMixin {
                             ? (currentIconFocus == 4
                                 ? this.zoomIconChosen.value
                                 : (previousIconFocus == 4 ? this.zoomIconNotChosen.value : 0.8))
-                            : this.zoomIconLike.value,
+                            : this.zoomIconWow.value,
                       ),
                       new Transform.scale(
                         child: new Container(
@@ -327,7 +327,7 @@ class FbReactionState extends State<FbReaction> with TickerProviderStateMixin {
                             ? (currentIconFocus == 5
                                 ? this.zoomIconChosen.value
                                 : (previousIconFocus == 5 ? this.zoomIconNotChosen.value : 0.8))
-                            : this.zoomIconLike.value,
+                            : this.zoomIconSad.value,
                       ),
                       new Transform.scale(
                         child: new Container(
@@ -343,7 +343,7 @@ class FbReactionState extends State<FbReaction> with TickerProviderStateMixin {
                             ? (currentIconFocus == 6
                                 ? this.zoomIconChosen.value
                                 : (previousIconFocus == 6 ? this.zoomIconNotChosen.value : 0.8))
-                            : this.zoomIconLike.value,
+                            : this.zoomIconAngry.value,
                       ),
                     ],
                     mainAxisAlignment: MainAxisAlignment.spaceEvenly,
