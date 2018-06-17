@@ -40,6 +40,7 @@ class FbReactionState extends State<FbReaction> with TickerProviderStateMixin {
   // For short press btn
   AnimationController animControlBtnShortPress;
   Animation zoomIconLikeInBtn2, tiltIconLikeInBtn2;
+  Animation zoomBoxIcon;
 
   // For zoom icon when drag
   AnimationController animControlIconWhenDrag;
@@ -195,11 +196,15 @@ class FbReactionState extends State<FbReaction> with TickerProviderStateMixin {
 
     zoomIconChosen = new Tween(begin: 1.0, end: 1.8).animate(animControlIconWhenDrag);
     zoomIconNotChosen = new Tween(begin: 1.0, end: 0.8).animate(animControlIconWhenDrag);
+    zoomBoxIcon = new Tween(begin: 50.0, end: 40.0).animate(animControlIconWhenDrag);
 
     zoomIconChosen.addListener(() {
       setState(() {});
     });
     zoomIconNotChosen.addListener(() {
+      setState(() {});
+    });
+    zoomBoxIcon.addListener(() {
       setState(() {});
     });
   }
@@ -238,8 +243,8 @@ class FbReactionState extends State<FbReaction> with TickerProviderStateMixin {
                     ],
                   ),
                   width: 300.0,
-                  height: 50.0,
-                  margin: new EdgeInsets.only(top: 70.0, left: 10.0),
+                  height: isDragging ? (previousIconFocus == 0 ? this.zoomBoxIcon.value : 40.0) : 50.0,
+                  margin: new EdgeInsets.only(bottom: 130.0, left: 10.0),
                 ),
                 opacity: this.fadeInBox.value,
               ),
@@ -359,6 +364,7 @@ class FbReactionState extends State<FbReaction> with TickerProviderStateMixin {
                 onHorizontalDragUpdate: onHorizontalDragUpdateBoxIcon,
               )
             ],
+            alignment: Alignment.bottomCenter,
           ),
 
           // Button like
@@ -366,7 +372,6 @@ class FbReactionState extends State<FbReaction> with TickerProviderStateMixin {
             child: new GestureDetector(
               onTapDown: onTapDownBtn,
               onTapUp: onTapUpBtn,
-//              onTapCancel: onTapCancelBtn,
               onTap: onTapBtn,
               child: new Container(
                 child: new Row(
