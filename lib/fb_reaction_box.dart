@@ -359,7 +359,6 @@ class FbReactionState extends State<FbReaction> with TickerProviderStateMixin {
                   margin: new EdgeInsets.only(left: this.moveRightGroupIcon.value),
                   color: Colors.amber.withOpacity(0.5),
                 ),
-                onHorizontalDragDown: onHorizontalDragDownBoxIcon,
                 onHorizontalDragEnd: onHorizontalDragEndBoxIcon,
                 onHorizontalDragUpdate: onHorizontalDragUpdateBoxIcon,
               )
@@ -430,66 +429,66 @@ class FbReactionState extends State<FbReaction> with TickerProviderStateMixin {
     );
   }
 
-  void onHorizontalDragDownBoxIcon(DragDownDetails dragDownDetail) {
-    isDragging = true;
-  }
-
   void onHorizontalDragEndBoxIcon(a) {
     isDragging = false;
     onTapUpBtn(null);
-//    animControlIconWhenDrag.reverse();
-//    animControlBtnLongPress.reverse();
-//    animControlBox.reverse();
   }
 
   void onHorizontalDragUpdateBoxIcon(DragUpdateDetails dragUpdateDetail) {
-    if (dragUpdateDetail.globalPosition.dx >= 20 && dragUpdateDetail.globalPosition.dx < 83) {
-      if (currentIconFocus != 1) {
-        previousIconFocus = currentIconFocus;
-        currentIconFocus = 1;
-        animControlIconWhenDrag.reset();
-        animControlIconWhenDrag.forward();
+    // the margin top the box is 200
+    // and plus the height of toolbar and the status bar
+    // so the range we check is about 250 -> 550
+    if (dragUpdateDetail.globalPosition.dy >= 250 && dragUpdateDetail.globalPosition.dy <= 550) {
+      isDragging = true;
+      if (dragUpdateDetail.globalPosition.dx >= 20 && dragUpdateDetail.globalPosition.dx < 83) {
+        if (currentIconFocus != 1) {
+          previousIconFocus = currentIconFocus;
+          currentIconFocus = 1;
+          animControlIconWhenDrag.reset();
+          animControlIconWhenDrag.forward();
+        }
+      } else if (dragUpdateDetail.globalPosition.dx >= 83 && dragUpdateDetail.globalPosition.dx < 126) {
+        if (currentIconFocus != 2) {
+          previousIconFocus = currentIconFocus;
+          currentIconFocus = 2;
+          animControlIconWhenDrag.reset();
+          animControlIconWhenDrag.forward();
+        }
+      } else if (dragUpdateDetail.globalPosition.dx >= 126 && dragUpdateDetail.globalPosition.dx < 180) {
+        if (currentIconFocus != 3) {
+          previousIconFocus = currentIconFocus;
+          currentIconFocus = 3;
+          animControlIconWhenDrag.reset();
+          animControlIconWhenDrag.forward();
+        }
+      } else if (dragUpdateDetail.globalPosition.dx >= 180 && dragUpdateDetail.globalPosition.dx < 233) {
+        if (currentIconFocus != 4) {
+          previousIconFocus = currentIconFocus;
+          currentIconFocus = 4;
+          animControlIconWhenDrag.reset();
+          animControlIconWhenDrag.forward();
+        }
+      } else if (dragUpdateDetail.globalPosition.dx >= 233 && dragUpdateDetail.globalPosition.dx < 286) {
+        if (currentIconFocus != 5) {
+          previousIconFocus = currentIconFocus;
+          currentIconFocus = 5;
+          animControlIconWhenDrag.reset();
+          animControlIconWhenDrag.forward();
+        }
+      } else if (dragUpdateDetail.globalPosition.dx >= 286 && dragUpdateDetail.globalPosition.dx < 340) {
+        if (currentIconFocus != 6) {
+          previousIconFocus = currentIconFocus;
+          currentIconFocus = 6;
+          animControlIconWhenDrag.reset();
+          animControlIconWhenDrag.forward();
+        }
       }
-    } else if (dragUpdateDetail.globalPosition.dx >= 83 && dragUpdateDetail.globalPosition.dx < 126) {
-      if (currentIconFocus != 2) {
-        previousIconFocus = currentIconFocus;
-        currentIconFocus = 2;
-        animControlIconWhenDrag.reset();
-
-        animControlIconWhenDrag.forward();
-      }
-    } else if (dragUpdateDetail.globalPosition.dx >= 126 && dragUpdateDetail.globalPosition.dx < 180) {
-      if (currentIconFocus != 3) {
-        previousIconFocus = currentIconFocus;
-        currentIconFocus = 3;
-        animControlIconWhenDrag.reset();
-
-        animControlIconWhenDrag.forward();
-      }
-    } else if (dragUpdateDetail.globalPosition.dx >= 180 && dragUpdateDetail.globalPosition.dx < 233) {
-      if (currentIconFocus != 4) {
-        previousIconFocus = currentIconFocus;
-        currentIconFocus = 4;
-        animControlIconWhenDrag.reset();
-
-        animControlIconWhenDrag.forward();
-      }
-    } else if (dragUpdateDetail.globalPosition.dx >= 233 && dragUpdateDetail.globalPosition.dx < 286) {
-      if (currentIconFocus != 5) {
-        previousIconFocus = currentIconFocus;
-        currentIconFocus = 5;
-        animControlIconWhenDrag.reset();
-
-        animControlIconWhenDrag.forward();
-      }
-    } else if (dragUpdateDetail.globalPosition.dx >= 286 && dragUpdateDetail.globalPosition.dx < 340) {
-      if (currentIconFocus != 6) {
-        previousIconFocus = currentIconFocus;
-        currentIconFocus = 6;
-        animControlIconWhenDrag.reset();
-
-        animControlIconWhenDrag.forward();
-      }
+    } else {
+      isDragging = false;
+      previousIconFocus = 0;
+      currentIconFocus = 0;
+      animControlIconWhenDrag.reset();
+      animControlIconWhenDrag.forward();
     }
   }
 
