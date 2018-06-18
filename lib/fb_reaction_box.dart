@@ -254,15 +254,35 @@ class FbReactionState extends State<FbReaction> with TickerProviderStateMixin {
                 child: new Container(
                   child: new Row(
                     children: <Widget>[
+                      // icon like
                       new Transform.scale(
                         child: new Container(
-                          child: new Image.asset(
-                            'images/like.gif',
-                            width: 40.0,
-                            height: 40.0,
-                            fit: BoxFit.contain,
+                          child: new Column(
+                            children: <Widget>[
+                              currentIconFocus == 1
+                                  ? new Container(
+                                      child: new Text(
+                                        'Like',
+                                        style: new TextStyle(fontSize: 8.0, color: Colors.white),
+                                      ),
+                                      decoration: new BoxDecoration(
+                                          borderRadius: new BorderRadius.circular(10.0),
+                                          color: Colors.black.withOpacity(0.3)),
+                                      padding: new EdgeInsets.only(left: 7.0, right: 7.0, top: 2.0, bottom: 2.0),
+                                      margin: new EdgeInsets.only(bottom: 8.0),
+                                    )
+                                  : new Container(),
+                              new Image.asset(
+                                'images/like.gif',
+                                width: 40.0,
+                                height: 40.0,
+                                fit: BoxFit.contain,
+                              ),
+                            ],
                           ),
                           margin: new EdgeInsets.only(bottom: pushIconLikeUp.value),
+                          width: 40.0,
+                          height: currentIconFocus == 1 ? 70.0 : 40.0,
                         ),
                         scale: isDragging
                             ? (currentIconFocus == 1
@@ -270,15 +290,36 @@ class FbReactionState extends State<FbReaction> with TickerProviderStateMixin {
                                 : (previousIconFocus == 1 ? this.zoomIconNotChosen.value : 0.8))
                             : this.zoomIconLike.value,
                       ),
+
+                      // icon love
                       new Transform.scale(
                         child: new Container(
-                          child: new Image.asset(
-                            'images/love.gif',
-                            width: 40.0,
-                            height: 40.0,
-                            fit: BoxFit.contain,
+                          child: new Column(
+                            children: <Widget>[
+                              currentIconFocus == 2
+                                  ? new Container(
+                                      child: new Text(
+                                        'Love',
+                                        style: new TextStyle(fontSize: 8.0, color: Colors.white),
+                                      ),
+                                      decoration: new BoxDecoration(
+                                          borderRadius: new BorderRadius.circular(10.0),
+                                          color: Colors.black.withOpacity(0.3)),
+                                      padding: new EdgeInsets.only(left: 7.0, right: 7.0, top: 2.0, bottom: 2.0),
+                                      margin: new EdgeInsets.only(bottom: 8.0),
+                                    )
+                                  : new Container(),
+                              new Image.asset(
+                                'images/love.gif',
+                                width: 40.0,
+                                height: 40.0,
+                                fit: BoxFit.contain,
+                              ),
+                            ],
                           ),
                           margin: new EdgeInsets.only(bottom: pushIconLoveUp.value),
+                          width: 40.0,
+                          height: currentIconFocus == 2 ? 70.0 : 40.0,
                         ),
                         scale: isDragging
                             ? (currentIconFocus == 2
@@ -286,15 +327,36 @@ class FbReactionState extends State<FbReaction> with TickerProviderStateMixin {
                                 : (previousIconFocus == 2 ? this.zoomIconNotChosen.value : 0.8))
                             : this.zoomIconLove.value,
                       ),
+
+                      // icon haha
                       new Transform.scale(
                         child: new Container(
-                          child: new Image.asset(
-                            'images/haha.gif',
-                            width: 40.0,
-                            height: 40.0,
-                            fit: BoxFit.contain,
+                          child: new Column(
+                            children: <Widget>[
+                              currentIconFocus == 3
+                                  ? new Container(
+                                      child: new Text(
+                                        'Haha',
+                                        style: new TextStyle(fontSize: 8.0, color: Colors.white),
+                                      ),
+                                      decoration: new BoxDecoration(
+                                          borderRadius: new BorderRadius.circular(10.0),
+                                          color: Colors.black.withOpacity(0.3)),
+                                      padding: new EdgeInsets.only(left: 7.0, right: 7.0, top: 2.0, bottom: 2.0),
+                                      margin: new EdgeInsets.only(bottom: 8.0),
+                                    )
+                                  : new Container(),
+                              new Image.asset(
+                                'images/haha.gif',
+                                width: 40.0,
+                                height: 40.0,
+                                fit: BoxFit.contain,
+                              ),
+                            ],
                           ),
                           margin: new EdgeInsets.only(bottom: pushIconHahaUp.value),
+                          width: 40.0,
+                          height: currentIconFocus == 3 ? 70.0 : 40.0,
                         ),
                         scale: isDragging
                             ? (currentIconFocus == 3
@@ -302,15 +364,36 @@ class FbReactionState extends State<FbReaction> with TickerProviderStateMixin {
                                 : (previousIconFocus == 3 ? this.zoomIconNotChosen.value : 0.8))
                             : this.zoomIconHaha.value,
                       ),
+
+                      // icon wow
                       new Transform.scale(
                         child: new Container(
-                          child: new Image.asset(
-                            'images/wow.gif',
-                            width: 40.0,
-                            height: 40.0,
-                            fit: BoxFit.contain,
+                          child: new Column(
+                            children: <Widget>[
+                              currentIconFocus == 4
+                                  ? new Container(
+                                      child: new Text(
+                                        'Wow',
+                                        style: new TextStyle(fontSize: 8.0, color: Colors.white),
+                                      ),
+                                      decoration: new BoxDecoration(
+                                          borderRadius: new BorderRadius.circular(10.0),
+                                          color: Colors.black.withOpacity(0.3)),
+                                      padding: new EdgeInsets.only(left: 7.0, right: 7.0, top: 2.0, bottom: 2.0),
+                                      margin: new EdgeInsets.only(bottom: 8.0),
+                                    )
+                                  : new Container(),
+                              new Image.asset(
+                                'images/wow.gif',
+                                width: 40.0,
+                                height: 40.0,
+                                fit: BoxFit.contain,
+                              ),
+                            ],
                           ),
                           margin: new EdgeInsets.only(bottom: pushIconWowUp.value),
+                          width: 40.0,
+                          height: currentIconFocus == 4 ? 70.0 : 40.0,
                         ),
                         scale: isDragging
                             ? (currentIconFocus == 4
@@ -320,13 +403,32 @@ class FbReactionState extends State<FbReaction> with TickerProviderStateMixin {
                       ),
                       new Transform.scale(
                         child: new Container(
-                          child: new Image.asset(
-                            'images/sad.gif',
-                            width: 40.0,
-                            height: 40.0,
-                            fit: BoxFit.contain,
+                          child: new Column(
+                            children: <Widget>[
+                              currentIconFocus == 5
+                                  ? new Container(
+                                      child: new Text(
+                                        'Sad',
+                                        style: new TextStyle(fontSize: 8.0, color: Colors.white),
+                                      ),
+                                      decoration: new BoxDecoration(
+                                          borderRadius: new BorderRadius.circular(10.0),
+                                          color: Colors.black.withOpacity(0.3)),
+                                      padding: new EdgeInsets.only(left: 7.0, right: 7.0, top: 2.0, bottom: 2.0),
+                                      margin: new EdgeInsets.only(bottom: 8.0),
+                                    )
+                                  : new Container(),
+                              new Image.asset(
+                                'images/sad.gif',
+                                width: 40.0,
+                                height: 40.0,
+                                fit: BoxFit.contain,
+                              ),
+                            ],
                           ),
                           margin: new EdgeInsets.only(bottom: pushIconSadUp.value),
+                          width: 40.0,
+                          height: currentIconFocus == 5 ? 70.0 : 40.0,
                         ),
                         scale: isDragging
                             ? (currentIconFocus == 5
@@ -336,13 +438,32 @@ class FbReactionState extends State<FbReaction> with TickerProviderStateMixin {
                       ),
                       new Transform.scale(
                         child: new Container(
-                          child: new Image.asset(
-                            'images/angry.gif',
-                            width: 40.0,
-                            height: 40.0,
-                            fit: BoxFit.contain,
+                          child: new Column(
+                            children: <Widget>[
+                              currentIconFocus == 6
+                                  ? new Container(
+                                      child: new Text(
+                                        'Angry',
+                                        style: new TextStyle(fontSize: 8.0, color: Colors.white),
+                                      ),
+                                      decoration: new BoxDecoration(
+                                          borderRadius: new BorderRadius.circular(10.0),
+                                          color: Colors.black.withOpacity(0.3)),
+                                      padding: new EdgeInsets.only(left: 7.0, right: 7.0, top: 2.0, bottom: 2.0),
+                                      margin: new EdgeInsets.only(bottom: 8.0),
+                                    )
+                                  : new Container(),
+                              new Image.asset(
+                                'images/angry.gif',
+                                width: 40.0,
+                                height: 40.0,
+                                fit: BoxFit.contain,
+                              ),
+                            ],
                           ),
                           margin: new EdgeInsets.only(bottom: pushIconAngryUp.value),
+                          width: 40.0,
+                          height: currentIconFocus == 6 ? 70.0 : 40.0,
                         ),
                         scale: isDragging
                             ? (currentIconFocus == 6
@@ -431,6 +552,9 @@ class FbReactionState extends State<FbReaction> with TickerProviderStateMixin {
 
   void onHorizontalDragEndBoxIcon(a) {
     isDragging = false;
+    previousIconFocus = 0;
+    currentIconFocus = 0;
+
     onTapUpBtn(null);
   }
 
