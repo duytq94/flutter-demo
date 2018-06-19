@@ -27,7 +27,7 @@ class FbReactionState extends State<FbReaction> with TickerProviderStateMixin {
   int durationAnimationBox = 500;
   int durationAnimationBtnLongPress = 150;
   int durationAnimationBtnShortPress = 500;
-  int durationAnimationZoomIcon = 1500;
+  int durationAnimationZoomIcon = 150;
 
   // For long press btn
   AnimationController animControlBtnLongPress, animControlBox;
@@ -365,8 +365,10 @@ class FbReactionState extends State<FbReaction> with TickerProviderStateMixin {
                         scale: isDragging
                             ? (currentIconFocus == 2
                                 ? this.zoomIconChosen.value
-                                : (previousIconFocus == 2 ? this.zoomIconNotChosen.value : 0.8))
-                            : this.zoomIconLove.value,
+                                : (previousIconFocus == 2
+                                    ? this.zoomIconNotChosen.value
+                                    : isFirstDragging ? this.zoomIconWhenFirstDrag.value : 0.8))
+                            : isDraggingOutside ? this.zoomIconWhenDragOutside.value : this.zoomIconLove.value,
                       ),
 
                       // icon haha
@@ -402,8 +404,10 @@ class FbReactionState extends State<FbReaction> with TickerProviderStateMixin {
                         scale: isDragging
                             ? (currentIconFocus == 3
                                 ? this.zoomIconChosen.value
-                                : (previousIconFocus == 3 ? this.zoomIconNotChosen.value : 0.8))
-                            : this.zoomIconHaha.value,
+                                : (previousIconFocus == 3
+                                    ? this.zoomIconNotChosen.value
+                                    : isFirstDragging ? this.zoomIconWhenFirstDrag.value : 0.8))
+                            : isDraggingOutside ? this.zoomIconWhenDragOutside.value : this.zoomIconHaha.value,
                       ),
 
                       // icon wow
@@ -439,8 +443,10 @@ class FbReactionState extends State<FbReaction> with TickerProviderStateMixin {
                         scale: isDragging
                             ? (currentIconFocus == 4
                                 ? this.zoomIconChosen.value
-                                : (previousIconFocus == 4 ? this.zoomIconNotChosen.value : 0.8))
-                            : this.zoomIconWow.value,
+                                : (previousIconFocus == 4
+                                    ? this.zoomIconNotChosen.value
+                                    : isFirstDragging ? this.zoomIconWhenFirstDrag.value : 0.8))
+                            : isDraggingOutside ? this.zoomIconWhenDragOutside.value : this.zoomIconWow.value,
                       ),
 
                       // icon sad
@@ -476,8 +482,10 @@ class FbReactionState extends State<FbReaction> with TickerProviderStateMixin {
                         scale: isDragging
                             ? (currentIconFocus == 5
                                 ? this.zoomIconChosen.value
-                                : (previousIconFocus == 5 ? this.zoomIconNotChosen.value : 0.8))
-                            : this.zoomIconSad.value,
+                                : (previousIconFocus == 5
+                                    ? this.zoomIconNotChosen.value
+                                    : isFirstDragging ? this.zoomIconWhenFirstDrag.value : 0.8))
+                            : isDraggingOutside ? this.zoomIconWhenDragOutside.value : this.zoomIconSad.value,
                       ),
 
                       // icon angry
@@ -513,8 +521,10 @@ class FbReactionState extends State<FbReaction> with TickerProviderStateMixin {
                         scale: isDragging
                             ? (currentIconFocus == 6
                                 ? this.zoomIconChosen.value
-                                : (previousIconFocus == 6 ? this.zoomIconNotChosen.value : 0.8))
-                            : this.zoomIconAngry.value,
+                                : (previousIconFocus == 6
+                                    ? this.zoomIconNotChosen.value
+                                    : isFirstDragging ? this.zoomIconWhenFirstDrag.value : 0.8))
+                            : isDraggingOutside ? this.zoomIconWhenDragOutside.value : this.zoomIconAngry.value,
                       ),
                     ],
                     mainAxisAlignment: MainAxisAlignment.spaceEvenly,
