@@ -258,355 +258,382 @@ class FbReactionState extends State<FbReaction> with TickerProviderStateMixin {
   @override
   Widget build(BuildContext context) {
     timeDilation = 1.0;
-    return new Container(
-      child: new Stack(
-        children: <Widget>[
-          // Box and icons
-          new Stack(
+    return new Column(
+      children: <Widget>[
+        // Top space for detect gesture
+        new GestureDetector(
+          child: new Container(
+            width: double.infinity,
+            height: 200.0,
+            color: Colors.transparent,
+          ),
+          onHorizontalDragEnd: onHorizontalDragEndBoxIcon,
+        ),
+
+        // Main content
+        new Container(
+          child: new Stack(
             children: <Widget>[
-              // Box
-              new Opacity(
-                child: new Container(
-                  decoration: new BoxDecoration(
-                    color: Colors.white,
-                    borderRadius: new BorderRadius.circular(30.0),
-                    border: new Border.all(color: Colors.grey[300], width: 0.3),
-                    boxShadow: [
-                      new BoxShadow(
-                          color: Colors.grey,
-                          blurRadius: 5.0,
-                          // LTRB
-                          offset: Offset.lerp(new Offset(0.0, 0.0), new Offset(0.0, 0.5), 10.0)),
-                    ],
+              // Box and icons
+              new Stack(
+                children: <Widget>[
+                  // Box
+                  new Opacity(
+                    child: new Container(
+                      decoration: new BoxDecoration(
+                        color: Colors.white,
+                        borderRadius: new BorderRadius.circular(30.0),
+                        border: new Border.all(color: Colors.grey[300], width: 0.3),
+                        boxShadow: [
+                          new BoxShadow(
+                              color: Colors.grey,
+                              blurRadius: 5.0,
+                              // LTRB
+                              offset: Offset.lerp(new Offset(0.0, 0.0), new Offset(0.0, 0.5), 10.0)),
+                        ],
+                      ),
+                      width: 300.0,
+                      height: isDragging
+                          ? (previousIconFocus == 0 ? this.zoomBoxIcon.value : 40.0)
+                          : isDraggingOutside ? this.zoomBoxWhenDragOutside.value : 50.0,
+                      margin: new EdgeInsets.only(bottom: 130.0, left: 10.0),
+                    ),
+                    opacity: this.fadeInBox.value,
                   ),
-                  width: 300.0,
-                  height: isDragging
-                      ? (previousIconFocus == 0 ? this.zoomBoxIcon.value : 40.0)
-                      : isDraggingOutside ? this.zoomBoxWhenDragOutside.value : 50.0,
-                  margin: new EdgeInsets.only(bottom: 130.0, left: 10.0),
-                ),
-                opacity: this.fadeInBox.value,
+
+                  // Icons
+                  new GestureDetector(
+                    child: new Container(
+                      child: new Row(
+                        children: <Widget>[
+                          // icon like
+                          new Transform.scale(
+                            child: new Container(
+                              child: new Column(
+                                children: <Widget>[
+                                  currentIconFocus == 1
+                                      ? new Container(
+                                          child: new Text(
+                                            'Like',
+                                            style: new TextStyle(fontSize: 8.0, color: Colors.white),
+                                          ),
+                                          decoration: new BoxDecoration(
+                                              borderRadius: new BorderRadius.circular(10.0),
+                                              color: Colors.black.withOpacity(0.3)),
+                                          padding: new EdgeInsets.only(left: 7.0, right: 7.0, top: 2.0, bottom: 2.0),
+                                          margin: new EdgeInsets.only(bottom: 8.0),
+                                        )
+                                      : new Container(),
+                                  new Image.asset(
+                                    'images/like.gif',
+                                    width: 40.0,
+                                    height: 40.0,
+                                    fit: BoxFit.contain,
+                                  ),
+                                ],
+                              ),
+                              margin: new EdgeInsets.only(bottom: pushIconLikeUp.value),
+                              width: 40.0,
+                              height: currentIconFocus == 1 ? 70.0 : 40.0,
+                            ),
+                            scale: isDragging
+                                ? (currentIconFocus == 1
+                                    ? this.zoomIconChosen.value
+                                    : (previousIconFocus == 1
+                                        ? this.zoomIconNotChosen.value
+                                        : isFirstDragging ? this.zoomIconWhenFirstDrag.value : 0.8))
+                                : isDraggingOutside ? this.zoomIconWhenDragOutside.value : this.zoomIconLike.value,
+                          ),
+
+                          // icon love
+                          new Transform.scale(
+                            child: new Container(
+                              child: new Column(
+                                children: <Widget>[
+                                  currentIconFocus == 2
+                                      ? new Container(
+                                          child: new Text(
+                                            'Love',
+                                            style: new TextStyle(fontSize: 8.0, color: Colors.white),
+                                          ),
+                                          decoration: new BoxDecoration(
+                                              borderRadius: new BorderRadius.circular(10.0),
+                                              color: Colors.black.withOpacity(0.3)),
+                                          padding: new EdgeInsets.only(left: 7.0, right: 7.0, top: 2.0, bottom: 2.0),
+                                          margin: new EdgeInsets.only(bottom: 8.0),
+                                        )
+                                      : new Container(),
+                                  new Image.asset(
+                                    'images/love.gif',
+                                    width: 40.0,
+                                    height: 40.0,
+                                    fit: BoxFit.contain,
+                                  ),
+                                ],
+                              ),
+                              margin: new EdgeInsets.only(bottom: pushIconLoveUp.value),
+                              width: 40.0,
+                              height: currentIconFocus == 2 ? 70.0 : 40.0,
+                            ),
+                            scale: isDragging
+                                ? (currentIconFocus == 2
+                                    ? this.zoomIconChosen.value
+                                    : (previousIconFocus == 2
+                                        ? this.zoomIconNotChosen.value
+                                        : isFirstDragging ? this.zoomIconWhenFirstDrag.value : 0.8))
+                                : isDraggingOutside ? this.zoomIconWhenDragOutside.value : this.zoomIconLove.value,
+                          ),
+
+                          // icon haha
+                          new Transform.scale(
+                            child: new Container(
+                              child: new Column(
+                                children: <Widget>[
+                                  currentIconFocus == 3
+                                      ? new Container(
+                                          child: new Text(
+                                            'Haha',
+                                            style: new TextStyle(fontSize: 8.0, color: Colors.white),
+                                          ),
+                                          decoration: new BoxDecoration(
+                                              borderRadius: new BorderRadius.circular(10.0),
+                                              color: Colors.black.withOpacity(0.3)),
+                                          padding: new EdgeInsets.only(left: 7.0, right: 7.0, top: 2.0, bottom: 2.0),
+                                          margin: new EdgeInsets.only(bottom: 8.0),
+                                        )
+                                      : new Container(),
+                                  new Image.asset(
+                                    'images/haha.gif',
+                                    width: 40.0,
+                                    height: 40.0,
+                                    fit: BoxFit.contain,
+                                  ),
+                                ],
+                              ),
+                              margin: new EdgeInsets.only(bottom: pushIconHahaUp.value),
+                              width: 40.0,
+                              height: currentIconFocus == 3 ? 70.0 : 40.0,
+                            ),
+                            scale: isDragging
+                                ? (currentIconFocus == 3
+                                    ? this.zoomIconChosen.value
+                                    : (previousIconFocus == 3
+                                        ? this.zoomIconNotChosen.value
+                                        : isFirstDragging ? this.zoomIconWhenFirstDrag.value : 0.8))
+                                : isDraggingOutside ? this.zoomIconWhenDragOutside.value : this.zoomIconHaha.value,
+                          ),
+
+                          // icon wow
+                          new Transform.scale(
+                            child: new Container(
+                              child: new Column(
+                                children: <Widget>[
+                                  currentIconFocus == 4
+                                      ? new Container(
+                                          child: new Text(
+                                            'Wow',
+                                            style: new TextStyle(fontSize: 8.0, color: Colors.white),
+                                          ),
+                                          decoration: new BoxDecoration(
+                                              borderRadius: new BorderRadius.circular(10.0),
+                                              color: Colors.black.withOpacity(0.3)),
+                                          padding: new EdgeInsets.only(left: 7.0, right: 7.0, top: 2.0, bottom: 2.0),
+                                          margin: new EdgeInsets.only(bottom: 8.0),
+                                        )
+                                      : new Container(),
+                                  new Image.asset(
+                                    'images/wow.gif',
+                                    width: 40.0,
+                                    height: 40.0,
+                                    fit: BoxFit.contain,
+                                  ),
+                                ],
+                              ),
+                              margin: new EdgeInsets.only(bottom: pushIconWowUp.value),
+                              width: 40.0,
+                              height: currentIconFocus == 4 ? 70.0 : 40.0,
+                            ),
+                            scale: isDragging
+                                ? (currentIconFocus == 4
+                                    ? this.zoomIconChosen.value
+                                    : (previousIconFocus == 4
+                                        ? this.zoomIconNotChosen.value
+                                        : isFirstDragging ? this.zoomIconWhenFirstDrag.value : 0.8))
+                                : isDraggingOutside ? this.zoomIconWhenDragOutside.value : this.zoomIconWow.value,
+                          ),
+
+                          // icon sad
+                          new Transform.scale(
+                            child: new Container(
+                              child: new Column(
+                                children: <Widget>[
+                                  currentIconFocus == 5
+                                      ? new Container(
+                                          child: new Text(
+                                            'Sad',
+                                            style: new TextStyle(fontSize: 8.0, color: Colors.white),
+                                          ),
+                                          decoration: new BoxDecoration(
+                                              borderRadius: new BorderRadius.circular(10.0),
+                                              color: Colors.black.withOpacity(0.3)),
+                                          padding: new EdgeInsets.only(left: 7.0, right: 7.0, top: 2.0, bottom: 2.0),
+                                          margin: new EdgeInsets.only(bottom: 8.0),
+                                        )
+                                      : new Container(),
+                                  new Image.asset(
+                                    'images/sad.gif',
+                                    width: 40.0,
+                                    height: 40.0,
+                                    fit: BoxFit.contain,
+                                  ),
+                                ],
+                              ),
+                              margin: new EdgeInsets.only(bottom: pushIconSadUp.value),
+                              width: 40.0,
+                              height: currentIconFocus == 5 ? 70.0 : 40.0,
+                            ),
+                            scale: isDragging
+                                ? (currentIconFocus == 5
+                                    ? this.zoomIconChosen.value
+                                    : (previousIconFocus == 5
+                                        ? this.zoomIconNotChosen.value
+                                        : isFirstDragging ? this.zoomIconWhenFirstDrag.value : 0.8))
+                                : isDraggingOutside ? this.zoomIconWhenDragOutside.value : this.zoomIconSad.value,
+                          ),
+
+                          // icon angry
+                          new Transform.scale(
+                            child: new Container(
+                              child: new Column(
+                                children: <Widget>[
+                                  currentIconFocus == 6
+                                      ? new Container(
+                                          child: new Text(
+                                            'Angry',
+                                            style: new TextStyle(fontSize: 8.0, color: Colors.white),
+                                          ),
+                                          decoration: new BoxDecoration(
+                                              borderRadius: new BorderRadius.circular(10.0),
+                                              color: Colors.black.withOpacity(0.3)),
+                                          padding: new EdgeInsets.only(left: 7.0, right: 7.0, top: 2.0, bottom: 2.0),
+                                          margin: new EdgeInsets.only(bottom: 8.0),
+                                        )
+                                      : new Container(),
+                                  new Image.asset(
+                                    'images/angry.gif',
+                                    width: 40.0,
+                                    height: 40.0,
+                                    fit: BoxFit.contain,
+                                  ),
+                                ],
+                              ),
+                              margin: new EdgeInsets.only(bottom: pushIconAngryUp.value),
+                              width: 40.0,
+                              height: currentIconFocus == 6 ? 70.0 : 40.0,
+                            ),
+                            scale: isDragging
+                                ? (currentIconFocus == 6
+                                    ? this.zoomIconChosen.value
+                                    : (previousIconFocus == 6
+                                        ? this.zoomIconNotChosen.value
+                                        : isFirstDragging ? this.zoomIconWhenFirstDrag.value : 0.8))
+                                : isDraggingOutside ? this.zoomIconWhenDragOutside.value : this.zoomIconAngry.value,
+                          ),
+                        ],
+                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                      ),
+                      width: 300.0,
+                      height: 250.0,
+                      margin: new EdgeInsets.only(left: this.moveRightGroupIcon.value),
+                      color: Colors.amber.withOpacity(0.5),
+                    ),
+                    onHorizontalDragEnd: onHorizontalDragEndBoxIcon,
+                    onHorizontalDragUpdate: onHorizontalDragUpdateBoxIcon,
+                  )
+                ],
+                alignment: Alignment.bottomCenter,
               ),
 
-              // Icons
-              new GestureDetector(
-                child: new Container(
-                  child: new Row(
-                    children: <Widget>[
-                      // icon like
-                      new Transform.scale(
-                        child: new Container(
-                          child: new Column(
-                            children: <Widget>[
-                              currentIconFocus == 1
-                                  ? new Container(
-                                      child: new Text(
-                                        'Like',
-                                        style: new TextStyle(fontSize: 8.0, color: Colors.white),
-                                      ),
-                                      decoration: new BoxDecoration(
-                                          borderRadius: new BorderRadius.circular(10.0),
-                                          color: Colors.black.withOpacity(0.3)),
-                                      padding: new EdgeInsets.only(left: 7.0, right: 7.0, top: 2.0, bottom: 2.0),
-                                      margin: new EdgeInsets.only(bottom: 8.0),
-                                    )
-                                  : new Container(),
-                              new Image.asset(
-                                'images/like.gif',
-                                width: 40.0,
-                                height: 40.0,
-                                fit: BoxFit.contain,
-                              ),
-                            ],
+              // Button like
+              new Container(
+                child: new GestureDetector(
+                  onTapDown: onTapDownBtn,
+                  onTapUp: onTapUpBtn,
+                  onTap: onTapBtn,
+                  child: new Container(
+                    child: new Row(
+                      children: <Widget>[
+                        // Icon like
+                        new Transform.scale(
+                          child: new Transform.rotate(
+                            child: new Image.asset(
+                              !isLongPress && isLiked ? 'images/ic_like_fill.png' : 'images/ic_like.png',
+                              width: 25.0,
+                              height: 25.0,
+                              fit: BoxFit.contain,
+                              color: !isLongPress && isLiked ? new Color(0xff3b5998) : Colors.grey,
+                            ),
+                            angle: !isLongPress
+                                ? handleOutputRangeTiltIconLike(tiltIconLikeInBtn2.value)
+                                : tiltIconLikeInBtn.value,
                           ),
-                          margin: new EdgeInsets.only(bottom: pushIconLikeUp.value),
-                          width: 40.0,
-                          height: currentIconFocus == 1 ? 70.0 : 40.0,
+                          scale: !isLongPress
+                              ? handleOutputRangeZoomInIconLike(zoomIconLikeInBtn2.value)
+                              : zoomIconLikeInBtn.value,
                         ),
-                        scale: isDragging
-                            ? (currentIconFocus == 1
-                                ? this.zoomIconChosen.value
-                                : (previousIconFocus == 1
-                                    ? this.zoomIconNotChosen.value
-                                    : isFirstDragging ? this.zoomIconWhenFirstDrag.value : 0.8))
-                            : isDraggingOutside ? this.zoomIconWhenDragOutside.value : this.zoomIconLike.value,
-                      ),
 
-                      // icon love
-                      new Transform.scale(
-                        child: new Container(
-                          child: new Column(
-                            children: <Widget>[
-                              currentIconFocus == 2
-                                  ? new Container(
-                                      child: new Text(
-                                        'Love',
-                                        style: new TextStyle(fontSize: 8.0, color: Colors.white),
-                                      ),
-                                      decoration: new BoxDecoration(
-                                          borderRadius: new BorderRadius.circular(10.0),
-                                          color: Colors.black.withOpacity(0.3)),
-                                      padding: new EdgeInsets.only(left: 7.0, right: 7.0, top: 2.0, bottom: 2.0),
-                                      margin: new EdgeInsets.only(bottom: 8.0),
-                                    )
-                                  : new Container(),
-                              new Image.asset(
-                                'images/love.gif',
-                                width: 40.0,
-                                height: 40.0,
-                                fit: BoxFit.contain,
-                              ),
-                            ],
+                        // Text like
+                        new Transform.scale(
+                          child: new Text(
+                            'Like',
+                            style: new TextStyle(
+                              color: !isLongPress && isLiked ? new Color(0xff3b5998) : Colors.grey,
+                              fontSize: 14.0,
+                              fontWeight: FontWeight.bold,
+                            ),
                           ),
-                          margin: new EdgeInsets.only(bottom: pushIconLoveUp.value),
-                          width: 40.0,
-                          height: currentIconFocus == 2 ? 70.0 : 40.0,
+                          scale: !isLongPress
+                              ? handleOutputRangeZoomInIconLike(zoomIconLikeInBtn2.value)
+                              : zoomTextLikeInBtn.value,
                         ),
-                        scale: isDragging
-                            ? (currentIconFocus == 2
-                                ? this.zoomIconChosen.value
-                                : (previousIconFocus == 2
-                                    ? this.zoomIconNotChosen.value
-                                    : isFirstDragging ? this.zoomIconWhenFirstDrag.value : 0.8))
-                            : isDraggingOutside ? this.zoomIconWhenDragOutside.value : this.zoomIconLove.value,
-                      ),
-
-                      // icon haha
-                      new Transform.scale(
-                        child: new Container(
-                          child: new Column(
-                            children: <Widget>[
-                              currentIconFocus == 3
-                                  ? new Container(
-                                      child: new Text(
-                                        'Haha',
-                                        style: new TextStyle(fontSize: 8.0, color: Colors.white),
-                                      ),
-                                      decoration: new BoxDecoration(
-                                          borderRadius: new BorderRadius.circular(10.0),
-                                          color: Colors.black.withOpacity(0.3)),
-                                      padding: new EdgeInsets.only(left: 7.0, right: 7.0, top: 2.0, bottom: 2.0),
-                                      margin: new EdgeInsets.only(bottom: 8.0),
-                                    )
-                                  : new Container(),
-                              new Image.asset(
-                                'images/haha.gif',
-                                width: 40.0,
-                                height: 40.0,
-                                fit: BoxFit.contain,
-                              ),
-                            ],
-                          ),
-                          margin: new EdgeInsets.only(bottom: pushIconHahaUp.value),
-                          width: 40.0,
-                          height: currentIconFocus == 3 ? 70.0 : 40.0,
-                        ),
-                        scale: isDragging
-                            ? (currentIconFocus == 3
-                                ? this.zoomIconChosen.value
-                                : (previousIconFocus == 3
-                                    ? this.zoomIconNotChosen.value
-                                    : isFirstDragging ? this.zoomIconWhenFirstDrag.value : 0.8))
-                            : isDraggingOutside ? this.zoomIconWhenDragOutside.value : this.zoomIconHaha.value,
-                      ),
-
-                      // icon wow
-                      new Transform.scale(
-                        child: new Container(
-                          child: new Column(
-                            children: <Widget>[
-                              currentIconFocus == 4
-                                  ? new Container(
-                                      child: new Text(
-                                        'Wow',
-                                        style: new TextStyle(fontSize: 8.0, color: Colors.white),
-                                      ),
-                                      decoration: new BoxDecoration(
-                                          borderRadius: new BorderRadius.circular(10.0),
-                                          color: Colors.black.withOpacity(0.3)),
-                                      padding: new EdgeInsets.only(left: 7.0, right: 7.0, top: 2.0, bottom: 2.0),
-                                      margin: new EdgeInsets.only(bottom: 8.0),
-                                    )
-                                  : new Container(),
-                              new Image.asset(
-                                'images/wow.gif',
-                                width: 40.0,
-                                height: 40.0,
-                                fit: BoxFit.contain,
-                              ),
-                            ],
-                          ),
-                          margin: new EdgeInsets.only(bottom: pushIconWowUp.value),
-                          width: 40.0,
-                          height: currentIconFocus == 4 ? 70.0 : 40.0,
-                        ),
-                        scale: isDragging
-                            ? (currentIconFocus == 4
-                                ? this.zoomIconChosen.value
-                                : (previousIconFocus == 4
-                                    ? this.zoomIconNotChosen.value
-                                    : isFirstDragging ? this.zoomIconWhenFirstDrag.value : 0.8))
-                            : isDraggingOutside ? this.zoomIconWhenDragOutside.value : this.zoomIconWow.value,
-                      ),
-
-                      // icon sad
-                      new Transform.scale(
-                        child: new Container(
-                          child: new Column(
-                            children: <Widget>[
-                              currentIconFocus == 5
-                                  ? new Container(
-                                      child: new Text(
-                                        'Sad',
-                                        style: new TextStyle(fontSize: 8.0, color: Colors.white),
-                                      ),
-                                      decoration: new BoxDecoration(
-                                          borderRadius: new BorderRadius.circular(10.0),
-                                          color: Colors.black.withOpacity(0.3)),
-                                      padding: new EdgeInsets.only(left: 7.0, right: 7.0, top: 2.0, bottom: 2.0),
-                                      margin: new EdgeInsets.only(bottom: 8.0),
-                                    )
-                                  : new Container(),
-                              new Image.asset(
-                                'images/sad.gif',
-                                width: 40.0,
-                                height: 40.0,
-                                fit: BoxFit.contain,
-                              ),
-                            ],
-                          ),
-                          margin: new EdgeInsets.only(bottom: pushIconSadUp.value),
-                          width: 40.0,
-                          height: currentIconFocus == 5 ? 70.0 : 40.0,
-                        ),
-                        scale: isDragging
-                            ? (currentIconFocus == 5
-                                ? this.zoomIconChosen.value
-                                : (previousIconFocus == 5
-                                    ? this.zoomIconNotChosen.value
-                                    : isFirstDragging ? this.zoomIconWhenFirstDrag.value : 0.8))
-                            : isDraggingOutside ? this.zoomIconWhenDragOutside.value : this.zoomIconSad.value,
-                      ),
-
-                      // icon angry
-                      new Transform.scale(
-                        child: new Container(
-                          child: new Column(
-                            children: <Widget>[
-                              currentIconFocus == 6
-                                  ? new Container(
-                                      child: new Text(
-                                        'Angry',
-                                        style: new TextStyle(fontSize: 8.0, color: Colors.white),
-                                      ),
-                                      decoration: new BoxDecoration(
-                                          borderRadius: new BorderRadius.circular(10.0),
-                                          color: Colors.black.withOpacity(0.3)),
-                                      padding: new EdgeInsets.only(left: 7.0, right: 7.0, top: 2.0, bottom: 2.0),
-                                      margin: new EdgeInsets.only(bottom: 8.0),
-                                    )
-                                  : new Container(),
-                              new Image.asset(
-                                'images/angry.gif',
-                                width: 40.0,
-                                height: 40.0,
-                                fit: BoxFit.contain,
-                              ),
-                            ],
-                          ),
-                          margin: new EdgeInsets.only(bottom: pushIconAngryUp.value),
-                          width: 40.0,
-                          height: currentIconFocus == 6 ? 70.0 : 40.0,
-                        ),
-                        scale: isDragging
-                            ? (currentIconFocus == 6
-                                ? this.zoomIconChosen.value
-                                : (previousIconFocus == 6
-                                    ? this.zoomIconNotChosen.value
-                                    : isFirstDragging ? this.zoomIconWhenFirstDrag.value : 0.8))
-                            : isDraggingOutside ? this.zoomIconWhenDragOutside.value : this.zoomIconAngry.value,
-                      ),
-                    ],
-                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                    crossAxisAlignment: CrossAxisAlignment.center,
+                      ],
+                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                    ),
+                    padding: new EdgeInsets.all(10.0),
+                    color: Colors.transparent,
                   ),
-                  width: 300.0,
-                  height: 250.0,
-                  margin: new EdgeInsets.only(left: this.moveRightGroupIcon.value),
-                  color: Colors.amber.withOpacity(0.5),
                 ),
-                onHorizontalDragEnd: onHorizontalDragEndBoxIcon,
-                onHorizontalDragUpdate: onHorizontalDragUpdateBoxIcon,
-              )
+                width: 100.0,
+                decoration: new BoxDecoration(
+                  borderRadius: new BorderRadius.circular(4.0),
+                  color: Colors.white,
+                  border: new Border.all(color: Colors.grey[400]),
+                ),
+                margin: new EdgeInsets.only(top: 140.0),
+              ),
             ],
-            alignment: Alignment.bottomCenter,
           ),
+          margin: new EdgeInsets.only(left: 20.0, right: 20.0),
+        ),
 
-          // Button like
-          new Container(
-            child: new GestureDetector(
-              onTapDown: onTapDownBtn,
-              onTapUp: onTapUpBtn,
-              onTap: onTapBtn,
-              child: new Container(
-                child: new Row(
-                  children: <Widget>[
-                    // Icon like
-                    new Transform.scale(
-                      child: new Transform.rotate(
-                        child: new Image.asset(
-                          !isLongPress && isLiked ? 'images/ic_like_fill.png' : 'images/ic_like.png',
-                          width: 25.0,
-                          height: 25.0,
-                          fit: BoxFit.contain,
-                          color: !isLongPress && isLiked ? new Color(0xff3b5998) : Colors.grey,
-                        ),
-                        angle: !isLongPress
-                            ? handleOutputRangeTiltIconLike(tiltIconLikeInBtn2.value)
-                            : tiltIconLikeInBtn.value,
-                      ),
-                      scale: !isLongPress
-                          ? handleOutputRangeZoomInIconLike(zoomIconLikeInBtn2.value)
-                          : zoomIconLikeInBtn.value,
-                    ),
-
-                    // Text like
-                    new Transform.scale(
-                      child: new Text(
-                        'Like',
-                        style: new TextStyle(
-                          color: !isLongPress && isLiked ? new Color(0xff3b5998) : Colors.grey,
-                          fontSize: 14.0,
-                          fontWeight: FontWeight.bold,
-                        ),
-                      ),
-                      scale: !isLongPress
-                          ? handleOutputRangeZoomInIconLike(zoomIconLikeInBtn2.value)
-                          : zoomTextLikeInBtn.value,
-                    ),
-                  ],
-                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                ),
-                padding: new EdgeInsets.all(10.0),
-                color: Colors.transparent,
-              ),
-            ),
-            width: 100.0,
-            decoration: new BoxDecoration(
-              borderRadius: new BorderRadius.circular(4.0),
-              color: Colors.white,
-              border: new Border.all(color: Colors.grey[400]),
-            ),
-            margin: new EdgeInsets.only(top: 140.0),
+        // Bottom space for detect gesture
+        new GestureDetector(
+          child: new Container(
+            width: double.infinity,
+            height: 110.0,
+            color: Colors.transparent,
           ),
-        ],
-      ),
-      margin: new EdgeInsets.only(top: 200.0, left: 20.0, right: 20.0),
+          onHorizontalDragEnd: onHorizontalDragEndBoxIcon,
+        ),
+      ],
     );
   }
 
-  void onHorizontalDragEndBoxIcon(a) {
+  void onHorizontalDragEndBoxIcon(DragEndDetails dragEndDetail) {
     isDragging = false;
+    isDraggingOutside = false;
+    isFirstDragging = true;
     previousIconFocus = 0;
     currentIconFocus = 0;
 
