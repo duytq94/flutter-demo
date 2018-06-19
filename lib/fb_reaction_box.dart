@@ -27,7 +27,7 @@ class FbReactionState extends State<FbReaction> with TickerProviderStateMixin {
   int durationAnimationBox = 500;
   int durationAnimationBtnLongPress = 150;
   int durationAnimationBtnShortPress = 500;
-  int durationAnimationZoomIcon = 150;
+  int durationAnimationZoomIcon = 1500;
 
   // For long press btn
   AnimationController animControlBtnLongPress, animControlBox;
@@ -44,7 +44,13 @@ class FbReactionState extends State<FbReaction> with TickerProviderStateMixin {
 
   // For zoom icon when drag
   AnimationController animControlIconWhenDrag;
+  AnimationController animControlIconWhenFirstDrag;
+  AnimationController animControlIconWhenDragOutside;
+  AnimationController animControlBoxWhenDragOutside;
   Animation zoomIconChosen, zoomIconNotChosen;
+  Animation zoomIconWhenDragOutside;
+  Animation zoomIconWhenFirstDrag;
+  Animation zoomBoxWhenDragOutside;
 
   Duration durationLongPress = new Duration(milliseconds: 250);
   Timer holdTimer;
@@ -55,6 +61,8 @@ class FbReactionState extends State<FbReaction> with TickerProviderStateMixin {
   int currentIconFocus = 0;
   int previousIconFocus = 0;
   bool isDragging = false;
+  bool isDraggingOutside = false;
+  bool isFirstDragging = true;
 
   @override
   void initState() {
@@ -207,6 +215,35 @@ class FbReactionState extends State<FbReaction> with TickerProviderStateMixin {
     zoomBoxIcon.addListener(() {
       setState(() {});
     });
+
+    // ------------------------------- Icon when drag outside -------------------------------
+    animControlIconWhenDragOutside =
+        new AnimationController(vsync: this, duration: new Duration(milliseconds: durationAnimationZoomIcon));
+    zoomIconWhenDragOutside = new Tween(begin: 0.8, end: 1.0).animate(animControlIconWhenDragOutside);
+    zoomIconWhenDragOutside.addListener(() {
+      setState(() {});
+    });
+
+    // ------------------------------- Box when drag outside -------------------------------
+    animControlBoxWhenDragOutside =
+        new AnimationController(vsync: this, duration: new Duration(milliseconds: durationAnimationZoomIcon));
+    zoomBoxWhenDragOutside = new Tween(begin: 40.0, end: 50.0).animate(animControlBoxWhenDragOutside);
+    zoomBoxWhenDragOutside.addListener(() {
+      setState(() {});
+    });
+
+    // ------------------------------- Icon when first drag -------------------------------
+    animControlIconWhenFirstDrag =
+        new AnimationController(vsync: this, duration: new Duration(milliseconds: durationAnimationZoomIcon));
+    zoomIconWhenFirstDrag = new Tween(begin: 1.0, end: 0.8).animate(animControlIconWhenFirstDrag);
+    zoomIconWhenFirstDrag.addListener(() {
+      setState(() {});
+    });
+    animControlIconWhenFirstDrag.addStatusListener((status) {
+      if (status == AnimationStatus.completed) {
+        isFirstDragging = false;
+      }
+    });
   }
 
   @override
@@ -243,7 +280,9 @@ class FbReactionState extends State<FbReaction> with TickerProviderStateMixin {
                     ],
                   ),
                   width: 300.0,
-                  height: isDragging ? (previousIconFocus == 0 ? this.zoomBoxIcon.value : 40.0) : 50.0,
+                  height: isDragging
+                      ? (previousIconFocus == 0 ? this.zoomBoxIcon.value : 40.0)
+                      : isDraggingOutside ? this.zoomBoxWhenDragOutside.value : 50.0,
                   margin: new EdgeInsets.only(bottom: 130.0, left: 10.0),
                 ),
                 opacity: this.fadeInBox.value,
@@ -287,8 +326,10 @@ class FbReactionState extends State<FbReaction> with TickerProviderStateMixin {
                         scale: isDragging
                             ? (currentIconFocus == 1
                                 ? this.zoomIconChosen.value
-                                : (previousIconFocus == 1 ? this.zoomIconNotChosen.value : 0.8))
-                            : this.zoomIconLike.value,
+                                : (previousIconFocus == 1
+                                    ? this.zoomIconNotChosen.value
+                                    : isFirstDragging ? this.zoomIconWhenFirstDrag.value : 0.8))
+                            : isDraggingOutside ? this.zoomIconWhenDragOutside.value : this.zoomIconLike.value,
                       ),
 
                       // icon love
@@ -572,6 +613,13 @@ class FbReactionState extends State<FbReaction> with TickerProviderStateMixin {
 
     if (dragUpdateDetail.globalPosition.dy >= 250 && dragUpdateDetail.globalPosition.dy <= 550) {
       isDragging = true;
+      isDraggingOutside = false;
+
+      if (isFirstDragging && !animControlIconWhenFirstDrag.isAnimating) {
+        animControlIconWhenFirstDrag.reset();
+        animControlIconWhenFirstDrag.forward();
+      }
+
       if (dragUpdateDetail.globalPosition.dx >= 20 && dragUpdateDetail.globalPosition.dx < 83) {
         if (currentIconFocus != 1) {
           previousIconFocus = currentIconFocus;
@@ -616,11 +664,18 @@ class FbReactionState extends State<FbReaction> with TickerProviderStateMixin {
         }
       }
     } else {
-      isDragging = false;
       previousIconFocus = 0;
       currentIconFocus = 0;
-      animControlIconWhenDrag.reset();
-      animControlIconWhenDrag.forward();
+      isFirstDragging = true;
+
+      if (isDragging && !isDraggingOutside) {
+        isDragging = false;
+        isDraggingOutside = true;
+        animControlIconWhenDragOutside.reset();
+        animControlIconWhenDragOutside.forward();
+        animControlBoxWhenDragOutside.reset();
+        animControlBoxWhenDragOutside.forward();
+      }
     }
   }
 
