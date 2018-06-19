@@ -559,9 +559,13 @@ class FbReactionState extends State<FbReaction> with TickerProviderStateMixin {
   }
 
   void onHorizontalDragUpdateBoxIcon(DragUpdateDetails dragUpdateDetail) {
+    // return if the drag is drag without press button
+    if (!isLongPress) return;
+
     // the margin top the box is 200
     // and plus the height of toolbar and the status bar
     // so the range we check is about 250 -> 550
+
     if (dragUpdateDetail.globalPosition.dy >= 250 && dragUpdateDetail.globalPosition.dy <= 550) {
       isDragging = true;
       if (dragUpdateDetail.globalPosition.dx >= 20 && dragUpdateDetail.globalPosition.dx < 83) {
