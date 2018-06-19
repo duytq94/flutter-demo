@@ -2,7 +2,6 @@
 
 ## App include:
 
-* Restaurant Animation Screen - Make multiple animations work together.
 * Hero Animation Screen - How to play with hero widget.
 * Simple Animation Screen - Some simple animation.
 * Edit Profile Screen - A simple form to fill user info.
@@ -15,7 +14,6 @@
 
 ## Screenshots:
 
-<img src="https://raw.githubusercontent.com/duytq94/demo-flutter/master/ScreenShots/RestaurantAnimation.gif" height="30%" width="30%">
 <img src="https://raw.githubusercontent.com/duytq94/demo-flutter/master/ScreenShots/HeroAnimation.gif" height="30%" width="30%">
 <img src="https://raw.githubusercontent.com/duytq94/demo-flutter/master/ScreenShots/Animation.jpg" height="30%" width="30%">
 <img src="https://raw.githubusercontent.com/duytq94/demo-flutter/master/ScreenShots/EditProfile.jpg" height="30%" width="30%">
