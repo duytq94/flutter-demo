@@ -401,6 +401,8 @@ class FbReactionState extends State<FbReaction> with TickerProviderStateMixin {
                                 : (previousIconFocus == 4 ? this.zoomIconNotChosen.value : 0.8))
                             : this.zoomIconWow.value,
                       ),
+
+                      // icon sad
                       new Transform.scale(
                         child: new Container(
                           child: new Column(
@@ -436,6 +438,8 @@ class FbReactionState extends State<FbReaction> with TickerProviderStateMixin {
                                 : (previousIconFocus == 5 ? this.zoomIconNotChosen.value : 0.8))
                             : this.zoomIconSad.value,
                       ),
+
+                      // icon angry
                       new Transform.scale(
                         child: new Container(
                           child: new Column(
