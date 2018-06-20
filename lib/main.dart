@@ -1,10 +1,8 @@
 import 'package:demo_flutter/edit_profile.dart';
-import 'package:demo_flutter/fb_reaction_box.dart';
 import 'package:demo_flutter/fetch_api.dart';
 import 'package:demo_flutter/hero_animation/hero_animation.dart';
 import 'package:demo_flutter/medium_clap.dart';
 import 'package:demo_flutter/music_player/music_player.dart';
-import 'package:demo_flutter/restaurant_animation/restaurant_animation.dart';
 import 'package:demo_flutter/tool_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
@@ -18,7 +16,7 @@ class MainApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return new MaterialApp(
-        title: 'Welcome to Flutter',
+        title: 'Flutter demo by duytq',
         theme: new ThemeData(primaryColor: Colors.amber, accentColor: Colors.amber),
         debugShowCheckedModeBanner: false,
         home: new Scaffold(
@@ -42,7 +40,6 @@ class MainScreen extends StatelessWidget {
         child: new Column(
           children: <Widget>[
             buildButton(context, 'Hero animation screen', new HeroAnimation()),
-            buildButton(context, 'FB reaction box screen', new FbReactionBox()),
             buildButton(context, 'Simple animation screen', new SimpleAnimation()),
             buildButton(context, 'Edit profile screen', new EditProfile()),
             buildButton(context, 'Music player screen', new MusicPlayer()),
