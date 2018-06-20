@@ -258,52 +258,48 @@ class FbReactionState extends State<FbReaction> with TickerProviderStateMixin {
   @override
   Widget build(BuildContext context) {
     timeDilation = 1.0;
-    return new Column(
-      children: <Widget>[
-        // Top space for detect gesture
-        new GestureDetector(
-          child: new Container(
+    return new GestureDetector(
+      child: new Column(
+        children: <Widget>[
+          // Just a top space
+          new Container(
             width: double.infinity,
-            height: 200.0,
-            color: Colors.transparent,
+            height: 150.0,
           ),
-          onHorizontalDragEnd: onHorizontalDragEndBoxIcon,
-        ),
 
-        // Main content
-        new Container(
-          child: new Stack(
-            children: <Widget>[
-              // Box and icons
-              new Stack(
-                children: <Widget>[
-                  // Box
-                  new Opacity(
-                    child: new Container(
-                      decoration: new BoxDecoration(
-                        color: Colors.white,
-                        borderRadius: new BorderRadius.circular(30.0),
-                        border: new Border.all(color: Colors.grey[300], width: 0.3),
-                        boxShadow: [
-                          new BoxShadow(
-                              color: Colors.grey,
-                              blurRadius: 5.0,
-                              // LTRB
-                              offset: Offset.lerp(new Offset(0.0, 0.0), new Offset(0.0, 0.5), 10.0)),
-                        ],
+          // main content
+          new Container(
+            child: new Stack(
+              children: <Widget>[
+                // Box and icons
+                new Stack(
+                  children: <Widget>[
+                    // Box
+                    new Opacity(
+                      child: new Container(
+                        decoration: new BoxDecoration(
+                          color: Colors.white,
+                          borderRadius: new BorderRadius.circular(30.0),
+                          border: new Border.all(color: Colors.grey[300], width: 0.3),
+                          boxShadow: [
+                            new BoxShadow(
+                                color: Colors.grey,
+                                blurRadius: 5.0,
+                                // LTRB
+                                offset: Offset.lerp(new Offset(0.0, 0.0), new Offset(0.0, 0.5), 10.0)),
+                          ],
+                        ),
+                        width: 300.0,
+                        height: isDragging
+                            ? (previousIconFocus == 0 ? this.zoomBoxIcon.value : 40.0)
+                            : isDraggingOutside ? this.zoomBoxWhenDragOutside.value : 50.0,
+                        margin: new EdgeInsets.only(bottom: 130.0, left: 10.0),
                       ),
-                      width: 300.0,
-                      height: isDragging
-                          ? (previousIconFocus == 0 ? this.zoomBoxIcon.value : 40.0)
-                          : isDraggingOutside ? this.zoomBoxWhenDragOutside.value : 50.0,
-                      margin: new EdgeInsets.only(bottom: 130.0, left: 10.0),
+                      opacity: this.fadeInBox.value,
                     ),
-                    opacity: this.fadeInBox.value,
-                  ),
 
-                  // Icons
-                  new GestureDetector(
-                    child: new Container(
+                    // Icons
+                    new Container(
                       child: new Row(
                         children: <Widget>[
                           // icon like
@@ -547,86 +543,76 @@ class FbReactionState extends State<FbReaction> with TickerProviderStateMixin {
                       height: 250.0,
                       margin: new EdgeInsets.only(left: this.moveRightGroupIcon.value),
                       color: Colors.amber.withOpacity(0.5),
-                    ),
-                    onHorizontalDragEnd: onHorizontalDragEndBoxIcon,
-                    onHorizontalDragUpdate: onHorizontalDragUpdateBoxIcon,
-                  )
-                ],
-                alignment: Alignment.bottomCenter,
-              ),
+                    )
+                  ],
+                  alignment: Alignment.bottomCenter,
+                ),
 
-              // Button like
-              new Container(
-                child: new GestureDetector(
-                  onTapDown: onTapDownBtn,
-                  onTapUp: onTapUpBtn,
-                  onTap: onTapBtn,
-                  child: new Container(
-                    child: new Row(
-                      children: <Widget>[
-                        // Icon like
-                        new Transform.scale(
-                          child: new Transform.rotate(
-                            child: new Image.asset(
-                              !isLongPress && isLiked ? 'images/ic_like_fill.png' : 'images/ic_like.png',
-                              width: 25.0,
-                              height: 25.0,
-                              fit: BoxFit.contain,
-                              color: !isLongPress && isLiked ? new Color(0xff3b5998) : Colors.grey,
+                // Button like
+                new Container(
+                  child: new GestureDetector(
+                    onTapDown: onTapDownBtn,
+                    onTapUp: onTapUpBtn,
+                    onTap: onTapBtn,
+                    child: new Container(
+                      child: new Row(
+                        children: <Widget>[
+                          // Icon like
+                          new Transform.scale(
+                            child: new Transform.rotate(
+                              child: new Image.asset(
+                                !isLongPress && isLiked ? 'images/ic_like_fill.png' : 'images/ic_like.png',
+                                width: 25.0,
+                                height: 25.0,
+                                fit: BoxFit.contain,
+                                color: !isLongPress && isLiked ? new Color(0xff3b5998) : Colors.grey,
+                              ),
+                              angle: !isLongPress
+                                  ? handleOutputRangeTiltIconLike(tiltIconLikeInBtn2.value)
+                                  : tiltIconLikeInBtn.value,
                             ),
-                            angle: !isLongPress
-                                ? handleOutputRangeTiltIconLike(tiltIconLikeInBtn2.value)
-                                : tiltIconLikeInBtn.value,
+                            scale: !isLongPress
+                                ? handleOutputRangeZoomInIconLike(zoomIconLikeInBtn2.value)
+                                : zoomIconLikeInBtn.value,
                           ),
-                          scale: !isLongPress
-                              ? handleOutputRangeZoomInIconLike(zoomIconLikeInBtn2.value)
-                              : zoomIconLikeInBtn.value,
-                        ),
 
-                        // Text like
-                        new Transform.scale(
-                          child: new Text(
-                            'Like',
-                            style: new TextStyle(
-                              color: !isLongPress && isLiked ? new Color(0xff3b5998) : Colors.grey,
-                              fontSize: 14.0,
-                              fontWeight: FontWeight.bold,
+                          // Text like
+                          new Transform.scale(
+                            child: new Text(
+                              'Like',
+                              style: new TextStyle(
+                                color: !isLongPress && isLiked ? new Color(0xff3b5998) : Colors.grey,
+                                fontSize: 14.0,
+                                fontWeight: FontWeight.bold,
+                              ),
                             ),
+                            scale: !isLongPress
+                                ? handleOutputRangeZoomInIconLike(zoomIconLikeInBtn2.value)
+                                : zoomTextLikeInBtn.value,
                           ),
-                          scale: !isLongPress
-                              ? handleOutputRangeZoomInIconLike(zoomIconLikeInBtn2.value)
-                              : zoomTextLikeInBtn.value,
-                        ),
-                      ],
-                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                        ],
+                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                      ),
+                      padding: new EdgeInsets.all(10.0),
+                      color: Colors.transparent,
                     ),
-                    padding: new EdgeInsets.all(10.0),
-                    color: Colors.transparent,
                   ),
+                  width: 100.0,
+                  decoration: new BoxDecoration(
+                    borderRadius: new BorderRadius.circular(4.0),
+                    color: Colors.white,
+                    border: new Border.all(color: Colors.grey[400]),
+                  ),
+                  margin: new EdgeInsets.only(top: 140.0),
                 ),
-                width: 100.0,
-                decoration: new BoxDecoration(
-                  borderRadius: new BorderRadius.circular(4.0),
-                  color: Colors.white,
-                  border: new Border.all(color: Colors.grey[400]),
-                ),
-                margin: new EdgeInsets.only(top: 140.0),
-              ),
-            ],
+              ],
+            ),
+            margin: new EdgeInsets.only(left: 20.0, right: 20.0),
           ),
-          margin: new EdgeInsets.only(left: 20.0, right: 20.0),
-        ),
-
-        // Bottom space for detect gesture
-        new GestureDetector(
-          child: new Container(
-            width: double.infinity,
-            height: 110.0,
-            color: Colors.transparent,
-          ),
-          onHorizontalDragEnd: onHorizontalDragEndBoxIcon,
-        ),
-      ],
+        ],
+      ),
+      onHorizontalDragEnd: onHorizontalDragEndBoxIcon,
+      onHorizontalDragUpdate: onHorizontalDragUpdateBoxIcon,
     );
   }
 

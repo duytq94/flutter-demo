@@ -41,7 +41,6 @@ class MainScreen extends StatelessWidget {
       child: new Center(
         child: new Column(
           children: <Widget>[
-            buildButton(context, 'Restaurant animation screen', new RestaurantAnimation()),
             buildButton(context, 'Hero animation screen', new HeroAnimation()),
             buildButton(context, 'FB reaction box screen', new FbReactionBox()),
             buildButton(context, 'Simple animation screen', new SimpleAnimation()),
