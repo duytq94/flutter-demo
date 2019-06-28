@@ -1,6 +1,6 @@
 # Demo Flutter - Some common UI in Flutter
 
-## App include:
+## App include
 
 * Hero Animation Screen - How to play with hero widget.
 * Simple Animation Screen - Some simple animation.
@@ -12,7 +12,7 @@
 * Tool widget Screen - Some widgets use for input like dialog, checkbox, radio button...
 * And more screen will be update in future...
 
-## Screenshots:
+## Screenshots
 
 <img src="https://raw.githubusercontent.com/duytq94/demo-flutter/master/ScreenShots/HeroAnimation.gif" height="30%" width="30%">
 <img src="https://raw.githubusercontent.com/duytq94/demo-flutter/master/ScreenShots/Animation.jpg" height="30%" width="30%">
